@@ -6,8 +6,7 @@
 **History of Sharmony:**
 <em> The idea of Sharmony was conceived when Kay James became disenchanted with the robotic algorithms that rule our lives. Popular platforms rely on algorithms for recommmending new music to users; this leaves only a narrow selection and hinders less popular songs from gaining traction. After being grouped together in a software engineering class, the Sharmony team developed a solution to the algorithm problem with a social music recommendation application, powered by passionate users sharing the music that they love. </em>
 
-**Contribute:**
-//insert link to contributing.md
+**Contribute:** https://github.com/nyu-software-engineering/spring-2020-toxic-flamingo/blob/master/CONTRIBUTING.md
 
 **How to Build:**
 Coming soon.
