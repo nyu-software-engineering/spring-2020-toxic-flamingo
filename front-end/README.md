@@ -39,7 +39,9 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ### `how directory works`
 
-you need PrimaryNav and react-router-dom for directory to work on the web. Once you create a javascript with the webpage, you need to update PrimaryNav.js and App.js to include the path of the website your js wants to show up. Don't foret to export your js AND IMPORT ON App.js as well!!!!!! 
+you need PrimaryNav and react-router-dom for directory to work on the web. Once you create a javascript with the webpage, 
+1. you need to update PrimaryNav.js and App.js to include the path of the website your js wants to show up. 
+2. Don't foret to export your js AND IMPORT ON App.js as well!!!!!! 
 
 ## Learn More
 
