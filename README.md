@@ -1,4 +1,4 @@
-#This is the final project of TOXIC FLAMINGO#
+# This is the final project of TOXIC FLAMINGO
 
 **Product Vision Statement:**
 <em> Sharmony is a web-based application for fans to discover and share the music they enjoy. Unlike other platforms such as Spotify, Sharmony focuses on fostering community through grassroots music recommendations from real people, not algorithms. </em>
