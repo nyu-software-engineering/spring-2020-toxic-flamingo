@@ -40,6 +40,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ### `how directory works`
 
 you need PrimaryNav and react-router-dom for directory to work on the web. Once you create a javascript with the webpage, 
+
 0. if there is an error regarind react router dom, run npm install react-router-dom (one time only)
 1. you need to update PrimaryNav.js and App.js to include the path of the website your js wants to show up. 
 2. Don't foret to export your js AND IMPORT ON App.js as well!!!!!! 
