@@ -1,16 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
-import ZipForm from './components/ZipForm';
-
-class App extends React.Component {
-  render() {
-    return (
-      <div className='app'>
-        <ZipForm />
-      </div>
-    );
-  }
-=======
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrimaryNav from './PrimaryNav';
 import Home from './Home';
@@ -47,7 +35,6 @@ import './App.css';
           </Router>
       </div>
     );
->>>>>>> 70c84f031be5ff4b8768d0c4a8845fefa11fa381
 }
 
 export default App;
