@@ -5,6 +5,7 @@ import Home from './Home';
 import Make_Post from './Make_Post';
 import Profile from './Profile';
 import LogIn from './components/logIn';
+import SignUp from './components/SignUp';
 import logo from './logo.svg';
 import './App.css';
 
@@ -33,9 +34,12 @@ import './App.css';
                       <PrimaryNav />
                       <Home/>
                   </Route>
+
+                  <Route path="/SignUp">
+                      <SignUp/>
+                  </Route>
   
                   <Route path="/">
-                      <PrimaryNav />
                       <LogIn />
                   </Route>
   

@@ -20,7 +20,7 @@ const LogIn = (props) => {
               <br/>
               <NavLink to="/Home">LogIn</NavLink>
               <br/>
-              <NavLink to="/components/SignUp">SignUp</NavLink>
+              <NavLink to="/SignUp">SignUp</NavLink>
               </form>
           </section>
       </div>
