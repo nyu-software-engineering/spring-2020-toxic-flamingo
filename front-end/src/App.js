@@ -42,6 +42,7 @@ import logInScreen from './components/LogIn';
                   <Route path="/Make_Post">
                       
                       <Make_Post />
+                      <PrimaryNav />
                   </Route>
   
   
