@@ -25,15 +25,27 @@ const Make_Post = (props) => {
   <div className="SearchBar">
     <input type="text" placeholder="Search (Artist, Title, Album):"></input>
   </div>
+
+
+
   <div class="flex-container">
   <div className="Spotify"><button class="company">Spotify</button></div>
   <div className="SoundCloud"><button class="company">SoundCloud</button></div>
   </div>
+ 
+ 
   <div className="content"> music content</div>
 
   <div className="nav_bar"> 
     <div class="flex-container">
-      
+      <nav>
+        <ul class ="nav_link"> 
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Search</a></li>
+          <li><a href="#">New Post</a></li>
+          <li><a href="#">Notifications</a></li>
+        </ul>
+      </nav>
     </div>
     </div>
   
