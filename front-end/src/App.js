@@ -4,6 +4,7 @@ import PrimaryNav from './PrimaryNav';
 import Home from './Home';
 import Make_Post from './Make_Post';
 import Profile from './Profile';
+import LogIn from './components/logIn';
 import logo from './logo.svg';
 import './App.css';
 
@@ -15,7 +16,7 @@ import './App.css';
       <div className="container">
           <Router>
               <Switch>
-  
+
                   <Route path="/Make_Post">
                       
                       <Make_Post />
@@ -27,10 +28,15 @@ import './App.css';
                       <PrimaryNav />
                       <Profile />
                   </Route>
+
+                  <Route path="/Home">
+                      <PrimaryNav />
+                      <Home/>
+                  </Route>
   
                   <Route path="/">
                       <PrimaryNav />
-                      <Home />
+                      <LogIn />
                   </Route>
   
               </Switch>
