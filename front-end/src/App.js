@@ -4,7 +4,7 @@ import PrimaryNav from './PrimaryNav';
 import SettingsNav from './SettingsNav';
 import Home from './Home';
 import Make_Post from './Make_Post';
-import Profile from './Profile';
+import PersonalProfile from './PersonalProfile';
 import LogIn from './components/logIn';
 import SignUp from './components/SignUp';
 import Settings from './Settings';
@@ -26,9 +26,17 @@ const App = (props) => {
                     <Make_Post />
                     <PrimaryNav />
                   </Route>
+<<<<<<< HEAD
                   <Route path="/Profile">
                       <Profile />
                       <PrimaryNav />
+=======
+  
+  
+                  <Route path="/PersonalProfile">
+                      <PrimaryNav />
+                      <PersonalProfile />
+>>>>>>> kaybranchnew
                   </Route>
 
                   <Route path="/Home">
