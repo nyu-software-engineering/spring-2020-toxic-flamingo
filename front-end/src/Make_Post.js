@@ -65,20 +65,20 @@ const Make_Post = (props) => {
 <div className="searchBar"> 
 this.props.history.push('/') //this will go to home page
 
-or
+    or
 
-this.props.history.goBack() //this will go to previous page
-</div>
-<div className="select_type">
+    this.props.history.goBack() //this will go to previous page
+    </div>
+    <div className="select_type">
 
-</div>
-<div className="post">
+    </div>
+    <div className="post">
 
-</div>
-<div className="nav_Bar">
+    </div>
+    <div className="nav_Bar">
 
-</div>
-*/
+    </div>
+    */
   );
 }
 
