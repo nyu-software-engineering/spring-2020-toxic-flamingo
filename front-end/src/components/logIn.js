@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-handleSubmit = ()
+
 
 const logIn = (props) => {
 
@@ -9,7 +9,7 @@ const logIn = (props) => {
   <div className="LogIn">
       <h1>Welcome to Sharmony!</h1>
       <section className="main-content">
-          
+
           <img alt="Sharmony Logo" src="C:\Users\Kay James\Documents\sharmony\spring-2020-toxic-flamingo\front-end\public\SharmonyLogo.PNG" />
           <form onSubmit={this.handleSubmit}>
           <p>Username: </p>
@@ -27,5 +27,5 @@ const logIn = (props) => {
   }
 
 
-  
+
   export default logIn;
