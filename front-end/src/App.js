@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrimaryNav from './PrimaryNav';
 import Home from './Home';
 import Make_Post from './Make_Post';
-import Profile from './Profile';
+import PersonalProfile from './PersonalProfile';
 import LogIn from './components/logIn';
 import SignUp from './components/SignUp';
 import logo from './logo.svg';
@@ -25,9 +25,9 @@ import './App.css';
                   </Route>
   
   
-                  <Route path="/Profile">
+                  <Route path="/PersonalProfile">
                       <PrimaryNav />
-                      <Profile />
+                      <PersonalProfile />
                   </Route>
 
                   <Route path="/Home">
