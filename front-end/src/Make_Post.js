@@ -23,7 +23,7 @@ const Make_Post = (props) => {
   </div>
 
   <div className="search_bar">
-    <button class="search_btn">Search (Artist, Title, Album): </button>
+    <input type="text" placeholder="Search (Artist, Title, Album):"></input>
   </div>
 
   <div className="Spotify">Spotify and SoundCloud bar here</div>

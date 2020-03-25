@@ -18,6 +18,7 @@ import './App.css';
                   <Route path="/Make_Post">
                       
                       <Make_Post />
+                      <PrimaryNav />
                   </Route>
   
   
