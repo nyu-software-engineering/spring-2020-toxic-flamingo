@@ -26,17 +26,11 @@ const App = (props) => {
                     <Make_Post />
                     <PrimaryNav />
                   </Route>
-<<<<<<< HEAD
-                  <Route path="/Profile">
-                      <Profile />
-                      <PrimaryNav />
-=======
   
   
                   <Route path="/PersonalProfile">
                       <PrimaryNav />
                       <PersonalProfile />
->>>>>>> kaybranchnew
                   </Route>
 
                   <Route path="/Home">
