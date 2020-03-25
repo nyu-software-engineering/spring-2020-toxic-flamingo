@@ -71,3 +71,12 @@ li, a {
   color: gray;
   border: 1px solid #555;
 }
+
+
+.content img{
+  float:left;
+}
+
+.content li {
+  display: inline;
+}

@@ -1,10 +1,18 @@
 import React from 'react';
 import './Make_Post.css';
+import data from './MOCK_DATA';
 // import logo from './logo.svg';
 //import './About.css';
 
 const Make_Post = (props) => {
-  const buttonText = 'Click Me!';
+
+  const list = [];
+  for(const x of data){
+    list.push(<li><img src="/content-img.jpg" alt="temp"></img></li>)
+    list.push(<br/>)
+    list.push(<li> {x.song_name} <br/>  {x.singer}</li>);
+    list.push(<br/>)
+  }
 
 
   return (
@@ -15,7 +23,7 @@ const Make_Post = (props) => {
       <button class="btn">a</button>
     </div>
     <div>
-    <img src="temp-logo.jpg" alt="logo plz" width="150" height="50"></img>
+    <img src="/temp-logo.jpg" alt="logo plz" width="150" height="50"></img>
     </div>
     <div>
     <button class="buttton_next">Next</button>
@@ -34,7 +42,9 @@ const Make_Post = (props) => {
   </div>
  
  
-  <div className="content"> music content</div>
+  <div className="content"> 
+    {list} 
+    </div>
 
   <div className="nav_bar"> 
     <div class="flex-container">
