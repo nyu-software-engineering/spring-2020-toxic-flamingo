@@ -50,7 +50,7 @@ import logInScreen from './components/logIn';
 =======
   
                   <Route path="/Make_Post">
-                      <PrimaryNav />
+                      
                       <Make_Post />
                   </Route>
   
