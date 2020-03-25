@@ -9,23 +9,20 @@ import logo from './logo.svg';
 import './App.css';
 //import logInScreen from './logIn';
 
-
-
-
-  const App = (props) => {
+const App = (props) => {
     return (
       <div className="container">
           <Router>
               <Switch>
-                  <Route path="Make_Post">
+                  <Route path="/Make_Post">
                     <Make_Post />
                     <PrimaryNav />
                   </Route>
-                  <Route path="Profile">
+                  <Route path="/Profile">
                       <Profile />
                       <PrimaryNav />
                   </Route>
-                  <Route path ="Settings">
+                  <Route path ="/Settings">
                       <Settings />
                       <PrimaryNav />
                   </Route>
@@ -33,7 +30,6 @@ import './App.css';
                       <PrimaryNav />
                       <Home />
                   </Route>
-  
               </Switch>
           </Router>
       </div>
