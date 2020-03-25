@@ -11,26 +11,31 @@ const Make_Post = (props) => {
 <div className="Header">
   <div class="flex-container">
     <div class="back_button">
-      <img src="/back-button.jpg" alt="where my button at"width="50" height="50"></img>
-      <button class="btn"></button>
+      <img src="/back-button.jpg" alt="where my button at"></img>
+      <button class="btn">a</button>
     </div>
     <div>
-    <img src="temp-logo.jpg" alt="logo plz"></img>
+    <img src="temp-logo.jpg" alt="logo plz" width="150" height="50"></img>
     </div>
     <div>
     <button class="buttton_next">Next</button>
     </div>
   </div>
 
-  <div className="search_bar">
+  <div className="SearchBar">
     <input type="text" placeholder="Search (Artist, Title, Album):"></input>
   </div>
-
-  <div className="Spotify">Spotify and SoundCloud bar here</div>
-
+  <div class="flex-container">
+  <div className="Spotify"><button class="company">Spotify</button></div>
+  <div className="SoundCloud"><button class="company">SoundCloud</button></div>
+  </div>
   <div className="content"> music content</div>
 
-  <div className="nav_bar"> 4 nav bar here</div>
+  <div className="nav_bar"> 
+    <div class="flex-container">
+      
+    </div>
+    </div>
   
 
 </div>
