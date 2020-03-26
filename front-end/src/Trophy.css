@@ -1,0 +1,28 @@
+.trophyBox, .postHeader, .trophyContent{
+    display: flex;
+}
+
+.trophyBox {
+    flex-direction: column;
+    width: 300px;
+    border-style: solid;
+}
+
+.trophyIcon {
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    align-content:center;
+  }
+  
+.flex-container > div {
+    margin: 0px;
+    padding: 5px;
+    font-size: 10px;
+  }

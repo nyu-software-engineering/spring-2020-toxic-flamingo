@@ -19,9 +19,7 @@ const Settings = (props) => {
             <br/>
             <section className="main-content">
                 <img alt="icon" className="icon" src="https://imageog.flaticon.com/icons/png/512/126/126472.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF" />
-                <p>
-                    We doing settings lets gooooooo
-                </p>
+                
                 
             </section>
         </div>
