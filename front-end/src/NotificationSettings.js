@@ -1,18 +1,41 @@
 import React from 'react';
-// import logo from './logo.svg';
-//import './About.css';
+import { FormControl, FormControlLabel, FormGroup, Switch} from '@material-ui/core';
+import "./NotificationSettings.css";
+
 
 const NotificationSettings = (props) => {
   return (
 <div className="About">
     <h1>Notification Settings</h1>
-    <div className="main-content">
-    <input type='checkbox' checked='checked'/>
-    <input type='checkbox' checked='checked'/>
-    <input type='checkbox' checked='checked'/>
-    <input type='checkbox' checked='checked'/>
-      
-    </div>
+    <section className="main-content">
+        <FormGroup>
+        <FormControlLabel
+        control={<Switch />}
+            label="Followers"
+            labelPlacement="start"
+        />
+        <FormControlLabel
+        control={<Switch />}
+            label="Messages"
+            labelPlacement="start"
+        />
+        <FormControlLabel
+        control={<Switch />}
+            label="New Posts"
+            labelPlacement="start"  
+        />
+        <FormControlLabel
+        control={<Switch />}
+            label="Trophies"
+            labelPlacement="start"
+        />
+        <FormControlLabel
+        control={<Switch />}
+            label="Harmonies"
+            labelPlacement="start"
+        />
+        </FormGroup>
+    </section>
 </div>
   );
 }

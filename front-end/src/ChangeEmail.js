@@ -1,25 +1,19 @@
 import React from 'react';
-// import logo from './logo.svg';
-//import './About.css';
-
+import { NavLink } from "react-router-dom";
+import "./ChangeEmail.css";
 const ChangeEmail = (props) => {
-
   return (
 <div className="About">
     <h1>Change Email</h1>
-    <section className="EmailForm">
-
-              <form>
-              <p>New Email: </p>
+    <section className="main-content">
+        <img alt="about us" className="icon" src="https://cdn1.iconfinder.com/data/icons/e-mail-11/48/Change-Mail-Email-Letter-Communication-512.png" />
+        <form>
+              <p>Enter your new email: </p>
               <input type='text' name='email' />
               <br/>
-              <p>Confirm Email: </p>
-              <input type='text' name='cemail'  />
-              <br/>
-              <br />
-              <button>Confirm</button>
+              <NavLink to="/Home">Submit</NavLink>
               </form>
-          </section>
+    </section>
 </div>
   );
 }
