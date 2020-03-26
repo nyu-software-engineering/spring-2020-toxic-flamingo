@@ -18,6 +18,8 @@ import './App.css';
 import MainFeed from './MainFeed';
 //import logInScreen from './logIn';
 import HashtagFeed from './HashtagFeed';
+import Follower from './Follower';
+import Followee from './Followee';
 
 
 const App = (props) => {
@@ -73,7 +75,14 @@ const App = (props) => {
                     <Make_Post2 />
                     <PrimaryNav />
                   </Route>
-
+                  <Route path="/Follower">
+                    <Follower />
+                    <PrimaryNav />
+                  </Route>
+                  <Route path="/Followee">
+                    <Followee />
+                    <PrimaryNav />
+                  </Route>                                      
                   <Route path="/">
                       <LogIn />
                 </Route>
