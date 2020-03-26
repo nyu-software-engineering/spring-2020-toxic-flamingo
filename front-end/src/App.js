@@ -6,6 +6,8 @@ import Make_Post from './Make_Post';
 import Profile from './Profile';
 import logo from './logo.svg';
 import './App.css';
+import Post from './Post';
+import MainFeed from './MainFeed';
 
 
 
@@ -30,7 +32,7 @@ import './App.css';
   
                   <Route path="/">
                       <PrimaryNav />
-                      <Home />
+                      <MainFeed />
                   </Route>
   
               </Switch>
