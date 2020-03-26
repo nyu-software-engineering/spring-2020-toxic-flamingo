@@ -21,6 +21,9 @@ const PersonalProfile = (props) => {
               <button>Following</button>
               <button>Followers</button>
               <button>Harmonies</button>
+      <div class='preview'>
+      <PostPreview />
+      </div>
     </div>
     
   );

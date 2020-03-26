@@ -12,7 +12,7 @@ const PostPreview = (props) => {
     useEffect( () => {
         //fetch data
 
-        axios.get("https://api.mockaroo.com/api/f9224880?count=1000&key=83e46730")
+        axios.get("https://api.mockaroo.com/api/f9224880?count=10&key=83e46730")
         .then ((response) => {
             setData(response.data);
         })
@@ -34,9 +34,11 @@ const PostPreview = (props) => {
     
 
     return(
-        <div className="PreviewPost">
+        <div class="PreviewPost">
             {data.map((jsonObj, i) => (
-                <Post key={jsonObj.id} data={jsonObj}/>
+                <div class='picture'>
+                <img src={jsonObj.cover_art}/>
+                </div>
             ))}
         </div>
     );
