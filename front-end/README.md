@@ -74,3 +74,9 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### custon npm install we did 
+npm install react-router-dom
+npm install @material-ui/core
+npm install axios
+
