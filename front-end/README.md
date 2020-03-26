@@ -84,3 +84,24 @@ npm install axios
 
 npm install react-burger-menu --save
 
+### Git Tips***
+update git branch from master
+
+git checkout b1
+
+git merge origin/master
+
+git push origin b1
+
+merge branch to master
+
+git checkout master
+
+git pull origin master
+
+git merge test
+
+git push origin master
+
+
+
