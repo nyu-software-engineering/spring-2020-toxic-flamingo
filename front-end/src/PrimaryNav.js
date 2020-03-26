@@ -7,14 +7,11 @@ const PrimaryNav = (props) => {
         <nav>
             <Link to="/MainFeed">Home</Link>
             <Link to="/Make_Post">Make_Post</Link>
-<<<<<<< HEAD
             <Link to="/Settings">Settings</Link>
             <Link to="/PersonalProfile">Profile</Link>
             
-=======
             <Link to="/Profile">Profile</Link>
             <Link to="/HashtagFeed">Hashtags</Link>
->>>>>>> newnewjackbranch
         </nav>
     )
 }
