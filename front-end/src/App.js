@@ -12,6 +12,7 @@ import ChangeEmail from './ChangeEmail';
 import ChangePassword from './ChangePassword';
 import NotificationSettings from './NotificationSettings';
 import Trophies from './Trophies';
+import Make_Post2 from './Make_Post2';
 import logo from './logo.svg';
 import './App.css';
 import MainFeed from './MainFeed';
@@ -67,6 +68,11 @@ const App = (props) => {
                         <MainFeed />
                         <PrimaryNav />
                   </Route>
+                  <Route path="/Make_Post2">
+                    <Make_Post2 />
+                    <PrimaryNav />
+                  </Route>
+
                   <Route path="/">
                       <LogIn />
                 </Route>
