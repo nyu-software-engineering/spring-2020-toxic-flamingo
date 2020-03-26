@@ -7,12 +7,19 @@ const ChangeEmail = (props) => {
   return (
 <div className="About">
     <h1>Change Email</h1>
-    <section className="main-content">
-        <img alt="about us" src="https://cdn1.iconfinder.com/data/icons/e-mail-11/48/Change-Mail-Email-Letter-Communication-512.png" />
-        <p>
-            Enter your new email address: 
-        </p>
-    </section>
+    <section className="EmailForm">
+
+              <form>
+              <p>New Email: </p>
+              <input type='text' name='email' />
+              <br/>
+              <p>Confirm Email: </p>
+              <input type='text' name='cemail'  />
+              <br/>
+              <br />
+              <button>Confirm</button>
+              </form>
+          </section>
 </div>
   );
 }

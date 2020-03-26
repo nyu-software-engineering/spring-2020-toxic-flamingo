@@ -7,13 +7,21 @@ const ChangePassword = (props) => {
   return (
 <div className="About">
     <h1>Change Password</h1>
-    <section className="main-content">
-        <img alt="about us" src="https://www.amazeelabs.com/sites/default/files/styles/leading_image/public/images/current-affairs/Maintenance-Password-Policies-Blog_0.jpg?h=f89ac811&itok=7NkzikSw" />
-        <p>
-            Enter your current password:
-            Enter your new password:
-        </p>
-    </section>
+    <section className="EmailForm">
+
+              <form>
+              <p>Current Password</p>
+              <input type='password' name='currentpasswrd'/>
+              <p>New Password: </p>
+              <input type='password' name='pass' />
+              <br/>
+              <p>Confirm New Password: </p>
+              <input type='text' name='cemail'  />
+              <br/>
+              <br />
+              <button>Confirm</button>
+              </form>
+          </section>
 </div>
   );
 }
