@@ -77,6 +77,10 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 ### custon npm install we did 
 npm install react-router-dom
+
 npm install @material-ui/core
+
 npm install axios
+
+npm install react-burger-menu --save
 
