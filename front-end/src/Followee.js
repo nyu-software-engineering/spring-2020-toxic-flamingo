@@ -48,7 +48,7 @@ const Followee = (props) => {
                 <div class="flex-container">
                 <nav>
                     <ul class ="nav_link"> 
-                    <li><a href="/Home">Home</a></li>
+                    <li><a href="/MainFeed">Home</a></li>
                     <li><a href="#">Search</a></li>
                     <li><a href="/Make_Post">New Post</a></li>
                     <li><a href="#">Notifications</a></li>
