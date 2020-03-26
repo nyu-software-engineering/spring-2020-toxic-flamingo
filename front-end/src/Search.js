@@ -40,22 +40,15 @@ const Make_Post = (props) => {
     <div>
     <img src="/temp-logo.jpg" alt="logo plz" width="200" height="50"></img>
     </div>
-    <div>
-    <form action="/Make_Post2">
-    <input type="submit" value="Next" />
-    </form>
-    </div>
   </div>
 
   <div className="SearchBar">
-    <input type="text" placeholder="Search (Artist, Title, Album):"></input>
+    <input type="text" placeholder="Search:"></input>
   </div>
 
-
-
   <div class="flex-container">
-  <div className="Spotify"><button class="company">Spotify</button></div>
-  <div className="SoundCloud"><button class="company">SoundCloud</button></div>
+  <div className="Users"><button class="company">Users</button></div>
+  <div className="Tags"><button class="company">Tags</button></div>
   </div>
  
  
