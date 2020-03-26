@@ -18,7 +18,7 @@ const LogIn = (props) => {
               <input type='password' name='password'  />
               <br/>
               <br/>
-              <NavLink to="/Home">LogIn</NavLink>
+              <NavLink to="/MainFeed">LogIn</NavLink>
               <br/>
               <NavLink to="/SignUp">SignUp</NavLink>
               </form>

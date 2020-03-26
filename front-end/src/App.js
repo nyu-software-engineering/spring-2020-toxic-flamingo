@@ -14,7 +14,9 @@ import NotificationSettings from './NotificationSettings';
 import Trophies from './Trophies';
 import logo from './logo.svg';
 import './App.css';
+import MainFeed from './MainFeed';
 //import logInScreen from './logIn';
+
 
 const App = (props) => {
     return (
@@ -60,6 +62,10 @@ const App = (props) => {
                   <Route path ="/Trophies">
                       <Trophies />
                       <SettingsNav />
+                  </Route>
+                  <Route path="/MainFeed">
+                        <MainFeed />
+                        <PrimaryNav />
                   </Route>
                   <Route path="/">
                       <LogIn />
