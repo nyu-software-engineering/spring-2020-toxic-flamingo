@@ -22,6 +22,8 @@ import HashtagFeed from './HashtagFeed';
 import Follower from './Follower';
 import Followee from './Followee';
 
+import Notifications from './Notifications';
+
 
 const App = (props) => {
     return (
@@ -45,7 +47,11 @@ const App = (props) => {
 
                   <Route path="/Home">
                       <PrimaryNav />
+<<<<<<< HEAD
                       <Home/>
+=======
+                      <Notifications />
+>>>>>>> newnewjackbranch
                   </Route>
 
                   <Route path="/SignUp">
