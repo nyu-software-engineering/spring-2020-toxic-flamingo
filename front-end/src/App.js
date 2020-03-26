@@ -47,11 +47,7 @@ const App = (props) => {
 
                   <Route path="/Home">
                       <PrimaryNav />
-<<<<<<< HEAD
-                      <Home/>
-=======
                       <Notifications />
->>>>>>> newnewjackbranch
                   </Route>
 
                   <Route path="/SignUp">
