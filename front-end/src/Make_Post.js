@@ -1,6 +1,7 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import './Make_Post.css';
+//import data from './MOCK_DATA';
 // import logo from './logo.svg';
 //import './About.css';
 
