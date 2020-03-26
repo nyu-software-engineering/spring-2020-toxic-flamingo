@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrimaryNav from './PrimaryNav';
 import SettingsNav from './SettingsNav';
 import Home from './Home';
+import Search from './Search';
 import Make_Post from './Make_Post';
 import PersonalProfile from './PersonalProfile';
 import LogIn from './components/logIn';
@@ -27,7 +28,10 @@ const App = (props) => {
       <div className="container">
           <Router>
               <Switch>
-
+                    <Route path="/Search">
+                    <Search />
+                    <PrimaryNav />
+                  </Route>
                   <Route path="/Make_Post">
                     <Make_Post />
                     <PrimaryNav />

@@ -9,7 +9,7 @@ const Make_Post = (props) => {
   const [data, setData] = useState([]);
 
   useEffect( () => {
-    axios.get("https://api.mockaroo.com/api/36d63960?count=10&key=5296eab0")
+    axios.get("https://api.mockaroo.com/api/87521f10?count=10&key=5296eab0")
     .then ((response) => {
       setData(response.data);
     })
@@ -40,36 +40,29 @@ const Make_Post = (props) => {
     <div>
     <img src="/temp-logo.jpg" alt="logo plz" width="200" height="50"></img>
     </div>
-    <div>
-    <form action="/Make_Post2">
-    <input type="submit" value="Next" />
-    </form>
-    </div>
   </div>
 
   <div className="SearchBar">
-    <input type="text" placeholder="Search (Artist, Title, Album):"></input>
+    <input type="text" placeholder="Search:"></input>
   </div>
 
-
-
   <div class="flex-container">
-  <div className="Spotify"><button class="company">Spotify</button></div>
-  <div className="SoundCloud"><button class="company">SoundCloud</button></div>
+  <div className="Users"><button class="company">Users</button></div>
+  <div className="Tags"><button class="company">Tags</button></div>
   </div>
  
  
   <div className="content"> 
-    {data.map((jsonObj,i) => (
-      <div class ="post">
-      <img src="/content-img.jpg" alt="temp"></img>
-       <p>{jsonObj.song_name} {jsonObj.singer}</p>
-       <br/>
-       <div class="line"></div>
-      </div>
-      
-    ))}
-    </div>
+                {data.map((jsonObj,i) => (
+                <div class ="post">
+                <img src={jsonObj.icon} ></img>
+                <p>{jsonObj.user}</p>
+                <br/>
+                <div class="line"></div>
+                </div>
+                
+                ))}
+            </div>
 
   <div className="nav_bar"> 
     <div class="flex-container">
