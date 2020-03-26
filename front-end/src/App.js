@@ -88,7 +88,11 @@ const App = (props) => {
                   <Route path="/Followee">
                     <Followee />
                     <PrimaryNav />
-                  </Route>                                      
+                  </Route>
+                  <Route path="/Notifications">
+                    <Notifications />
+                    <PrimaryNav />
+                  </Route>                                         
                   <Route path="/">
                       <LogIn />
                 </Route>
