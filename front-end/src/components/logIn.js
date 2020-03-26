@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {NavLink} from 'react-router-dom';
-
+import SharmonyLogo from './SharmonyLogo.PNG';
 
 
 const LogIn = (props) => {
@@ -9,7 +9,7 @@ const LogIn = (props) => {
           <h1>Welcome to Sharmony!</h1>
           <section className="logInForm">
 
-              <img alt="Sharmony Logo" src="front-end\public\SharmonyLogo.PNG" />
+              <img alt="Sharmony Logo" src={SharmonyLogo} width="200" height="150" />
               <form>
               <p>Username: </p>
               <input type='text' name='username' />
