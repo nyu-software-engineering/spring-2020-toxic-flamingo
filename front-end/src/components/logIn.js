@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {NavLink} from 'react-router-dom';
 import SharmonyLogo from './SharmonyLogo.PNG';
+import './logIn.css';
 
 
 const LogIn = (props) => {
@@ -18,9 +19,11 @@ const LogIn = (props) => {
               <input type='password' name='password'  />
               <br/>
               <br/>
-              <NavLink to="/MainFeed">LogIn</NavLink>
-              <br/>
-              <NavLink to="/SignUp">SignUp</NavLink>
+              <div className='buttons'>
+                <NavLink to="/MainFeed">LogIn</NavLink>
+                <br/>
+                <NavLink to="/SignUp">SignUp</NavLink>
+              </div>
               </form>
           </section>
       </div>

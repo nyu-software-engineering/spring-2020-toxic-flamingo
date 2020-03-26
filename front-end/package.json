@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "material-ui": "^0.20.2",
     "react": "^16.13.0",
+    "react-burger-menu": "^2.6.13",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0"
