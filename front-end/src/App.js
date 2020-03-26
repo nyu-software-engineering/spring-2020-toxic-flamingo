@@ -8,6 +8,7 @@ import logo from './logo.svg';
 import './App.css';
 import Post from './Post';
 import MainFeed from './MainFeed';
+import HashtagFeed from './HashtagFeed';
 
 
 
@@ -29,11 +30,18 @@ import MainFeed from './MainFeed';
                       <PrimaryNav />
                       <Profile />
                   </Route>
+
+                  <Route path="/HashtagFeed">
+                      <PrimaryNav/>
+                      <HashtagFeed/>
+                  </Route>
   
                   <Route path="/">
                       <PrimaryNav />
                       <MainFeed />
                   </Route>
+
+                  
   
               </Switch>
           </Router>

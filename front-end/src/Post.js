@@ -27,7 +27,7 @@ const Post = (props) => {
             <div className="commentsTitle"><h5>Comments</h5></div>
             <div className='postComments'>
                 <div className='initialComment'>
-                    <p className='user'>@{data.username}</p><p className='comment'>{data.post_comment}Nice!</p>
+                    <p className='user'>@{data.username}</p><p className='comment'>{data.post_comment}</p>
                 </div>
                 <div className='seeMore'>See {x} more comments</div>
             </div>
