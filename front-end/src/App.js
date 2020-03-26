@@ -17,6 +17,7 @@ import logo from './logo.svg';
 import './App.css';
 import MainFeed from './MainFeed';
 //import logInScreen from './logIn';
+import HashtagFeed from './HashtagFeed';
 
 
 const App = (props) => {
