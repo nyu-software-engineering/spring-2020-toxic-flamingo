@@ -10,6 +10,8 @@ import Post from './Post';
 import MainFeed from './MainFeed';
 import HashtagFeed from './HashtagFeed';
 
+import Notifications from './Notifications';
+
 
 
 
@@ -38,7 +40,7 @@ import HashtagFeed from './HashtagFeed';
   
                   <Route path="/">
                       <PrimaryNav />
-                      <MainFeed />
+                      <Notifications />
                   </Route>
 
                   
