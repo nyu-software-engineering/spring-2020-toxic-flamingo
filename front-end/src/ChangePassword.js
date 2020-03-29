@@ -5,7 +5,7 @@ import "./ChangePassword.css";
 const ChangePassword = (props) => {
 
   return (
-<div className="About">
+<div className="ChangePassword">
     <h1>Change Password</h1>
     <section className="main-content">
         <img alt="about us" className="icon" src="https://www.amazeelabs.com/sites/default/files/styles/leading_image/public/images/current-affairs/Maintenance-Password-Policies-Blog_0.jpg?h=f89ac811&itok=7NkzikSw" />

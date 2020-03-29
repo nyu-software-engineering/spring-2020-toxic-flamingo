@@ -1,0 +1,15 @@
+.nav {
+    position: fixed;
+    top: 0;
+    height: 54px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: row;
+}
+.navigation {
+    display: flex;
+    flex-direction: row;
+}
+.mainfeed {
+    min-width: 40px;
+}

@@ -1,15 +1,9 @@
-<<<<<<< HEAD
+
 import React from 'react';
-
-
-const logIn = (props) => {
-=======
-import React, { useState } from 'react';
 import {NavLink} from 'react-router-dom';
 import SharmonyLogo from './SharmonyLogo.PNG';
 import './logIn.css';
 
->>>>>>> 6981d1e99891ffcab801a7b1cdfdbd0368331e7d
 
 const LogIn = (props) => {
     return (
