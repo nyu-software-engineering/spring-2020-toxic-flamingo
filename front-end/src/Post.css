@@ -1,0 +1,38 @@
+.FeedPost, .postHeader, .postContent, .songInfo, .playInfo, .postComments, .initialComment{
+    display: flex;
+}
+
+.FeedPost, .songInfo, .playInfo, .postComments {
+    flex-direction: column;
+}
+
+.initialComment {
+    flex-direction: row;
+}
+
+.user, .comment {
+    margin: 10px;
+    font-size: 15px;
+}
+
+.commentsTitle {
+    align-items: center;
+    justify-content: center;
+}
+
+.seeMore {
+    font-size: 10px;
+    margin-left: 20px;
+}
+
+.profileImage {
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.FeedPost {
+    width: 300px;
+    border-style: solid;
+}

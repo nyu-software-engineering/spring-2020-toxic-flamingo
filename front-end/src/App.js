@@ -1,47 +1,101 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import PrimaryNav from './components/PrimaryNav';
-import Home from './components/Home';
-import makePost from './components/makePost';
-import Profile from './components/Profile';
-//import Sharmony logo from './logo.svg';
+import PrimaryNav from './PrimaryNav';
+import SettingsNav from './SettingsNav';
+import Home from './Home';
+import Search from './Search';
+import Make_Post from './Make_Post';
+import PersonalProfile from './PersonalProfile';
+import LogIn from './components/logIn';
+import SignUp from './components/SignUp';
+import Settings from './Settings';
+import ChangeEmail from './ChangeEmail';
+import ChangePassword from './ChangePassword';
+import NotificationSettings from './NotificationSettings';
+import Trophies from './Trophies';
+import Make_Post2 from './Make_Post2';
+import logo from './logo.svg';
 import './App.css';
-import logInScreen from './components/logIn';
+import MainFeed from './MainFeed';
+//import logInScreen from './logIn';
+import HashtagFeed from './HashtagFeed';
+import Follower from './Follower';
+import Followee from './Followee';
+
+import Notifications from './Notifications';
 
 
-
-
-  const App = (props) => {
+const App = (props) => {
     return (
       <div className="container">
           <Router>
               <Switch>
-
-                  <Route path="/components/logIn">
-                      <PrimaryNav />
-                      <logInScreen />
-                      
+                    <Route path="/Search">
+                    <Search />
+                    <PrimaryNav />
                   </Route>
-  
-                  <Route path="/components/Make_Post">
-                      <PrimaryNav />
-                      <makePost />
+                  <Route path="/Make_Post">
+                    <Make_Post />
+                    <PrimaryNav />
                   </Route>
   
   
-                  <Route path="/components/Profile">
+                  <Route path="/PersonalProfile">
                       <PrimaryNav />
-                      <Profile />
+                      <PersonalProfile />
                   </Route>
 
+                  <Route path="/Home">
+                      <PrimaryNav />
+                      <Home/>
+                  </Route>
 
+                  <Route path="/SignUp">
+                      <SignUp/>
+                  </Route>
+                  <Route path ="/Settings">
+                      <Settings />
+                      <PrimaryNav />
+                  </Route>
+                  <Route path ="/ChangeEmail">
+                      <ChangeEmail />
+                      <SettingsNav />
+                  </Route>
+                  <Route path ="/ChangePassword">
+                      <ChangePassword />
+                      <SettingsNav />
+                  </Route>
+                  <Route path ="/NotificationSettings">
+                      <NotificationSettings/>
+                      <SettingsNav />
+                  </Route>
+                  <Route path ="/Trophies">
+                      <Trophies />
+                      <SettingsNav />
+                  </Route>
+                  <Route path="/MainFeed">
+                        <MainFeed />
+                        <PrimaryNav />
+                  </Route>
+                  <Route path="/Make_Post2">
+                    <Make_Post2 />
+                    <PrimaryNav />
+                  </Route>
+                  <Route path="/Follower">
+                    <Follower />
+                    <PrimaryNav />
+                  </Route>
+                  <Route path="/Followee">
+                    <Followee />
+                    <PrimaryNav />
+                  </Route>
+                  <Route path="/Notifications">
+                    <Notifications />
+                    <PrimaryNav />
+                  </Route>                                         
                   <Route path="/">
-                      <PrimaryNav />
-                      <Home />
-                  </Route>
-
-                  
-
+                      <LogIn />
+                </Route>
               </Switch>
           </Router>
       </div>

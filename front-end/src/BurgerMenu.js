@@ -1,0 +1,21 @@
+import React from 'react';
+import { slide as Menu } from 'react-burger-menu'
+
+const BurgerMenu = () => {
+ 
+
+   //NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
+    return (
+      <Menu>
+        <a id="ChangeEmail" className="menu-item" href="/ChangeEmail">Change Email</a>
+        <a id="ChangePassword" className="menu-item" href="/ChangePassword">Change Password</a>
+        <a id="NotificationSettings" className="menu-item" href="/NotificationSettings">Notification Settings</a>
+        <a id="Trophies" className="menu-item" href="/Trophies">Trophies</a>
+        <a id="Log Out" className="menu-item" href="/LogIn">Log Out</a>
+        <a  className="menu-item--small" href="">Settings</a>
+      </Menu>
+    );
+  
+}
+
+export default BurgerMenu;

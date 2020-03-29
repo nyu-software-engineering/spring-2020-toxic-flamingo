@@ -37,6 +37,14 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### `how directory works`
+
+you need PrimaryNav and react-router-dom for directory to work on the web. Once you create a javascript with the webpage, 
+
+0. if there is an error regarind react router dom, run npm install react-router-dom (one time only)
+1. you need to update PrimaryNav.js and App.js to include the path of the website your js wants to show up. 
+2. Don't foret to export your js AND IMPORT ON App.js as well!!!!!! 
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
@@ -66,3 +74,34 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### custon npm install we did 
+npm install react-router-dom
+
+npm install @material-ui/core
+
+npm install axios
+
+npm install react-burger-menu --save
+
+### Git Tips***
+update git branch from master
+
+git checkout b1
+
+git merge origin/master
+
+git push origin b1
+
+merge branch to master
+
+git checkout master
+
+git pull origin master
+
+git merge test
+
+git push origin master
+
+
+

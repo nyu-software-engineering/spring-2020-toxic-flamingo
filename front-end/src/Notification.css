@@ -1,0 +1,9 @@
+.Notification {
+    display: flex;
+
+    flex-direction: row;
+
+    border-style: solid;
+
+    width: 300px;
+}
