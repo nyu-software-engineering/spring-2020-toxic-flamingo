@@ -1,6 +1,9 @@
 // import and instantiate express
 const express = require("express"); // CommonJS import style!
+const bodyParser = require("body-parser");
 const app = express(); // instantiate an Express object
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 // we will put some server logic here later...
 // export the express app we created to make it available to other modules
 
@@ -38,6 +41,37 @@ const posts = [
   }
 ];
 
+const trophies = [
+  {
+    id: 1,
+    trophy: "Harmonize",
+    trophy_description: "Get your first Harmony!",
+    trophy_icon: "https://i.pinimg.com/originals/5f/77/4b/5f774b20b2f212b7f9b888437a097579.jpg",
+    userID: 12345
+  },
+  {
+    id: 2,
+    trophy: "Musically Informed",
+    trophy_description: "Follow 10 People!",
+    trophy_icon: "https://i.pinimg.com/originals/5f/77/4b/5f774b20b2f212b7f9b888437a097579.jpg",
+    userID: 12345
+  },
+  {
+    id: 3,
+    trophy: "So Popular",
+    trophy_description: "Get 10 followers!",
+    trophy_icon: "https://i.pinimg.com/originals/5f/77/4b/5f774b20b2f212b7f9b888437a097579.jpg",
+    userID: 12345
+  },
+
+]
+
+app.get('/trophies/:userID', (req, res) => {
+
+  const userID = req.params.userID; 
+
+  res.json(getTrophyData(userID));
+});
 
 app.get('/hashtagFeed/:hashtag', (req, res) => {
 
@@ -45,6 +79,26 @@ app.get('/hashtagFeed/:hashtag', (req, res) => {
 
   res.json(getHashtagData(hashtag));
 });
+
+function getTrophyData(userID) {
+
+  let trophyList = [];
+
+  console.log(userID);
+
+  for (let i=0; i<trophies.length; i++) {
+    const trophy = trophies[i];
+    console.log(trophy.userID);
+    if (trophy.userID != userID) {
+      continue;
+    }
+    
+    trophyList.push(trophy);
+  }
+
+  return trophyList;
+}
+
 
 function getHashtagData(hashtag) {
 
@@ -64,5 +118,7 @@ function getHashtagData(hashtag) {
 
   return postsResponse;
 }
+
+
 
 module.exports = app;
