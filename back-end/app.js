@@ -1,9 +1,49 @@
 // import and instantiate express
 const axios = require("axios");
 const express = require("express"); // CommonJS import style!
+const bodyParser = require("body-parser");
 const app = express(); // instantiate an Express object
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+let request = require("request");
 // we will put some server logic here later...
 // export the express app we created to make it available to other modules
+
+
+app.get('/callback', function(req, res){
+    let code = req.query.code || null
+    let redirect_uri = 'http://localhost:7000/callback'
+    let authOptions = {
+      url: 'https://accounts.spotify.com/api/token',
+      form: {
+        code: code,
+        redirect_uri,
+        grant_type: 'client_credentials'
+      },
+      headers: {
+        'Authorization': 'Basic ' + (new Buffer(
+            '691936c2acfc4bad82db2fe642f023ec' + ':' + '2907a5de299c4052a6f9b3f738030a7a'
+        ).toString('base64'))
+      },
+      json: true
+    }
+    request.post(authOptions, function(error, response, body) {
+      var access_token = body.access_token
+      let uri = process.env.FRONTEND_URI || 'http://localhost:3000/Make_Post'
+      res.redirect(uri + '?access_token=' + access_token)
+    })
+})
+
+app.get('/login', function(req, res) {
+    var scopes = 'user-read-private user-read-email';
+    let my_client_id = '691936c2acfc4bad82db2fe642f023ec';
+    let redirect_uri = 'http://localhost:7000/callback'
+    res.redirect('https://accounts.spotify.com/authorize' +
+      '?response_type=code' +
+      '&client_id=' + my_client_id +
+      (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+      '&redirect_uri=' + encodeURIComponent(redirect_uri));
+    });
 
 // mock post database
 const posts = [
@@ -79,6 +119,37 @@ function getFollowedUsers(userId) {
     }
   }
 }
+const trophies = [
+  {
+    id: 1,
+    trophy: "Harmonize",
+    trophy_description: "Get your first Harmony!",
+    trophy_icon: "https://i.pinimg.com/originals/5f/77/4b/5f774b20b2f212b7f9b888437a097579.jpg",
+    userID: 12345
+  },
+  {
+    id: 2,
+    trophy: "Musically Informed",
+    trophy_description: "Follow 10 People!",
+    trophy_icon: "https://i.pinimg.com/originals/5f/77/4b/5f774b20b2f212b7f9b888437a097579.jpg",
+    userID: 12345
+  },
+  {
+    id: 3,
+    trophy: "So Popular",
+    trophy_description: "Get 10 followers!",
+    trophy_icon: "https://i.pinimg.com/originals/5f/77/4b/5f774b20b2f212b7f9b888437a097579.jpg",
+    userID: 12345
+  },
+
+]
+
+app.get('/trophies/:userID', (req, res) => {
+
+  const userID = req.params.userID; 
+
+  res.json(getTrophyData(userID));
+});
 
 // load and filter a feed based on a hashtag
 app.get('/hashtagFeed/:hashtag', (req, res) => {
@@ -87,6 +158,26 @@ app.get('/hashtagFeed/:hashtag', (req, res) => {
 
   res.json(getHashtagData(hashtag));
 });
+
+function getTrophyData(userID) {
+
+  let trophyList = [];
+
+  console.log(userID);
+
+  for (let i=0; i<trophies.length; i++) {
+    const trophy = trophies[i];
+    console.log(trophy.userID);
+    if (trophy.userID != userID) {
+      continue;
+    }
+    
+    trophyList.push(trophy);
+  }
+
+  return trophyList;
+}
+
 
 function getHashtagData(hashtag) {
 
@@ -106,5 +197,7 @@ function getHashtagData(hashtag) {
 
   return postsResponse;
 }
+
+
 
 module.exports = app;
