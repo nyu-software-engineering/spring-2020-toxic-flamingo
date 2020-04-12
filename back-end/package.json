@@ -17,9 +17,8 @@
   },
   "homepage": "https://github.com/nyu-software-engineering/spring-2020-toxic-flamingo#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "multer": "^1.4.2"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodeman": "^1.1.2",
