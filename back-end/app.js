@@ -12,7 +12,7 @@ app.get('/callback', function(req, res){
 app.get('/login', function(req, res) {
     var scopes = 'user-read-private user-read-email';
     let my_client_id = '691936c2acfc4bad82db2fe642f023ec';
-    let redirect_uri = 'http://localhost:3000/callback'
+    let redirect_uri = 'http://localhost:7000/callback'
     res.redirect('https://accounts.spotify.com/authorize' +
       '?response_type=code' +
       '&client_id=' + my_client_id +
