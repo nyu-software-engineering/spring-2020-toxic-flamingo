@@ -1,12 +1,33 @@
 // import and instantiate express
 const express = require("express"); // CommonJS import style!
 const app = express(); // instantiate an Express object
+let request = require("request");
 // we will put some server logic here later...
 // export the express app we created to make it available to other modules
 
 
 app.get('/callback', function(req, res){
-    res.send('Hello i have the token');
+    let code = req.query.code || null
+    let redirect_uri = 'http://localhost:7000/callback'
+    let authOptions = {
+      url: 'https://accounts.spotify.com/api/token',
+      form: {
+        code: code,
+        redirect_uri,
+        grant_type: 'client_credentials'
+      },
+      headers: {
+        'Authorization': 'Basic ' + (new Buffer(
+            '691936c2acfc4bad82db2fe642f023ec' + ':' + '2907a5de299c4052a6f9b3f738030a7a'
+        ).toString('base64'))
+      },
+      json: true
+    }
+    request.post(authOptions, function(error, response, body) {
+      var access_token = body.access_token
+      let uri = process.env.FRONTEND_URI || 'http://localhost:3000/Make_Post'
+      res.redirect(uri + '?access_token=' + access_token)
+    })
 })
 
 app.get('/login', function(req, res) {
