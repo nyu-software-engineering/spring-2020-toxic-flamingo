@@ -10,24 +10,25 @@ const HashtagFeed = (props) => {
     const [noPosts, setPosts] = useState(false);
 
     // this will be passed in from hashtag search page, for now it is hardcoded as Computers based on mockaroo data
-    const hashtag = "Computers"; //props.hashtag; 
+    const hashtag = "nyc"; //props.hashtag; 
 
     // load in posts or whatever
     useEffect( () => {
         //fetch data
-
-        axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0")
+        axios.get("/hashtagFeed/" + hashtag)
         .then ((response) => {
 
-            //filter data for hashtags
-            const filteredResponse = [];
+            // //filter data for hashtags
+            // const filteredResponse = [];
 
-            for (let i=0; i < response.data.length; i++) {
-                let jsonObj = response.data[i];
-                if (jsonObj.hashtag == hashtag) filteredResponse.push(jsonObj);
-            }
-            if (filteredResponse.length == 0) setPosts(true);
-            setData(filteredResponse);
+            // for (let i=0; i < response.data.length; i++) {
+            //     let jsonObj = response.data[i];
+            //     if (jsonObj.hashtag == hashtag) filteredResponse.push(jsonObj);
+            // }
+            // if (filteredResponse.length == 0) setPosts(true);
+            // setData(filteredResponse);
+
+            setData(response.data);
         })
         .catch( err => {
             console.log("ERROR!");
