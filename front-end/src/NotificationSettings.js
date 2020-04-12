@@ -5,7 +5,7 @@ import "./NotificationSettings.css";
 
 const NotificationSettings = (props) => {
   return (
-<div className="About">
+<div className="NotificationSettings">
     <h1>Notification Settings</h1>
     <section className="main-content">
         <FormGroup>
