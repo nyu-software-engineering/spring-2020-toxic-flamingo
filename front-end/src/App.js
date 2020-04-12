@@ -92,7 +92,11 @@ const App = (props) => {
                   <Route path="/Notifications">
                     <Notifications />
                     <PrimaryNav />
-                  </Route>                                         
+                  </Route> 
+                  <Route path="/HashtagFeed">
+                    <HashtagFeed />
+                    <PrimaryNav />
+                  </Route>                                          
                   <Route path="/">
                       <LogIn />
                 </Route>
