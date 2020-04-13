@@ -6,7 +6,8 @@ const app = express(); // instantiate an Express object
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-let request = require("request");
+const request = require("request");
+const querystring = require('querystring');
 // we will put some server logic here later...
 
 
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 
 
 // export the express app we created to make it available to other modules
+
 
 //mock users data
 const users = [
@@ -82,10 +84,13 @@ request.post(authOptions, function(error, response, body) {
     };
     request.get(options, function(error, response, body) {
       console.log(body);
+      //console.log(body.artists.items);
+      res.json(body);
+      //res.redirect(querystring.stringify(body), 'http://localhost:3000/Make_Post');
     });
 
-    let uri = process.env.FRONTEND_URI || 'http://localhost:3000/Make_Post'
-    res.redirect(uri)
+    //let uri = process.env.FRONTEND_URI || 'http://localhost:3000/Make_Post'
+    //res.redirect(uri)
   }
 });
 })

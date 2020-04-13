@@ -11,6 +11,22 @@ const Make_Post = (props) => {
   const [data, setData] = useState([]);
 
   useEffect( () => {
+    axios.get("/login")
+    //.then(response => JSON.parse(response))
+    .then ((response) => {
+      setData(response.data);
+      console.log('testset')
+      console.log(response.data);
+    })
+    .catch(err => {
+      console.log("error");
+      console.log(err);
+    })
+    
+  }, []);
+/*
+// actual data from spotify 
+  useEffect( () => {
     axios.get("https://api.mockaroo.com/api/36d63960?count=10&key=5296eab0")
     .then ((response) => {
       setData(response.data);
@@ -20,21 +36,9 @@ const Make_Post = (props) => {
       console.log("error");
       console.log(err);
     })
-    console.log('WHAT IS HAPP');
-    console.log(window.location.href);
-    let test = window.location.href;
-    let token = test.substring(test.indexOf('='),);
-    token = token.substring(1,);
-    console.log(token);
-    
-    fetch('https://api.spotify.com/v1/me', {
-      headers: {'Authorization': 'Bearer' + token}
-    }).then((response) => response.json())
-    .then(data => console.log(data))
-    
+
   }, []);
-
-
+  */
   /*const list = [];
   for(const x of data){
     list.push(<li><img src="/content-img.jpg" alt="temp"></img></li>)
@@ -75,15 +79,7 @@ const Make_Post = (props) => {
  
  
   <div className="content"> 
-    {data.map((jsonObj,i) => (
-      <div class ="post">
-      <img src="/content-img.jpg" alt="temp"></img>
-       <p>{jsonObj.song_name} {jsonObj.singer}</p>
-       <br/>
-       <div class="line"></div>
-      </div>
-      
-    ))}
+
     </div>
 
   <div className="nav_bar"> 
