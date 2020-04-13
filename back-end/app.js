@@ -3,13 +3,10 @@ const axios = require("axios");
 const express = require("express"); // CommonJS import style!
 const bodyParser = require("body-parser");
 const app = express(); // instantiate an Express object
-<<<<<<< HEAD
 
-=======
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 let request = require("request");
->>>>>>> 1e769f4d77d09744a60ffe6dae5db779665b0552
 // we will put some server logic here later...
 
 
@@ -21,7 +18,6 @@ app.get("/", (req, res) => {
 
 // export the express app we created to make it available to other modules
 
-<<<<<<< HEAD
 //mock users data
 const users = [
   {
@@ -46,12 +42,16 @@ app.get("/loadProfile", (req,res) =>{
   res.json(user[1]);
 })
 
+app.get("/following", (req, res) => {
+  res.json(following);
+})
+
+app.get("/followers", (req, res) => {
+  res.json(following);
+})
 
 
 
-
-
-=======
 /*
 app.get('/callback', function(req, res){
     let code = req.query.code || null
@@ -123,6 +123,7 @@ app.get('/refresh_token', function(req, res) {
     });
 });
 */
+
 app.get('/login', function(req, res){
 var client_id = '691936c2acfc4bad82db2fe642f023ec'; // Your client id
 var client_secret = '2907a5de299c4052a6f9b3f738030a7a'; // Your secret
@@ -160,7 +161,7 @@ request.post(authOptions, function(error, response, body) {
   }
 });
 })
->>>>>>> 1e769f4d77d09744a60ffe6dae5db779665b0552
+
 // mock post database
 const posts = [
   {

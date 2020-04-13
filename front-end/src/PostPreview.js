@@ -7,12 +7,13 @@ import Post from './Post';
 const PostPreview = (props) => {
 
     const [data, setData] = useState([]);
-
+    const userID = 1;
+    
     // load in posts or whatever
     useEffect( () => {
         //fetch data
 
-        axios.get("/profileposts")
+        axios.get("/profileposts"+userID)
         .then ((response) => {
             setData(response.data);
         })
@@ -37,7 +38,7 @@ const PostPreview = (props) => {
         <div className="PreviewPost">
             {data.map((jsonObj, i) => (
                 <div class='coverart'>
-                <img class='pic' src={jsonObj.coverart}/>
+                <img class='pic' src={jsonObj.coverart} height="300" width="300" />
                 </div>
             ))}
         </div>

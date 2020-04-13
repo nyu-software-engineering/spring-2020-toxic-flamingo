@@ -42,7 +42,7 @@ const PersonalProfile = (props) => {
     
 }, []);
 
-
+  
 
     return (
       <div>
@@ -64,9 +64,9 @@ const PersonalProfile = (props) => {
                       </div>
                     </div>
                       <div class='buttons'>
-                            <button>Following {jsonObj.following}</button>
-                            <button>Followers {jsonObj.followers}</button>
-                            <button>Harmonies</button>
+                            <button id="following">Following {jsonObj.following}</button>
+                            <button id="followers" >Followers {jsonObj.followers}</button>
+                            <button id="harmonies" >Harmonies</button>
                       </div>
               
             </div>
