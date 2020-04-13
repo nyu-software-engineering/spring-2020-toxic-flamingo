@@ -13,6 +13,35 @@ app.get("/", (req, res) => {
 
 // export the express app we created to make it available to other modules
 
+//mock users data
+const users = [
+  {
+    id: 1,
+    username: "kanyelover70",
+    name: "Kanye Fan",
+    bio: "Welcome to the good life, the life i live!",
+    followers: 200,
+    following: 265
+  },
+  {
+    id: 2,
+    username: "kanyehater20",
+    name: "Kanye Hater",
+    bio: "If I could I'd become a cow and eat grass daily",
+    followers: 2000,
+    following: 154
+  }
+];
+
+app.get("/loadProfile", (req,res) =>{
+  res.json(user[1]);
+})
+
+
+
+
+
+
 // mock post database
 const posts = [
   {
