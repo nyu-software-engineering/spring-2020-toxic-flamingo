@@ -3,12 +3,55 @@ const axios = require("axios");
 const express = require("express"); // CommonJS import style!
 const bodyParser = require("body-parser");
 const app = express(); // instantiate an Express object
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const request = require("request");
 const querystring = require('querystring');
 // we will put some server logic here later...
+
+
+app.get("/", (req, res) => {
+    res.send("Hello!");
+  });
+
+
+
 // export the express app we created to make it available to other modules
+
+
+//mock users data
+const users = [
+  {
+    id: 1,
+    username: "kanyelover70",
+    name: "Kanye Fan",
+    bio: "Welcome to the good life, the life i live!",
+    followers: 200,
+    following: 265
+  },
+  {
+    id: 2,
+    username: "kanyehater20",
+    name: "Kanye Hater",
+    bio: "If I could I'd become a cow and eat grass daily",
+    followers: 2000,
+    following: 154
+  }
+];
+
+app.get("/loadProfile", (req,res) =>{
+  res.json(user[1]);
+})
+
+app.get("/following", (req, res) => {
+  res.json(following);
+})
+
+app.get("/followers", (req, res) => {
+  res.json(following);
+})
+
 
 
 app.get('/login', function(req, res){
@@ -51,6 +94,7 @@ request.post(authOptions, function(error, response, body) {
   }
 });
 })
+
 // mock post database
 const posts = [
   {
