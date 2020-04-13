@@ -45,6 +45,24 @@ app.get('/login', function(req, res) {
       '&redirect_uri=' + encodeURIComponent(redirect_uri));
     });
 
+
+app.get('/postComments/:postId', async (req, res) => {
+
+  const postId = req.params.postId; // this will be useful later without mockaroo data, for now just load it in
+
+  let response = await axios.get("https://api.mockaroo.com/api/19ec2810?count=20&key=ffab93f0");
+
+  // filter for the most recent comment
+
+  let mostRecentComment = {};
+
+  let data = response.data;
+  for (let i=0; i < data.length; i++) {
+    const commentData = data[i];
+    
+  }
+});
+
 // mock post database
 const posts = [
   {
@@ -98,6 +116,7 @@ app.get('/mainFeed/:userId', async (req, res) => {
 
   let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
 
+  // this logic would assumedly be taken care of in the eventual database queries
   let followedPosts = [];
   let data = response.data;
   for (let i=0; i<data.length; i++) {
