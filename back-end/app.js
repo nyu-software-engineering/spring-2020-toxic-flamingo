@@ -58,7 +58,6 @@ app.get('/login', function(req, res) {
       '&redirect_uri=' + encodeURIComponent(redirect_uri));
     });
 
-<<<<<<< HEAD
 
 app.get('/postComments/:postId', async (req, res) => {
 
@@ -77,7 +76,6 @@ app.get('/postComments/:postId', async (req, res) => {
   }
 });
 
-=======
 app.get('/refresh_token', function(req, res) {
     let refresh_token = req.query.refresh_token;
     let authOptions = {
@@ -137,7 +135,6 @@ request.post(authOptions, function(error, response, body) {
   }
 });
 })
->>>>>>> 1e769f4d77d09744a60ffe6dae5db779665b0552
 // mock post database
 const posts = [
   {
