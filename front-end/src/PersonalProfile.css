@@ -1,9 +1,19 @@
+html,body {
+    background: #efefef;
+    font-family: "Arial";
+}
+
+.flex-container {
+    bottom: 50px;
+}
+
+
+
 .Profile {
     padding: 30px 20px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
 
 .ProfileHeader {
@@ -11,9 +21,6 @@
     line-height: 18px;
     text-align: start;
     flex-basis: 0;
-    -webkit-box-flex: 2;
-    -webkit-box-orient: horizontal;
-    -webkit-flex-basis: 30px;
    
 }
 

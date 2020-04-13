@@ -2,6 +2,8 @@ import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import BurgerMenu from './BurgerMenu';
 import './PersonalProfile.css';
+import './PostPreview';
+import PostPreview from './PostPreview';
 // import logo from './logo.svg';
 //import './About.css';
 
@@ -33,6 +35,9 @@ const PersonalProfile = (props) => {
             }
         ];
         setData(backupData);
+
+
+
     })
     
 }, []);
@@ -42,33 +47,32 @@ const PersonalProfile = (props) => {
     return (
       <div>
       {data.map((jsonObj, i) => (
-    
-          <div class='Profile'>
-          <div className="ProfileHeader">
           
-            <div class="flex-container">
-              <div class="Burger">
-                <BurgerMenu />
-              </div>
+     
+          <div class='Profile'>
+            <BurgerMenu />
+            <div class="ProfileHeader">
+            
+                <div class="flex-container">
+                      <div class="profilePic">
+                      <img alt="Profile Pic" src={jsonObj.picture} width="100" height="100"/>
+                      </div>
+                    <h1>{jsonObj.name}</h1>
+                 </div>
+                      <div class="bio">
+                      <p>{jsonObj.bio}</p>
+                      </div>
+                    </div>
+                      <div class='buttons'>
+                            <button>Following {jsonObj.following}</button>
+                            <button>Followers {jsonObj.followers}</button>
+                            <button>Harmonies</button>
+                      </div>
               
-                <header class='header'>
-                  <div class="profilePic">
-                  <img alt="Profile Pic" src={jsonObj.picture} width="100" height="100"/>
-                  </div>
-                <h1>{jsonObj.name}</h1>
-                <div class="bio">
-                <p>{jsonObj.bio}</p>
-                </div>
-                <br/>
-                <div class='buttons'>
-                      <button>Following {jsonObj.following}</button>
-                      <button>Followers {jsonObj.followers}</button>
-                      <button>Harmonies</button>
-                </div>
-                </header>
-          </div>
-          </div></div>
+            </div>
+         
       ))}
+      <PostPreview />
       </div>
     );
  }
