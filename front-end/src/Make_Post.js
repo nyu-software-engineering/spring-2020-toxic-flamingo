@@ -1,6 +1,8 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import './Make_Post.css';
+import queryString from 'query-string';
+
 // import logo from './logo.svg';
 //import './About.css';
 
@@ -12,13 +14,26 @@ const Make_Post = (props) => {
     axios.get("https://api.mockaroo.com/api/36d63960?count=10&key=5296eab0")
     .then ((response) => {
       setData(response.data);
+
     })
     .catch(err => {
       console.log("error");
       console.log(err);
     })
+    console.log('WHAT IS HAPP');
+    console.log(window.location.href);
+    let test = window.location.href;
+    let token = test.substring(test.indexOf('='),);
+    token = token.substring(1,);
+    console.log(token);
+    
+    fetch('https://api.spotify.com/v1/me', {
+      headers: {'Authorization': 'Bearer' + token}
+    }).then((response) => response.json())
+    .then(data => console.log(data))
     
   }, []);
+
 
   /*const list = [];
   for(const x of data){

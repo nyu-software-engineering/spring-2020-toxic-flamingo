@@ -13,8 +13,8 @@ app.get('/callback', function(req, res){
       url: 'https://accounts.spotify.com/api/token',
       form: {
         code: code,
-        redirect_uri,
-        grant_type: 'client_credentials'
+        redirect_uri: redirect_uri,
+        grant_type: 'authorization_code'
       },
       headers: {
         'Authorization': 'Basic ' + (new Buffer(
@@ -24,7 +24,19 @@ app.get('/callback', function(req, res){
       json: true
     }
     request.post(authOptions, function(error, response, body) {
-      var access_token = body.access_token
+      var access_token = body.access_token;
+      console.log(access_token);
+      var options = {
+        url: 'https://api.spotify.com/v1/search?q=<artist name>&type=artist',
+        headers: { 'Authorization': 'Bearer ' + access_token },
+        json: true
+      };
+
+      // use the access token to access the Spotify Web API
+      request.get(options, function(error, response, body) {
+        console.log('HERE PLZ');
+        console.log(body);
+      });      
       let uri = process.env.FRONTEND_URI || 'http://localhost:3000/Make_Post'
       res.redirect(uri + '?access_token=' + access_token)
     })
