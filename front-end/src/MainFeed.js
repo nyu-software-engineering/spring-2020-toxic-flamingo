@@ -8,12 +8,15 @@ const MainFeed = (props) => {
 
     const [data, setData] = useState([]);
 
-    // load in posts or whatever
+    const userId = "ilovemusic14";
+
+    // load in posts
     useEffect( () => {
         //fetch data
 
-        axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0")
+        axios.get("/mainFeed/" + userId)
         .then ((response) => {
+            
             setData(response.data);
         })
         .catch( err => {
@@ -23,13 +26,11 @@ const MainFeed = (props) => {
             //fake backup data
             const backupData = [
                 {
-                    id: 1,
+                    post_id: 1,
                     artist_name: "Mr Cardify",
                     song_title: "Rock my world",
                     username: "rGeogioo001",
                     post_title: "coolest post ever",
-                    post_comment: "Wow, cool song!",
-                    post_commenter: "my friend dave"
                 }
             ];
             setData(backupData);
