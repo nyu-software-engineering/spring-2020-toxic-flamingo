@@ -9,24 +9,16 @@ const HashtagFeed = (props) => {
     const [data, setData] = useState([]);
     const [noPosts, setPosts] = useState(false);
 
-    // this will be passed in from hashtag search page, for now it is hardcoded as Computers based on mockaroo data
+    // this will be passed in from hashtag search page, for now it is hardcoded as nyc based on mock backend database
     const hashtag = "nyc"; //props.hashtag; 
 
-    // load in posts or whatever
+    // load in posts
     useEffect( () => {
         //fetch data
         axios.get("/hashtagFeed/" + hashtag)
         .then ((response) => {
 
-            // //filter data for hashtags
-            // const filteredResponse = [];
-
-            // for (let i=0; i < response.data.length; i++) {
-            //     let jsonObj = response.data[i];
-            //     if (jsonObj.hashtag == hashtag) filteredResponse.push(jsonObj);
-            // }
-            // if (filteredResponse.length == 0) setPosts(true);
-            // setData(filteredResponse);
+            //filtering now takes place on the backend
 
             setData(response.data);
         })
