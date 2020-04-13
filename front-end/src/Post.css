@@ -1,12 +1,12 @@
-.FeedPost, .postHeader, .postContent, .songInfo, .playInfo, .postComments, .initialComment{
+.FeedPost, .postHeader, .postContent, .songInfo, .playInfo, .postComments, .initialComment, .posterInfo{
     display: flex;
 }
 
-.FeedPost, .songInfo, .playInfo, .postComments {
+.FeedPost, .songInfo, .playInfo, .postComments, .postHeader {
     flex-direction: column;
 }
 
-.initialComment {
+.initialComment, .posterInfo {
     flex-direction: row;
 }
 

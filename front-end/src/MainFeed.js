@@ -10,7 +10,7 @@ const MainFeed = (props) => {
 
     const userId = "ilovemusic14";
 
-    // load in posts or whatever
+    // load in posts
     useEffect( () => {
         //fetch data
 
@@ -26,13 +26,11 @@ const MainFeed = (props) => {
             //fake backup data
             const backupData = [
                 {
-                    id: 1,
+                    post_id: 1,
                     artist_name: "Mr Cardify",
                     song_title: "Rock my world",
                     username: "rGeogioo001",
                     post_title: "coolest post ever",
-                    post_comment: "Wow, cool song!",
-                    post_commenter: "my friend dave"
                 }
             ];
             setData(backupData);
