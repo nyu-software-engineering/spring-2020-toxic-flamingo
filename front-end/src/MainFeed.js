@@ -8,12 +8,15 @@ const MainFeed = (props) => {
 
     const [data, setData] = useState([]);
 
+    const userId = "ilovemusic14";
+
     // load in posts or whatever
     useEffect( () => {
         //fetch data
 
-        axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0")
+        axios.get("/mainFeed/" + userId)
         .then ((response) => {
+            
             setData(response.data);
         })
         .catch( err => {

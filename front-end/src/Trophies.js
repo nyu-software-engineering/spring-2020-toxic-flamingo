@@ -1,15 +1,18 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import Trophy from './Trophy';
+import './Trophies.css';
 
 const Trophies = (props) => {
 
         const [data, setData] = useState([]);
     
+        const userID = "12345" //hardcoded for now
+
         // load in posts or whatever
         useEffect( () => {
             //fetch data
-            axios.get("https://api.mockaroo.com/api/11bdcb60?count=10&key=06908ea0")
+            axios.get("/trophies/" + userID)
             .then ((response) => {
                 setData(response.data);
             })
@@ -34,9 +37,11 @@ const Trophies = (props) => {
   return (
 <div className="Trophies">
     <h1>Trophies</h1>
+        <div class="flex-container">
             {data.map((jsonObj, i) => (
                 <Trophy key={jsonObj.id} data={jsonObj}/>
             ))}
+        </div>
 </div>
   );
 }
