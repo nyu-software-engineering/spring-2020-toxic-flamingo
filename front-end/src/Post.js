@@ -25,10 +25,10 @@ const Post = (props) => {
             console.log(err);
 
             const backupData = {
-                commenter_username = "commentman123",
-                comment = "I love that song!",
-                posted = "6:30 PM",
-                remainingComments = 8,
+                commenter_username: "commentman123",
+                comment: "I love that song!",
+                posted: "6:30 PM",
+                remainingComments: 8,
             };
 
             setInitialComment(backupData);
