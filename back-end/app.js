@@ -58,7 +58,7 @@ app.get("/user/:userID", (req, res) => {
 app.get("/profileposts/:userID", async (req,res) => {
   const userID = req.params.userID;
   res.json(getProfilePosts(userID));
-  
+})
 
 app.get("/Followee", async (req, res) => {
   let response = await axios.get("https://api.mockaroo.com/api/87521f10?count=10&key=5296eab0").catch();
