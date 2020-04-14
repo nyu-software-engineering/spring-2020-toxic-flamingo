@@ -25,7 +25,7 @@ const Make_Post2 = (props) => {
             </div>
 
             <div class="post">
-                <form action="/Make_Post">
+                <form action="/MainFeed">
                     <input type="submit" value="Create Post"/>
                  </form>
             </div>
