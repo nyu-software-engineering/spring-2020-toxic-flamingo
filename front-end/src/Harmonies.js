@@ -8,7 +8,7 @@ const Harmonies = (props) => {
         // load in posts or whatever
         useEffect( () => {
             //fetch data
-            axios.get("https://api.mockaroo.com/api/11bdcb60?count=10&key=06908ea0")
+            axios.get("/Harmonies")
             .then ((response) => {
                 setData(response.data);
             })
