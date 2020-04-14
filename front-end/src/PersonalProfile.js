@@ -73,13 +73,21 @@ const PersonalProfile = (props) => {
                       </div>
                     </div>
                       <div class='buttons'>
+                          <div className='button1'>
                             <form action="/Followee">
                             <button id="following">Following {jsonObj.following}</button>
-
+                            </form>
+                          </div>
+                          <div className='button2'>
+                            <form action="/Follower">
                             <button id="followers" onClick={handleFollowersClick(jsonObj.id)}>Followers {jsonObj.followers}</button>
-
+                            </form>
+                          </div>
+                          <div class Name='button3'>
+                            <form action="/Harmonies">
                             <button id="harmonies" >Harmonies</button>
                             </form>
+                          </div>
                             
                       </div>
               
