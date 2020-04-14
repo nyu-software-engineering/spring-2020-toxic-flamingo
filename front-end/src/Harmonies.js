@@ -1,5 +1,6 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
+import Post from './Post';
 
 const Harmonies = (props) => {
 
@@ -33,7 +34,7 @@ const Harmonies = (props) => {
 <div className="Harmonies">
     <h1>Harmonies</h1>
             {data.map((jsonObj, i) => (
-                <Harmonies key={jsonObj.id} data={jsonObj}/>
+                <Post key={jsonObj.id} data={jsonObj}/>
             ))}
 </div>
   );
