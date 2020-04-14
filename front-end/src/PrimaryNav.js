@@ -23,7 +23,7 @@ const PrimaryNav = (props) => {
 
             <Link to="/Settings">Settings</Link>
             <Link to="/PersonalProfile">Profile</Link>
-            <Link to="/Profile">Profile</Link>
+            <Link to="/">Log_Out</Link>
             <Link to="/HashtagFeed">Hashtags</Link>
             </div>
         </nav>
