@@ -22,7 +22,7 @@ const PersonalProfile = (props) => {
   // load in posts or whatever
   useEffect( () => {
     //fetch data
-    axios.get("/loadProfile")
+    axios.get("/userID"+userID)
     .then ((response) => {
       setData(response.data);
     })
@@ -73,14 +73,9 @@ const PersonalProfile = (props) => {
                       </div>
                     </div>
                       <div class='buttons'>
-                            <form action="/Followee">
                             <button id="following">Following {jsonObj.following}</button>
-
                             <button id="followers" onClick={handleFollowersClick(jsonObj.id)}>Followers {jsonObj.followers}</button>
-
                             <button id="harmonies" >Harmonies</button>
-                            </form>
-                            
                       </div>
               
             </div>
