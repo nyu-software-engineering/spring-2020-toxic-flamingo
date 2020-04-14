@@ -1,0 +1,7 @@
+.CommentView {
+    display: flex;
+    flex-direction: column;
+
+    width: 40%;
+    border-style: solid;
+}

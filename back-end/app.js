@@ -75,6 +75,35 @@ app.get("/Follower", async (req, res) => {
 
 
 
+app.get('/postComments/:postId', async (req, res) => {
+
+  const postId = req.params.postId; // this will be useful later without mockaroo data, for now just load it in
+
+  let response = await axios.get("https://api.mockaroo.com/api/19ec2810?count=20&key=ffab93f0");
+
+  // filter for the most recent comment
+
+  let mostRecentComment = {};
+
+  let data = response.data;
+  for (let i=0; i < data.length; i++) {
+    const commentData = data[i];
+    
+  }
+});
+
+app.get('/refresh_token', function(req, res) {
+    let refresh_token = req.query.refresh_token;
+    let authOptions = {
+        url: 'https://accounts.spotify.com/api/token',
+        headers:{ 'Authorization': 'Basic ' + (new Buffer('691936c2acfc4bad82db2fe642f023ec' + ':' + '2907a5de299c4052a6f9b3f738030a7a').toString('base64')) },
+        form:{
+            grant_type: 'refresh_token',
+            refresh_token: refresh_token
+        },
+        json: true
+    };
+  })
 app.get('/login', function(req, res){
 var client_id = '691936c2acfc4bad82db2fe642f023ec'; // Your client id
 var client_secret = '2907a5de299c4052a6f9b3f738030a7a'; // Your secret
@@ -160,6 +189,21 @@ const following = [
   }
 ]
 
+//load comments for a particular post
+app.get('/loadComments/:postId', async (req, res) => {
+
+    const postId = req.params.postId;
+
+    let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+    for (let i=0; i < response.data.length; i++) {
+      if (response.data[i].post_id.toString() == postId) {
+        console.log("found post with id " + postId);
+        res.json(response.data[i].post_comments);
+        break;
+      }
+    }
+});
+
 // load a main feed of only followed users' posts
 app.get('/mainFeed/:userId', async (req, res) => {
 
@@ -169,6 +213,7 @@ app.get('/mainFeed/:userId', async (req, res) => {
 
   let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
 
+  // this logic would assumedly be taken care of in the eventual database queries
   let followedPosts = [];
   let data = response.data;
   for (let i=0; i<data.length; i++) {
@@ -223,11 +268,22 @@ app.get('/trophies/:userID', (req, res) => {
 });
 
 // load and filter a feed based on a hashtag
-app.get('/hashtagFeed/:hashtag', (req, res) => {
+app.get('/hashtagFeed/:hashtag', async (req, res) => {
 
   const hashtag = req.params.hashtag; 
 
-  res.json(getHashtagData(hashtag));
+  let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+
+  let postsResponse = [];
+
+  for (let i=0; i<response.data.length; i++) {
+    const post = response.data[i];
+    if (post.hashtag == hashtag) {
+      postsResponse.push(post);
+    }
+  }
+
+  res.json(postsResponse);
 });
 
 function getTrophyData(userID) {
@@ -247,26 +303,6 @@ function getTrophyData(userID) {
   }
 
   return trophyList;
-}
-
-
-function getHashtagData(hashtag) {
-
-  let postsResponse = [];
-
-  console.log(hashtag);
-
-  for (let i=0; i<posts.length; i++) {
-    const post = posts[i];
-    console.log(post.hashtag);
-    if (post.hashtag != hashtag) {
-      continue;
-    }
-    
-    postsResponse.push(post);
-  }
-
-  return postsResponse;
 }
 
 

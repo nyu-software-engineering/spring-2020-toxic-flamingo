@@ -22,8 +22,10 @@ import HashtagFeed from './HashtagFeed';
 import Follower from './Follower';
 import Followee from './Followee';
 import Harmonies from './Harmonies';
+import PostComments from './PostComments';
 
 import Notifications from './Notifications';
+import CommentView from './CommentView';
 
 
 const App = (props) => {
@@ -101,7 +103,11 @@ const App = (props) => {
                   <Route path="/HashtagFeed">
                     <HashtagFeed />
                     <PrimaryNav />
-                  </Route>                                          
+                  </Route>        
+                  <Route path="/PostComments/:postId">
+                    <PostComments />
+                    <PrimaryNav />
+                  </Route>                                  
                   <Route path="/">
                       <LogIn />
                 </Route>

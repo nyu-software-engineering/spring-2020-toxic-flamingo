@@ -1,40 +1,39 @@
 import React, {useState, useEffect, Component} from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import './Post.css';
 import MusicPlayer from './MusicPlayer';
+import { Redirect } from 'react-router-dom';
 
 const Post = (props) => {
 
-    const x = Math.round((Math.random() * 100));
-
-    const [initialComment, setInitialComment] = useState({})
+    const [shouldRedirect, setRedirect] = useState(false);
 
     const data = props.data;
 
-    const postId = data.post_id;
-    // load post's initial comment
-    useEffect(() => {
+    const commentsData = props.data.post_comments;
+    const initialComment = commentsData[0];
+    const remainingComments = commentsData.length-1;
 
-        axios.get("/postComments/" + postId)
-        .then((response) => {
-            setInitialComment(response.data);
-        })
-        .catch(err => {
-            console.log("error in Post object frontend");
-            console.log(err);
 
-            const backupData = {
-                commenter_username: "commentman123",
-                comment: "I love that song!",
-                posted: "6:30 PM",
-                remainingComments: 8,
-            };
+    // make sure you dont see "see more comments if there are none"
+    let button;
+    if (remainingComments > 0) {
+    button = (
+        <nav>
+            <Link to={"/PostComments/" + data.post_id}>See {remainingComments} more comments</Link>
+        </nav>
+    );
+    }
 
-            setInitialComment(backupData);
-        })
-    }, []);
-    
+    if (shouldRedirect) {
+        return (
+            <Redirect to={"/PostComments/" + data.post_id}/>
+        )
+    }
+
+
     return (
         <div className="FeedPost">
             <div className='postHeader'>
@@ -58,7 +57,7 @@ const Post = (props) => {
                 <div className='initialComment'>
                     <p className='user'>@{initialComment.commenter_username}</p><p className='comment'>{initialComment.comment}</p>
                 </div>
-                <div className='seeMore'>See {initialComment.remainingComments} more comments</div>
+                {button}
             </div>
         </div>
     );
