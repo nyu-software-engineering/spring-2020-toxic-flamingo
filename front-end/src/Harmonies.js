@@ -33,10 +33,10 @@ const Harmonies = (props) => {
 <div className="Harmonies">
     <h1>Harmonies</h1>
             {data.map((jsonObj, i) => (
-                <Trophy key={jsonObj.id} data={jsonObj}/>
+                <Harmonies key={jsonObj.id} data={jsonObj}/>
             ))}
 </div>
   );
 }
 
-export default Trophies;
+export default Harmonies;
