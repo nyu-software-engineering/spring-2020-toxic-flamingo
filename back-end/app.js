@@ -145,6 +145,16 @@ request.post(authOptions, function(error, response, body) {
 });
 })
 
+
+//post request for submitting a comment
+app.post("/submitComment/:comment", (req, res) => {
+
+    const comment = req.params.comment;
+
+    console.log("comment is: " + comment);
+});
+
+
 // mock post database
 const posts = [
   {
@@ -178,6 +188,7 @@ const posts = [
     hashtag: "dumbsongs"
   }
 ];
+
 
 //mock users followed database
 const following = [
