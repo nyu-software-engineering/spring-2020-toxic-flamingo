@@ -14,9 +14,17 @@ const Make_Post = (props) => {
     axios.get("/login")
     //.then(response => JSON.parse(response))
     .then ((response) => {
-      setData(response.data);
+      
       console.log('testset')
       console.log(response.data);
+
+      let row = [];
+      for(const i of response.data.artists.items){
+        row.push(i.name);
+      }
+
+      console.log(row);
+      setData(row);
     })
     .catch(err => {
       console.log("error");
@@ -79,7 +87,15 @@ const Make_Post = (props) => {
  
  
   <div className="content"> 
-
+    {data.map((jsonObj,i) => (
+          <div class ="post">
+          <img src="/content-img.jpg" alt="temp"></img>
+          <p>{jsonObj}</p>
+          <br/>
+          <div class="line"></div>
+          </div>
+          
+        ))}
     </div>
 
   <div className="nav_bar"> 

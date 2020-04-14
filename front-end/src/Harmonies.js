@@ -1,5 +1,6 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
+import Post from './Post';
 
 const Harmonies = (props) => {
 
@@ -8,7 +9,7 @@ const Harmonies = (props) => {
         // load in posts or whatever
         useEffect( () => {
             //fetch data
-            axios.get("https://api.mockaroo.com/api/11bdcb60?count=10&key=06908ea0")
+            axios.get("/Harmonies")
             .then ((response) => {
                 setData(response.data);
             })
@@ -33,10 +34,10 @@ const Harmonies = (props) => {
 <div className="Harmonies">
     <h1>Harmonies</h1>
             {data.map((jsonObj, i) => (
-                <Trophy key={jsonObj.id} data={jsonObj}/>
+                <Post key={jsonObj.id} data={jsonObj}/>
             ))}
 </div>
   );
 }
 
-export default Trophies;
+export default Harmonies;

@@ -12,7 +12,7 @@ const Trophies = (props) => {
         // load in posts or whatever
         useEffect( () => {
             //fetch data
-            axios.get("/trophies/" + userID)
+            axios.get("/trophies/")
             .then ((response) => {
                 setData(response.data);
             })
@@ -36,11 +36,13 @@ const Trophies = (props) => {
     
   return (
 <div className="Trophies">
-    <h1>Trophies</h1>
+    <h1><u>Trophies</u></h1>
         <div class="flex-container">
-            {data.map((jsonObj, i) => (
-                <Trophy key={jsonObj.id} data={jsonObj}/>
-            ))}
+            <div class="flex-container > div">
+                {data.map((jsonObj, i) => (
+                    <Trophy key={jsonObj.id} data={jsonObj}/>
+                ))}
+            </div>
         </div>
 </div>
   );
