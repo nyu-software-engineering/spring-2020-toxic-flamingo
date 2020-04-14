@@ -235,36 +235,21 @@ function getFollowedUsers(userId) {
     }
   }
 }
-const trophies = [
-  {
-    id: 1,
-    trophy: "Harmonize",
-    trophy_description: "Get your first Harmony!",
-    trophy_icon: "https://i.pinimg.com/originals/5f/77/4b/5f774b20b2f212b7f9b888437a097579.jpg",
-    userID: 12345
-  },
-  {
-    id: 2,
-    trophy: "Musically Informed",
-    trophy_description: "Follow 10 People!",
-    trophy_icon: "https://i.pinimg.com/originals/5f/77/4b/5f774b20b2f212b7f9b888437a097579.jpg",
-    userID: 12345
-  },
-  {
-    id: 3,
-    trophy: "So Popular",
-    trophy_description: "Get 10 followers!",
-    trophy_icon: "https://i.pinimg.com/originals/5f/77/4b/5f774b20b2f212b7f9b888437a097579.jpg",
-    userID: 12345
-  },
 
-]
+app.get('/trophies/', async (req, res) => {
+  
+  //const userID = req.params.userID; 
+  let response = await axios.get("https://api.mockaroo.com/api/3ea885f0?count=12&key=ffab93f0");
+  //res.json(getTrophyData(userID));
+  let trophyList = [];
 
-app.get('/trophies/:userID', (req, res) => {
-
-  const userID = req.params.userID; 
-
-  res.json(getTrophyData(userID));
+  for (let i=0; i<response.data.length; i++) {
+    const trophy = response.data[i];
+    //console.log(trophy);
+    trophyList.push(trophy);
+  }
+  
+  res.json(trophyList);
 });
 
 // load and filter a feed based on a hashtag
@@ -285,26 +270,6 @@ app.get('/hashtagFeed/:hashtag', async (req, res) => {
 
   res.json(postsResponse);
 });
-
-function getTrophyData(userID) {
-
-  let trophyList = [];
-
-  console.log(userID);
-
-  for (let i=0; i<trophies.length; i++) {
-    const trophy = trophies[i];
-    console.log(trophy.userID);
-    if (trophy.userID != userID) {
-      continue;
-    }
-    
-    trophyList.push(trophy);
-  }
-
-  return trophyList;
-}
-
 
 
 module.exports = app;
