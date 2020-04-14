@@ -44,12 +44,33 @@ app.get("/loadProfile", (req,res) =>{
   res.json(user[1]);
 })
 
-app.get("/following", (req, res) => {
-  res.json(following);
+app.get("/Followee", async (req, res) => {
+  let response = await axios.get("https://api.mockaroo.com/api/87521f10?count=10&key=5296eab0").catch();
+  res.json(response.data);
 })
 
-app.get("/followers", (req, res) => {
-  res.json(following);
+app.get("/Search", async (req, res) => {
+  //const user  = req.params.userid;
+  let response = await axios.get("https://api.mockaroo.com/api/87521f10?count=10&key=5296eab0").catch();
+  res.json(response.data);
+})
+
+app.get("/Notifications", async (req, res) => {
+  //const user  = req.params.userid;
+  let response = await axios.get("https://api.mockaroo.com/api/1a0149e0?count=20&key=ffab93f0").catch();
+  res.json(response.data);
+})
+
+app.get("/Harmonies", async (req, res) => {
+  //const user  = req.params.userid;
+  let response = await axios.get("https://api.mockaroo.com/api/11bdcb60?count=10&key=06908ea0").catch();
+  res.json(response.data);
+})
+
+app.get("/Follower", async (req, res) => {
+  //const user  = req.params.userid;
+  let response = await axios.get("https://api.mockaroo.com/api/87521f10?count=10&key=5296eab0").catch();
+  res.json(response.data);
 })
 
 
