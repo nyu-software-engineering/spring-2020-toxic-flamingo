@@ -9,8 +9,8 @@ const HashtagFeed = (props) => {
     const [data, setData] = useState([]);
     const [noPosts, setPosts] = useState(false);
 
-    // this will be passed in from hashtag search page, for now it is hardcoded as nyc based on mock backend database
-    const hashtag = "nyc"; //props.hashtag; 
+    // this will be passed in from hashtag search page, for now it is hardcoded as Computers based on mockaroo data
+    const hashtag = "Computers"; //props.hashtag; 
 
     // load in posts
     useEffect( () => {
@@ -21,6 +21,7 @@ const HashtagFeed = (props) => {
             //filtering now takes place on the backend
 
             setData(response.data);
+            if (response.data.length == 0) setPosts(true);
         })
         .catch( err => {
             console.log("ERROR!");

@@ -179,6 +179,21 @@ const following = [
   }
 ]
 
+//load comments for a particular post
+app.get('/loadComments/:postId', async (req, res) => {
+
+    const postId = req.params.postId;
+
+    let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+    for (let i=0; i < response.data.length; i++) {
+      if (response.data[i].post_id.toString() == postId) {
+        console.log("found post with id " + postId);
+        res.json(response.data[i].post_comments);
+        break;
+      }
+    }
+});
+
 // load a main feed of only followed users' posts
 app.get('/mainFeed/:userId', async (req, res) => {
 
@@ -243,11 +258,22 @@ app.get('/trophies/:userID', (req, res) => {
 });
 
 // load and filter a feed based on a hashtag
-app.get('/hashtagFeed/:hashtag', (req, res) => {
+app.get('/hashtagFeed/:hashtag', async (req, res) => {
 
   const hashtag = req.params.hashtag; 
 
-  res.json(getHashtagData(hashtag));
+  let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+
+  let postsResponse = [];
+
+  for (let i=0; i<response.data.length; i++) {
+    const post = response.data[i];
+    if (post.hashtag == hashtag) {
+      postsResponse.push(post);
+    }
+  }
+
+  res.json(postsResponse);
 });
 
 function getTrophyData(userID) {
@@ -267,26 +293,6 @@ function getTrophyData(userID) {
   }
 
   return trophyList;
-}
-
-
-function getHashtagData(hashtag) {
-
-  let postsResponse = [];
-
-  console.log(hashtag);
-
-  for (let i=0; i<posts.length; i++) {
-    const post = posts[i];
-    console.log(post.hashtag);
-    if (post.hashtag != hashtag) {
-      continue;
-    }
-    
-    postsResponse.push(post);
-  }
-
-  return postsResponse;
 }
 
 
