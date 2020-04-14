@@ -11,7 +11,7 @@ const ChangeEmail = (props) => {
               <p>Enter your new email: </p>
               <input type='text' name='email' />
               <br/>
-              <NavLink to="/">Submit</NavLink>
+              <NavLink to="/MainFeed">Submit</NavLink>
               </form>
     </section>
 </div>

@@ -28,7 +28,7 @@ const SignUp = (props) => {
           <p>Email Address:</p>
           <input type='email' name='email' />
           <br/>
-          <NavLink to='/'>Sign Up</NavLink>
+          <NavLink to='/MainFeed'>Sign Up</NavLink>
           </form>
       </section>
     </div>

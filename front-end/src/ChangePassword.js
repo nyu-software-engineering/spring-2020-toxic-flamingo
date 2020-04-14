@@ -17,7 +17,7 @@ const ChangePassword = (props) => {
               <input type='text' name='newPassword' />
               <br/>
               <input type='submit' name='Submit' />
-              <NavLink to="/">Submit</NavLink>
+              <NavLink to="/MainFeed">Submit</NavLink>
               </form>
     </section>
 </div>
