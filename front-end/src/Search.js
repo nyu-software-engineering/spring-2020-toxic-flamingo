@@ -4,7 +4,7 @@ import './Make_Post.css';
 // import logo from './logo.svg';
 //import './About.css';
 
-const Make_Post = (props) => {
+const Search = (props) => {
 
   const [data, setData] = useState([]);
 
@@ -47,8 +47,12 @@ const Make_Post = (props) => {
   </div>
 
   <div class="flex-container">
+  <form action="/Search">  
   <div className="Users"><button class="company">Users</button></div>
+  </form>
+  <form action="/HashtagFeed"> 
   <div className="Tags"><button class="company">Tags</button></div>
+  </form>
   </div>
  
  
@@ -100,4 +104,4 @@ this.props.history.push('/') //this will go to home page
   );
 }
 
-export default Make_Post;
+export default Search;
