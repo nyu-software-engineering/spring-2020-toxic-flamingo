@@ -25,18 +25,22 @@ const users = [
   {
     id: 1,
     username: "kanyelover70",
+    pic: "https://www.dictionary.com/e/wp-content/uploads/2018/04/kawaii.jpg",
     name: "Kanye Fan",
     bio: "Welcome to the good life, the life i live!",
     followers: 200,
-    following: 265
+    following: 265,
+    coverarts: "https://www.mockaroo.com/schemas/226537"
   },
   {
     id: 2,
     username: "kanyehater20",
+    pic: "https://www.dictionary.com/e/wp-content/uploads/2018/04/kawaii.jpg",
     name: "Kanye Hater",
     bio: "If I could I'd become a cow and eat grass daily",
     followers: 2000,
-    following: 154
+    following: 154,
+    coverarts: "https://www.mockaroo.com/schemas/226537"
   }
 ];
 
@@ -44,13 +48,24 @@ app.get("/loadProfile", (req,res) =>{
   res.json(user[1]);
 })
 
-app.get("/following", (req, res) => {
-  res.json(following);
+
+app.get("/user/:userID", (req, res) => {
+  const userID = req.params.userID;
+  res.send(following);
 })
 
-app.get("/followers", (req, res) => {
-  res.json(following);
+app.get("/profileposts/:userID", async (req,res) => {
+  const userID = req.params.userID;
+  res.json(getProfilePosts(userID));
+  
 })
+ function getProfilePosts(userID){
+   let posts = [];
+  console.log(userID);
+   posts.push(users[userID].coverarts);
+  return posts;
+ }
+
 
 
 
