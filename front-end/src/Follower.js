@@ -9,8 +9,10 @@ const Follower = (props) => {
     const [data, setData] = useState([]);
 
     useEffect( () => {
-      axios.get("https://api.mockaroo.com/api/87521f10?count=10&key=5296eab0")
+      axios.get("/Follower")
       .then ((response) => {
+        console.log('where is it');
+        console.log(response.data);
         setData(response.data);
       })
       .catch(err => {

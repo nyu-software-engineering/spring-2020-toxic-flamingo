@@ -13,7 +13,7 @@ const Notifications = (props) => {
 
         //fetch data
 
-        axios.get('https://api.mockaroo.com/api/1a0149e0?count=20&key=ffab93f0')
+        axios.get('/Notifications')
         .then((response) => {
             setData(response.data);
         })

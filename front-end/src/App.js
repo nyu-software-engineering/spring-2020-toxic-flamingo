@@ -21,6 +21,7 @@ import MainFeed from './MainFeed';
 import HashtagFeed from './HashtagFeed';
 import Follower from './Follower';
 import Followee from './Followee';
+import Harmonies from './Harmonies';
 import PostComments from './PostComments';
 
 import Notifications from './Notifications';
@@ -89,6 +90,10 @@ const App = (props) => {
                   </Route>
                   <Route path="/Followee">
                     <Followee />
+                    <PrimaryNav />
+                  </Route>
+                  <Route path="/Harmonies">
+                    <Harmonies />
                     <PrimaryNav />
                   </Route>
                   <Route path="/Notifications">

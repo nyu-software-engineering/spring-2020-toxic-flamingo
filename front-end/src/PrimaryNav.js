@@ -16,9 +16,14 @@ const PrimaryNav = (props) => {
             <div class="makePost">
             <Link to="/Make_Post">Make_Post</Link>
             </div>
+            <div class="notifications">
+                
+            </div>
+
+
             <Link to="/Settings">Settings</Link>
             <Link to="/PersonalProfile">Profile</Link>
-            <Link to="/Profile">Profile</Link>
+            <Link to="/">Log_Out</Link>
             <Link to="/HashtagFeed">Hashtags</Link>
             </div>
         </nav>
