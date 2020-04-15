@@ -1,0 +1,27 @@
+.nav {
+    position: fixed;
+    background-color: blueviolet;
+    top: 0;
+    height: 54px;
+    width: 100%;
+}
+
+.nav Link {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+}
+
+.nav Link:hover {
+    background-color: cornsilk;
+    color: black;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: row;
+}
+.mainfeed {
+    min-width: 40px;
+}

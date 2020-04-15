@@ -17,15 +17,12 @@ import Make_Post2 from './Make_Post2';
 import logo from './logo.svg';
 import './App.css';
 import MainFeed from './MainFeed';
-//import logInScreen from './logIn';
 import HashtagFeed from './HashtagFeed';
 import Follower from './Follower';
 import Followee from './Followee';
 import Harmonies from './Harmonies';
 import PostComments from './PostComments';
-
 import Notifications from './Notifications';
-import CommentView from './CommentView';
 
 
 const App = (props) => {
