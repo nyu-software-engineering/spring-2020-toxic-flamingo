@@ -23,6 +23,7 @@ import Followee from './Followee';
 import Harmonies from './Harmonies';
 import PostComments from './PostComments';
 import Notifications from './Notifications';
+import SharmonyHeader from './SharmonyHeader';
 
 
 const App = (props) => {
@@ -31,6 +32,7 @@ const App = (props) => {
           <Router>
               <Switch>
                     <Route path="/Search">
+                    <SharmonyHeader />
                     <Search />
                     <PrimaryNav />
                   </Route>
@@ -41,11 +43,13 @@ const App = (props) => {
   
   
                   <Route path="/PersonalProfile">
+                      <SharmonyHeader />
                       <PrimaryNav />
                       <PersonalProfile />
                   </Route>
 
                   <Route path="/Home">
+                      <SharmonyHeader />
                       <PrimaryNav />
                       <Home/>
                   </Route>
@@ -74,6 +78,7 @@ const App = (props) => {
                       <SettingsNav />
                   </Route>
                   <Route path="/MainFeed">
+                  <SharmonyHeader />
                         <MainFeed />
                         <PrimaryNav />
                   </Route>
@@ -82,10 +87,12 @@ const App = (props) => {
                     <PrimaryNav />
                   </Route>
                   <Route path="/Follower">
+                  <SharmonyHeader />
                     <Follower />
                     <PrimaryNav />
                   </Route>
                   <Route path="/Followee">
+                  <SharmonyHeader />
                     <Followee />
                     <PrimaryNav />
                   </Route>
@@ -94,14 +101,17 @@ const App = (props) => {
                     <PrimaryNav />
                   </Route>
                   <Route path="/Notifications">
+                    <SharmonyHeader />
                     <Notifications />
                     <PrimaryNav />
                   </Route> 
                   <Route path="/HashtagFeed">
+                   <SharmonyHeader />
                     <HashtagFeed />
                     <PrimaryNav />
                   </Route>        
                   <Route path="/PostComments/:postId">
+                   <SharmonyHeader />
                     <PostComments />
                     <PrimaryNav />
                   </Route>                                  

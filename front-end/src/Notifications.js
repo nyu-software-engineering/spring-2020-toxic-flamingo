@@ -40,7 +40,7 @@ const Notifications = (props) => {
     
     return(
         <div className="Notifications">
-            <h1>Appbar</h1>
+            <h1>Notifications</h1>
             {data.map((jsonObj, i) => (
                 <Notification key={jsonObj.id} data={jsonObj}/>
             ))}
