@@ -1,27 +1,21 @@
-.nav {
-    position: fixed;
-    background-color: blueviolet;
-    top: 0;
-    height: 54px;
-    width: 100%;
+
+.nav_bar{
+  background-color: purple;
+  position: fixed;
+  bottom: 0;
+  width: 100%; 
+  display: flex;
+  justify-content:center;
+  align-items:flex-end;
 }
 
-.nav Link {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
+li a:hover {
+  background-color: #555;
+  color: white;
 }
 
-.nav Link:hover {
-    background-color: cornsilk;
-    color: black;
-}
-
-.navigation {
-    display: flex;
-    flex-direction: row;
-}
-.mainfeed {
-    min-width: 40px;
+li a {
+  display: block;
+  padding: 8px 16px;
+  text-decoration: none;
 }
