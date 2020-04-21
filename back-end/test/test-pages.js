@@ -10,14 +10,24 @@ it('Main page content', function(done) {
     });
 });
 
-//profile posts
-it('Profile Posts', function(done) {
-    request('http://localhost:7000/profileposts/:userID' , function(error, response, body) {
+//hashtag//feed
+it('Hashtag Feed', function(done) {
+    request('http://localhost:7000/Hashtag/' , function(error, response, body) {
         expect(response).to.not.equal(null);
         //console.log(response);
         done();
     });
 });
+
+//profile posts
+it('Profile Posts', function(done) {
+    request('http://localhost:7000/profileposts/' , function(error, response, body) {
+        expect(response).to.not.equal(null);
+        //console.log(response);
+        done();
+    });
+});
+
 //harmonies
 it('Harmonies', function(done) {
     request('http://localhost:7000/Harmonies' , function(error, response, body) {
@@ -26,11 +36,4 @@ it('Harmonies', function(done) {
         done();
     });
 });
-//hashtag//feed
-it('Hashtag Feed', function(done) {
-    request('http://localhost:7000/hashtagFeed/:hashtag' , function(error, response, body) {
-        expect(response).to.not.equal(null);
-        //console.log(response);
-        done();
-    });
-});
+
