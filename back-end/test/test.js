@@ -1,1 +1,1 @@
-mocha and chai testing 
+const chai = require('chai');
