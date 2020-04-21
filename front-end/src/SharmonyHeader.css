@@ -1,3 +1,6 @@
 .header {
+    padding: 60px;
     align-items: center;
+    justify-content: center;
+    background: #6f567d;
 }

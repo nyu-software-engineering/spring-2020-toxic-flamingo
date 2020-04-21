@@ -2,15 +2,15 @@ import React from 'react';
 //import logo from './logo.svg';
 //import './About.css';
 import {NavLink} from 'react-router-dom';
+import SharmonyLogo from './SharmonyLogo.PNG';
 
 
 const SignUp = (props) => {
 
   return (
     <div className="SignUp">
-      <section className="SignUpForm">
 
-          <img alt="Sharmony Logo" src="front-end\public\SharmonyLogo.PNG" />
+          <img alt="Sharmony Logo" src={SharmonyLogo} width="200" height="150"/>
           <form>
           <p>Enter the info below:
           </p> 
@@ -30,7 +30,6 @@ const SignUp = (props) => {
           <br/>
           <NavLink to='/MainFeed'>Sign Up</NavLink>
           </form>
-      </section>
     </div>
   );
 }
