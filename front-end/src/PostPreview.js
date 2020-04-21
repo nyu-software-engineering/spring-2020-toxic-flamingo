@@ -13,7 +13,7 @@ const PostPreview = (props) => {
     useEffect( () => {
         //fetch data
 
-        axios.get("/profileposts"+userID)
+        axios.get("/profileposts/"+userID)
         .then ((response) => {
             setData(response.data);
         })
@@ -37,8 +37,8 @@ const PostPreview = (props) => {
     return(
         <div className="PreviewPost">
             {data.map((jsonObj, i) => (
-                <div class='coverart'>
-                <img class='pic' src={jsonObj.coverart} height="300" width="300" />
+                <div className='coverart'>
+                    <img className='pic' src={data.coverart} height="300" width="300" />
                 </div>
             ))}
         </div>

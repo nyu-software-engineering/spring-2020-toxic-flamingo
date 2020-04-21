@@ -3,7 +3,7 @@ import SharmonyLogoCropped from "./SharmonyLogoCropped.PNG";
 
 const SharmonyHeader = (props) => {
     return(
-        <div class="header">
+        <div className="header">
              <img alt="SharmonyLogoCropped.PNG" src={SharmonyLogoCropped}  />
         </div>
     );
