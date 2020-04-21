@@ -95,20 +95,17 @@ app.get("/Follower", async (req, res) => {
 
 
 
-app.get('/postComments/:postId', async (req, res) => {
+app.get('/loadComments/:postId', async (req, res) => {
 
-  const postId = req.params.postId; // this will be useful later without mockaroo data, for now just load it in
+  const postId = req.params.postId;
 
-  let response = await axios.get("https://api.mockaroo.com/api/19ec2810?count=20&key=ffab93f0");
-
-  // filter for the most recent comment
-
-  let mostRecentComment = {};
-
-  let data = response.data;
-  for (let i=0; i < data.length; i++) {
-    const commentData = data[i];
-    
+  let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+  for (let i=0; i < response.data.length; i++) {
+    if (response.data[i].post_id.toString() == postId) {
+      console.log("found post with id " + postId);
+      res.json(response.data[i].post_comments);
+      break;
+    }
   }
 });
 
