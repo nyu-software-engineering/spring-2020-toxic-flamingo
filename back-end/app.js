@@ -44,14 +44,10 @@ const users = [
   }
 ];
 
-app.get("/loadProfile", (req,res) =>{
-  res.json(user[1]);
-})
-
 
 app.get("/user/:userID", (req, res) => {
   const userID = req.params.userID;
-  res.send(following);
+  res.send(user[userID]);
 })
 
 app.get("/profileposts/:userID", async (req,res) => {

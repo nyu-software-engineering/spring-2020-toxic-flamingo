@@ -22,7 +22,7 @@ const PersonalProfile = (props) => {
   // load in posts or whatever
   useEffect( () => {
     //fetch data
-    axios.get("/loadProfile")
+    axios.get("/user/"+userID)
     .then ((response) => {
       setData(response.data);
     })
