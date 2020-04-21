@@ -58,21 +58,21 @@ const PersonalProfile = (props) => {
       {data.map((jsonObj, i) => (
           
      
-          <div class='Profile'>
+          <div className='Profile'>
             <BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
-            <div class="ProfileHeader">
+            <div className="ProfileHeader">
             
-                <div class="flex-container">
-                      <div class="profilePic">
+                <div className="flex-container">
+                      <div className="profilePic">
                       <img alt="Profile Pic" src={jsonObj.pic} width="100" height="100"/>
                       </div>
                     <h1>{jsonObj.name}</h1>
                  </div>
-                      <div class="bio">
+                      <div className="bio">
                       <p>{jsonObj.bio}</p>
                       </div>
                     </div>
-                      <div class='buttons'>
+                      <div className='buttons'>
                           <div className='button1'>
                             <form action="/Followee">
                             <button id="following">Following {jsonObj.following}</button>
@@ -83,17 +83,17 @@ const PersonalProfile = (props) => {
                             <button id="followers" onClick={handleFollowersClick(jsonObj.id)}>Followers {jsonObj.followers}</button>
                             </form>
                           </div>
-                          <div class Name='button3'>
+                          <div className='button3'>
                             <form action="/Harmonies">
                             <button id="harmonies" >Harmonies</button>
                             </form>
                           </div>
                             
                       </div>
-              
+                      
             </div>
          
-      ))}
+          ))}
       <PostPreview />
       </div> </div>
     );
