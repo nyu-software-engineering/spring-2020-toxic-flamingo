@@ -3,6 +3,7 @@ import React, {useState, useEffect, Component} from 'react';
 import './PostComments.css';
 import CommentView from './CommentView';
 import axios from 'axios';
+import CommentBuilder from './CommentBuilder';
 
 const PostComments = (props) => {
     
@@ -39,6 +40,7 @@ const PostComments = (props) => {
             {comments.map((commentJson, i) => (
                 <CommentView key={i} data={commentJson}/>
             ))}
+            <CommentBuilder/>
         </div>
     );
 
