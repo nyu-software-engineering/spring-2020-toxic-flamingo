@@ -10,10 +10,10 @@ const querystring = require('querystring');
 let mongoose = require('mongoose');
 // we will put some server logic here later...
 
-const server = '10.0.0.5'; // REPLACE WITH YOUR DB SERVER
-const database = 'sharmony';      // REPLACE WITH YOUR DB NAME
 
-mongoose.connect(`mongodb://${server}/${database}`)
+
+mongoose.connect(`mongodb+srv://will:diddnjswhd12@toxicflamingo-isrgh.mongodb.net/test?retryWrites=true&w=majority`);
+
 
 //Get the default connection
 let db = mongoose.connection;
