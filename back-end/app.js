@@ -3,13 +3,23 @@ const axios = require("axios");
 const express = require("express"); // CommonJS import style!
 const bodyParser = require("body-parser");
 const app = express(); // instantiate an Express object
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const request = require("request");
 const querystring = require('querystring');
+let mongoose = require('mongoose');
 // we will put some server logic here later...
 
+const server = '10.0.0.5'; // REPLACE WITH YOUR DB SERVER
+const database = 'sharmony';      // REPLACE WITH YOUR DB NAME
+
+mongoose.connect(`mongodb://${server}/${database}`)
+
+//Get the default connection
+let db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.get("/", (req, res) => {
     res.send("Hello!");
