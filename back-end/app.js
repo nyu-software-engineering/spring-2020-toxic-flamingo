@@ -8,11 +8,12 @@ app.use(bodyParser.json());
 const request = require("request");
 const querystring = require('querystring');
 let mongoose = require('mongoose');
+require('dotenv').config()
 // we will put some server logic here later...
 
+console.log(process.env.DB_USER);
 
-
-mongoose.connect(`mongodb+srv://will:diddnjswhd12@toxicflamingo-isrgh.mongodb.net/test?retryWrites=true&w=majority`);
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@toxicflamingo-isrgh.mongodb.net/test?retryWrites=true&w=majority`);
 
 
 //Get the default connection
