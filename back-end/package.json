@@ -23,8 +23,10 @@
     "express": "^4.17.1",
     "istanbul": "^0.4.5",
     "mocha": "^7.1.1",
+    "mongoose": "^5.9.10",
     "morgan": "^1.10.0",
-    "nyc": "^15.0.1"
+    "nyc": "^15.0.1",
+    "validator": "^13.0.0"
   },
   "devDependencies": {
     "nodeman": "^1.1.2",
