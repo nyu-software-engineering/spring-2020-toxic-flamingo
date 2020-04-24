@@ -8,19 +8,35 @@ app.use(bodyParser.json());
 const request = require("request");
 const querystring = require('querystring');
 let mongoose = require('mongoose');
-require('dotenv').config()
+let db = require('./src/database.js');
+let userModel = require('./src/models/User.js');
+//require('dotenv').config();
 // we will put some server logic here later...
-
-console.log(process.env.DB_USER);
-
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@toxicflamingo-isrgh.mongodb.net/test?retryWrites=true&w=majority`);
-
-
+//console.log(process.env.DB_USER);
+//mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@toxicflamingo-isrgh.mongodb.net/test?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true} );
 //Get the default connection
-let db = mongoose.connection;
-
+//let db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+//db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+//db.on('connected', () => {
+  //console.log("connected with ")
+//});
+
+let user123 = new userModel({
+        userID: "1jjj",   
+        Username: "bob",
+        Password: "1234",
+        Email: "bob25@gmail.com",
+        Bio: "hello my name is asdasdas",
+        Profile_Pic: "link to picture",
+        Trophies: [],
+        Harmony_id: []
+})
+
+user123.save().then(doc => {
+  console.log(doc);
+})
 
 app.get("/", (req, res) => {
     res.send("Hello!");

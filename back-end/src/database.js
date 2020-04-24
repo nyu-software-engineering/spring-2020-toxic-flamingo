@@ -1,7 +1,5 @@
 let mongoose = require('mongoose');
-
-const server = '127.0.0.1:27017'; // REPLACE WITH YOUR DB SERVER
-const database = 'sharmony';      // REPLACE WITH YOUR DB NAME
+require('dotenv').config();
 
 class Database {
   constructor() {
@@ -9,7 +7,7 @@ class Database {
   }
   
 _connect() {
-     mongoose.connect(`mongodb://${server}/${database}`)
+      mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@toxicflamingo-isrgh.mongodb.net/SharmonyData?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true} )
        .then(() => {
          console.log('Database connection successful')
        })
@@ -18,5 +16,6 @@ _connect() {
        })
   }
 }
+
 
 module.exports = new Database()
