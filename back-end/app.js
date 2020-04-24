@@ -10,6 +10,8 @@ const querystring = require('querystring');
 let mongoose = require('mongoose');
 let db = require('./src/database.js');
 let userModel = require('./src/models/User.js');
+let followModel = require('./src/models/Follow.js');
+let postModel = require('./src/models/Post.js');
 //require('dotenv').config();
 // we will put some server logic here later...
 //console.log(process.env.DB_USER);
