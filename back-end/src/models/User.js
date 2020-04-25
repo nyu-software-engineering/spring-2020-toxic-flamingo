@@ -8,8 +8,7 @@ let userSchema = new mongoose.Schema({
   Email: String,  
   Bio: String,
   Profile_Pic: String,
-  Trophies: [trophy],
-  Harmonies_id: Array
+  Trophies: Array
 }, {collection: "UserCollection"})
 
 module.exports = mongoose.model('User', userSchema);

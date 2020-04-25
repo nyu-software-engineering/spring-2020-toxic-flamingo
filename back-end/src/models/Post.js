@@ -4,9 +4,15 @@ let infoschema = require('./Info.js')
 
 let postSchema = new mongoose.Schema({
   userID: String,
-  hashID: String,
-  harmonyID: String,
-  info: [infoschema]
+  postID: String,
+  hashID: Array,
+  harmony: Boolean,
+  songName: String,
+  artistName: String,
+  albumName: String,
+  picture: String,
+  spotify: String,
+  comments: []
 }, {collection: "PostCollection"})
 
 
