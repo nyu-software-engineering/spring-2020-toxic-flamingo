@@ -12,6 +12,7 @@ let db = require('./src/database.js');
 let userModel = require('./src/models/User.js');
 let followModel = require('./src/models/Follow.js');
 let postModel = require('./src/models/Post.js');
+let trophyModel = require('./src/models/Trophy.js');
 //require('dotenv').config();
 // we will put some server logic here later...
 //console.log(process.env.DB_USER);
@@ -25,6 +26,9 @@ let postModel = require('./src/models/Post.js');
   //console.log("connected with ")
 //});
 
+
+
+
 let user123 = new userModel({
         userID: "1jjj",   
         Username: "bob",
@@ -32,8 +36,7 @@ let user123 = new userModel({
         Email: "bob25@gmail.com",
         Bio: "hello my name is asdasdas",
         Profile_Pic: "link to picture",
-        Trophies: [],
-        Harmony_id: []
+        Trophies: [true, false, true, true, false, false, false, false]
 })
 
 user123.save().then(doc => {
