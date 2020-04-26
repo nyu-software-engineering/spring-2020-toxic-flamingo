@@ -1,6 +1,6 @@
 let mongoose = require('mongoose')
 //let validator = require('validator')
-let trophy = require('./Trophy.js')
+
 let userSchema = new mongoose.Schema({
   userID: String,
   Username: String,
