@@ -1,6 +1,10 @@
-let mongoose = require('mongoose');
-let validator = require('validator');
+
 const bcrypt = require('bcryptjs');
+
+let mongoose = require('mongoose')
+let validator = require('validator')
+const duplicatePlugin = require('./../plugins/duplicate');
+
 
 let userSchema = new mongoose.Schema({
   userID: {
@@ -28,6 +32,7 @@ let userSchema = new mongoose.Schema({
   following: Array
 }, {collection: "UserCollection"})
 
+
 userSchema.pre('save', async function(next) {
     try{
         //generate a salt
@@ -49,5 +54,8 @@ userSchema.methods.isValidPassword = async function(newPassword) {
         throw new Error(error);
     }
 }
+
+userSchema.plugin(duplicatePlugin);
+
 
 module.exports = mongoose.model('User', userSchema);

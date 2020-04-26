@@ -43,21 +43,32 @@ router.route('/secret')
 
 
 
-let user123 = new userModel({
-        userID: "1jjjww",   
-        Username: "bob",
-        Password: "1234",
-        Email: "bob25@gmail.com",
-        Bio: "hello my name is asdasdas",
-        Profile_Pic: "link to picture",
-        Trophies: [true, false, true, true, false, false, false, false],
-        Follower: [],
-        Following: []
-})
+
+
+let post123 = new postModel({
+  userID: "testID",
+  postID: "4234234",
+  hashID: "la",
+  timestamp: '2020-01-21',
+  harmony: true,
+  songName: "I Love LA",
+  artistName: "Randy Newman",
+  albumName: "I Love LA",
+  picture: "pictureURL",
+  spotify: "spotifyURL",
+  comments: []
+});
+
+// user123.save({runValidators:true}).then(doc => {
+//   console.log(doc);
+// }).catch(err => {
+//   console.log(err);
+// });
+
 
 // let post123 = new postModel({
 //   userID: "testID",
-//   postID: "123456",
+//   postID: "78910",
 //   hashID: "nyc",
 //   harmony: true,
 //   songName: "Imagine",
@@ -65,24 +76,25 @@ let user123 = new userModel({
 //   albumName: "Imagine",
 //   picture: "pictureURL",
 //   spotify: "spotifyURL",
+//   descripton: "i love this song!"
 //   comments: []
 // });
 
-user123.save({runValidators:true}).then(doc => {
-  console.log(doc);
-}).catch(err => {
-  console.log(err);
-});
-
-// userModel.findOneAndUpdate({Username: 'updatedUsername'},{Username: 'test test test'}, 
-// {
-//   new : true,
-//   runValidators: true
-// }).then(doc => {
+// post123.save({runValidators:true}).then(doc => {
 //   console.log(doc);
 // }).catch(err => {
 //   console.log(err);
-// })
+// });
+
+userModel.findOneAndUpdate({userID: '1jjjww'},{Email: 'testtesttest@gmail.com'}, 
+{
+  new : true,
+  runValidators: true
+}).then(doc => {
+  console.log(doc);
+}).catch(err => {
+  console.log(err);
+})
 
 app.get("/", (req, res) => {
     res.send("Hello!");
@@ -245,41 +257,6 @@ app.post("/submitComment/:comment", (req, res) => {
 });
 
 
-// mock post database
-const posts = [
-  {
-    id: 1,
-    artist_name: "Waiyu",
-    song_title: "Imagine",
-    username: "username123",
-    post_title: "Cool song! #nyc",
-    post_comment: "Very cool, thanks for sharing",
-    post_commenter: "commentMan23",
-    hashtag: "nyc"
-  },
-  {
-    id: 2,
-    artist_name: "Ace Frehley",
-    song_title: "New York Groove",
-    username: "username745",
-    post_title: "Nice #nyc",
-    post_comment: "Nice, thanks",
-    post_commenter: "commentMan23",
-    hashtag: "nyc"
-  },
-  {
-    id: 3,
-    artist_name: "Dumb artist",
-    song_title: "Dumb song",
-    username: "username82",
-    post_title: "Dumb song!",
-    post_comment: "That was pretty dumb",
-    post_commenter: "commentMan23",
-    hashtag: "dumbsongs"
-  }
-];
-
-
 //mock users followed database
 const following = [
   {
@@ -308,20 +285,41 @@ app.get('/loadComments/:postId', async (req, res) => {
 // load a main feed of only followed users' posts
 app.get('/mainFeed/:userId', async (req, res) => {
 
-  const userId = req.params.userId;
+  const userID = req.params.userId;
 
-  const followedUsers = getFollowedUsers(userId);
+  let following = [];
 
-  let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+  await userModel.findById(userID)
+    .then(doc => {
+      following = doc.following;
+    })
+    .catch(err => {
+      console.log(err);
+    });
 
-  // this logic would assumedly be taken care of in the eventual database queries
-  let followedPosts = [];
-  let data = response.data;
-  for (let i=0; i<data.length; i++) {
-    const post = data[i];
-    if (followedUsers.includes(post.username)) followedPosts.push(post);
-  }
-  res.json(followedPosts);
+  postModel.find({
+    'userID': { $in: following.map((id, i) => {
+      return mongoose.Types.ObjectId(id);
+    })},
+  })
+  .then(result => {
+    console.log(result);
+    res.json(result);
+  })
+  .catch(err => {
+    console.log(err);
+  })
+
+  // let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+
+  // // this logic would assumedly be taken care of in the eventual database queries
+  // let followedPosts = [];
+  // let data = response.data;
+  // for (let i=0; i<data.length; i++) {
+  //   const post = data[i];
+  //   if (followedUsers.includes(post.username)) followedPosts.push(post);
+  // }
+  // res.json(followedPosts);
 });
 
 function getFollowedUsers(userId) {

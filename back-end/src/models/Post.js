@@ -1,5 +1,8 @@
 let mongoose = require('mongoose')
-//let validator = require('validator')
+let validator = require('validator')
+const timestampPlugin = require('./../plugins/timestamp');
+const duplicatePlugin = require('./../plugins/duplicate');
+
 
 let postSchema = new mongoose.Schema({
   userID: String,
@@ -23,8 +26,11 @@ let postSchema = new mongoose.Schema({
   spotify: {
     type: String,
     required: true,},
+  description: String,
   comments: []
 }, {collection: "PostCollection"})
 
+postSchema.plugin(timestampPlugin);
+postSchema.plugin(duplicatePlugin);
 
 module.exports = mongoose.model('Post', postSchema);

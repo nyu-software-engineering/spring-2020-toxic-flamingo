@@ -8,7 +8,7 @@ const MainFeed = (props) => {
 
     const [data, setData] = useState([]);
 
-    const userId = "ilovemusic14";
+    const userId = "5ea5f57f46ba2e699831ae3f";
 
     // load in posts
     useEffect( () => {
@@ -22,18 +22,6 @@ const MainFeed = (props) => {
         .catch( err => {
             console.log("ERROR!");
             console.error(err);
-
-            //fake backup data
-            const backupData = [
-                {
-                    post_id: 1,
-                    artist_name: "Mr Cardify",
-                    song_title: "Rock my world",
-                    username: "rGeogioo001",
-                    post_title: "coolest post ever",
-                }
-            ];
-            setData(backupData);
         })
         
     }, []);
@@ -44,7 +32,7 @@ const MainFeed = (props) => {
         <div className="MainFeed">
             <h1>Appbar</h1>
             {data.map((jsonObj, i) => (
-                <Post key={jsonObj.id} data={jsonObj}/>
+                <Post key={jsonObj._id} data={jsonObj}/>
             ))}
         </div>
     );
