@@ -1,17 +1,28 @@
 let mongoose = require('mongoose')
 //let validator = require('validator')
-let infoschema = require('./Info.js')
 
 let postSchema = new mongoose.Schema({
   userID: String,
-  postID: String,
+  postID: {
+    type: String,
+    unique: true, },
   hashID: Array,
   harmony: Boolean,
-  songName: String,
-  artistName: String,
-  albumName: String,
-  picture: String,
-  spotify: String,
+  songName: {
+    type: String,
+    required: true,},
+  artistName: {
+    type: String,
+    required: true,},
+  albumName: {
+    type: String,
+    required: true,},
+  picture: {
+    type: String,
+    required: true,},
+  spotify: {
+    type: String,
+    required: true,},
   comments: []
 }, {collection: "PostCollection"})
 
