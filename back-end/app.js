@@ -27,6 +27,7 @@ let postModel = require('./src/models/Post.js');
 
 
 
+
 // let user123 = new userModel({
 //         userID: "1jjjww",   
 //         Username: "bob",
@@ -300,20 +301,43 @@ app.get('/loadComments/:postId', async (req, res) => {
 // load a main feed of only followed users' posts
 app.get('/mainFeed/:userId', async (req, res) => {
 
-  const userId = req.params.userId;
+  const userID = req.params.userId;
 
-  const followedUsers = getFollowedUsers(userId);
+  const followedUsers = getFollowedUsers(userID);
 
-  let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+  let following = [];
 
-  // this logic would assumedly be taken care of in the eventual database queries
-  let followedPosts = [];
-  let data = response.data;
-  for (let i=0; i<data.length; i++) {
-    const post = data[i];
-    if (followedUsers.includes(post.username)) followedPosts.push(post);
-  }
-  res.json(followedPosts);
+  let userDoc = await userModel.findById(userID)
+    .then(doc => {
+      following = doc.following;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  postModel.find({
+    'userID': { $in: following.map((id, i) => {
+      return mongoose.Types.ObjectId(id);
+    })},
+  })
+  .then(result => {
+    console.log(result);
+    res.json(result);
+  })
+  .catch(err => {
+    console.log(err);
+  })
+
+  // let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+
+  // // this logic would assumedly be taken care of in the eventual database queries
+  // let followedPosts = [];
+  // let data = response.data;
+  // for (let i=0; i<data.length; i++) {
+  //   const post = data[i];
+  //   if (followedUsers.includes(post.username)) followedPosts.push(post);
+  // }
+  // res.json(followedPosts);
 });
 
 function getFollowedUsers(userId) {
