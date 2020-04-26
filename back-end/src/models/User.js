@@ -1,5 +1,6 @@
 let mongoose = require('mongoose')
 let validator = require('validator')
+const duplicatePlugin = require('./../plugins/duplicate');
 
 let userSchema = new mongoose.Schema({
   userID: {
@@ -26,5 +27,7 @@ let userSchema = new mongoose.Schema({
   follower: Array,
   following: Array
 }, {collection: "UserCollection"})
+
+userSchema.plugin(duplicatePlugin);
 
 module.exports = mongoose.model('User', userSchema);

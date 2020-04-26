@@ -27,31 +27,39 @@ let postModel = require('./src/models/Post.js');
 
 
 
-let user123 = new userModel({
-        userID: "1jjjww2",   
-        Username: "testuser123",
-        Password: "1234",
-        Email: "bob253@gmail.com",
-        Bio: "hello my name is asdasdas",
-        Profile_Pic: "link to picture",
-        Trophies: [true, false, true, true, false, false, false, false],
-        follower: ["musicman123"],
-        following: ["musicman123"]
-})
 
-let post123 = new postModel({
-  userID: "testID",
-  postID: "123456",
-  hashID: "nyc",
-  timestamp: '2020-01-20',
-  harmony: true,
-  songName: "Imagine",
-  artistName: "Waiyu",
-  albumName: "Imagine",
-  picture: "pictureURL",
-  spotify: "spotifyURL",
-  comments: []
-});
+// let user123 = new userModel({
+//         userID: "1jjjww",   
+//         Username: "bob",
+//         Password: "1234",
+//         Email: "bob25@gmail.com",
+//         Bio: "hello my name is asdasdas",
+//         Profile_Pic: "link to picture",
+//         Trophies: [true, false, true, true, false, false, false, false],
+//         Follower: [],
+//         Following: []
+// })
+
+// user123.save({runValidators:true}).then(doc => {
+//   console.log(doc);
+// }).catch(err => {
+//   console.log(err);
+// });
+
+
+// let post123 = new postModel({
+//   userID: "testID",
+//   postID: "78910",
+//   hashID: "nyc",
+//   harmony: true,
+//   songName: "Imagine",
+//   artistName: "Waiyu",
+//   albumName: "Imagine",
+//   picture: "pictureURL",
+//   spotify: "spotifyURL",
+//   descripton: "i love this song!"
+//   comments: []
+// });
 
 // post123.save({runValidators:true}).then(doc => {
 //   console.log(doc);
@@ -59,15 +67,15 @@ let post123 = new postModel({
 //   console.log(err);
 // });
 
-// userModel.findOneAndUpdate({Username: 'updatedUsername'},{Username: 'test test test'}, 
-// {
-//   new : true,
-//   runValidators: true
-// }).then(doc => {
-//   console.log(doc);
-// }).catch(err => {
-//   console.log(err);
-// })
+userModel.findOneAndUpdate({userID: '1jjjww'},{Email: 'testtesttest@gmail.com'}, 
+{
+  new : true,
+  runValidators: true
+}).then(doc => {
+  console.log(doc);
+}).catch(err => {
+  console.log(err);
+})
 
 app.get("/", (req, res) => {
     res.send("Hello!");
