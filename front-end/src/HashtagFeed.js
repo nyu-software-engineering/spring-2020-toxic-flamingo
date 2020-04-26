@@ -10,7 +10,7 @@ const HashtagFeed = (props) => {
     const [noPosts, setPosts] = useState(false);
 
     // this will be passed in from hashtag search page, for now it is hardcoded as Computers based on mockaroo data
-    const hashtag = "Computers"; //props.hashtag; 
+    const hashtag = "la"; //props.hashtag; 
 
     // load in posts
     useEffect( () => {
@@ -26,21 +26,6 @@ const HashtagFeed = (props) => {
         .catch( err => {
             console.log("ERROR!");
             console.error(err);
-
-            //fake backup data
-            const backupData = [
-                {
-                    id: 1,
-                    artist_name: "Mr Cardify",
-                    song_title: "Rock my world",
-                    username: "rGeogioo001",
-                    post_title: "coolest post ever",
-                    post_comment: "Wow, cool song!",
-                    post_commenter: "my friend dave",
-                    hashtag: hashtag
-                }
-            ];
-            setData(backupData);
         })
         
     }, []);
@@ -57,7 +42,7 @@ const HashtagFeed = (props) => {
             <h1>Appbar</h1>
             <h3>#{hashtag}</h3>
             {data.map((jsonObj, i) => (
-                <Post key={jsonObj.id} data={jsonObj}/>
+                <Post key={jsonObj._id} data={jsonObj}/>
             ))}
         </div>
     );

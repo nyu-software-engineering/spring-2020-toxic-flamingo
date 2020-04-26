@@ -2,9 +2,11 @@
 const axios = require("axios");
 const express = require("express"); // CommonJS import style!
 const bodyParser = require("body-parser");
+const morgan = require("morgan");
 const app = express(); // instantiate an Express object
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(morgan('dev'));
 const request = require("request");
 const querystring = require('querystring');
 let mongoose = require('mongoose');
@@ -25,31 +27,56 @@ let postModel = require('./src/models/Post.js');
 //});
 
 
+const router = require('express-promise-router')();
+const { validateBody, schemas } = require('./src/authentification/Helper.js');
+const UsersController = require('./src/authentification/UserController.js');
+const passport = require('passport');
+const passportConf = require('./src/authentification/passport');
+router.route('/signup')
+  .post(validateBody(schemas.authSchema), UsersController.signUp);
+
+router.route('/')
+      .post(validateBody(schemas.authSchema), passport.authenticate('local', {session: false}), UsersController.logIn);
+
+router.route('/secret')
+      .get(passport.authenticate('jwt', {session: false}), UsersController.secret);
 
 
-let user123 = new userModel({
-        userID: "1jjjww",   
-        Username: "bob",
-        Password: "1234",
-        Email: "bob25@gmail.com",
-        Bio: "hello my name is asdasdas",
-        Profile_Pic: "link to picture",
-        Trophies: [true, false, true, true, false, false, false, false],
-        Follower: [],
-        Following: []
-})
+
+
+
+let post123 = new postModel({
+  userID: "testID",
+  postID: "4234234",
+  hashID: "la",
+  timestamp: '2020-01-21',
+  harmony: true,
+  songName: "I Love LA",
+  artistName: "Randy Newman",
+  albumName: "I Love LA",
+  picture: "pictureURL",
+  spotify: "spotifyURL",
+  comments: []
+});
+
+// user123.save({runValidators:true}).then(doc => {
+//   console.log(doc);
+// }).catch(err => {
+//   console.log(err);
+// });
+
 
 // let post123 = new postModel({
 //   userID: "testID",
-//   postID: "123456",
+//   postID: "78910",
 //   hashID: "nyc",
-//   timestamp: '2020-01-20',
 //   harmony: true,
 //   songName: "Imagine",
 //   artistName: "Waiyu",
 //   albumName: "Imagine",
 //   picture: "pictureURL",
 //   spotify: "spotifyURL",
+//   descripton: "i love this song!"
 //   comments: []
 // });
 
@@ -59,15 +86,6 @@ let user123 = new userModel({
 //   console.log(err);
 // });
 
-// userModel.findOneAndUpdate({Username: 'updatedUsername'},{Username: 'test test test'}, 
-// {
-//   new : true,
-//   runValidators: true
-// }).then(doc => {
-//   console.log(doc);
-// }).catch(err => {
-//   console.log(err);
-// })
 
 app.get("/", (req, res) => {
     res.send("Hello!");
@@ -233,50 +251,6 @@ app.post("/submitComment/:comment", (req, res) => {
 });
 
 
-// mock post database
-const posts = [
-  {
-    id: 1,
-    artist_name: "Waiyu",
-    song_title: "Imagine",
-    username: "username123",
-    post_title: "Cool song! #nyc",
-    post_comment: "Very cool, thanks for sharing",
-    post_commenter: "commentMan23",
-    hashtag: "nyc"
-  },
-  {
-    id: 2,
-    artist_name: "Ace Frehley",
-    song_title: "New York Groove",
-    username: "username745",
-    post_title: "Nice #nyc",
-    post_comment: "Nice, thanks",
-    post_commenter: "commentMan23",
-    hashtag: "nyc"
-  },
-  {
-    id: 3,
-    artist_name: "Dumb artist",
-    song_title: "Dumb song",
-    username: "username82",
-    post_title: "Dumb song!",
-    post_comment: "That was pretty dumb",
-    post_commenter: "commentMan23",
-    hashtag: "dumbsongs"
-  }
-];
-
-
-//mock users followed database
-const following = [
-  {
-    id: "ilovemusic14",
-    followedUsers: [
-      "user123", "musiclov3r",
-    ]
-  }
-]
 
 //load comments for a particular post
 app.get('/loadComments/:postId', async (req, res) => {
@@ -296,34 +270,42 @@ app.get('/loadComments/:postId', async (req, res) => {
 // load a main feed of only followed users' posts
 app.get('/mainFeed/:userId', async (req, res) => {
 
-  const userId = req.params.userId;
+  const userID = req.params.userId;
 
-  const followedUsers = getFollowedUsers(userId);
+  let following = [];
 
-  let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+  await userModel.findById(userID)
+    .then(doc => {
+      following = doc.following;
+    })
+    .catch(err => {
+      console.log(err);
+    });
 
-  // this logic would assumedly be taken care of in the eventual database queries
-  let followedPosts = [];
-  let data = response.data;
-  for (let i=0; i<data.length; i++) {
-    const post = data[i];
-    if (followedUsers.includes(post.username)) followedPosts.push(post);
-  }
-  res.json(followedPosts);
+  postModel.find({
+    'userID': { $in: following.map((id, i) => {
+      return mongoose.Types.ObjectId(id);
+    })},
+  })
+  .then(result => {
+    console.log(result);
+    res.json(result);
+  })
+  .catch(err => {
+    console.log(err);
+  })
+
+  // let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+
+  // // this logic would assumedly be taken care of in the eventual database queries
+  // let followedPosts = [];
+  // let data = response.data;
+  // for (let i=0; i<data.length; i++) {
+  //   const post = data[i];
+  //   if (followedUsers.includes(post.username)) followedPosts.push(post);
+  // }
+  // res.json(followedPosts);
 });
-
-function getFollowedUsers(userId) {
-
-  const database = following;
-
-  for (let i=0; i < database.length; i++) {
-    let jsonObj = database[i];
-
-    if (jsonObj.id == userId) {
-      return jsonObj.followedUsers;
-    }
-  }
-}
 
 app.get('/trophies/', async (req, res) => {
   
@@ -346,18 +328,17 @@ app.get('/hashtagFeed/:hashtag', async (req, res) => {
 
   const hashtag = req.params.hashtag; 
 
-  let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+  postModel.find({
+    'hashID': hashtag,
+  })
+  .then(result => {
+    console.log(result);
+    res.json(result);
+  })
+  .catch(err => {
+    console.log(err);
+  })
 
-  let postsResponse = [];
-
-  for (let i=0; i<response.data.length; i++) {
-    const post = response.data[i];
-    if (post.hashtag == hashtag) {
-      postsResponse.push(post);
-    }
-  }
-
-  res.json(postsResponse);
 });
 
 
