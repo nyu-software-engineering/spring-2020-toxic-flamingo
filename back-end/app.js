@@ -43,6 +43,7 @@ let user123 = new userModel({
 //   userID: "testID",
 //   postID: "123456",
 //   hashID: "nyc",
+//   timestamp: '2020-01-20',
 //   harmony: true,
 //   songName: "Imagine",
 //   artistName: "Waiyu",
@@ -52,11 +53,11 @@ let user123 = new userModel({
 //   comments: []
 // });
 
-user123.save({runValidators:true}).then(doc => {
-  console.log(doc);
-}).catch(err => {
-  console.log(err);
-});
+// post123.save({runValidators:true}).then(doc => {
+//   console.log(doc);
+// }).catch(err => {
+//   console.log(err);
+// });
 
 // userModel.findOneAndUpdate({Username: 'updatedUsername'},{Username: 'test test test'}, 
 // {
