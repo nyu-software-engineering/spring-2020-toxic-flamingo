@@ -28,17 +28,20 @@ let postModel = require('./src/models/Post.js');
 
 
 
-// let user123 = new userModel({
-//         userID: "1jjjww",   
-//         Username: "bob",
-//         Password: "1234",
-//         Email: "bob25@gmail.com",
-//         Bio: "hello my name is asdasdas",
-//         Profile_Pic: "link to picture",
-//         Trophies: [true, false, true, true, false, false, false, false],
-//         Follower: [],
-//         Following: []
-// })
+
+let post123 = new postModel({
+  userID: "testID",
+  postID: "4234234",
+  hashID: "la",
+  timestamp: '2020-01-21',
+  harmony: true,
+  songName: "I Love LA",
+  artistName: "Randy Newman",
+  albumName: "I Love LA",
+  picture: "pictureURL",
+  spotify: "spotifyURL",
+  comments: []
+});
 
 // user123.save({runValidators:true}).then(doc => {
 //   console.log(doc);
@@ -238,41 +241,6 @@ app.post("/submitComment/:comment", (req, res) => {
 });
 
 
-// mock post database
-const posts = [
-  {
-    id: 1,
-    artist_name: "Waiyu",
-    song_title: "Imagine",
-    username: "username123",
-    post_title: "Cool song! #nyc",
-    post_comment: "Very cool, thanks for sharing",
-    post_commenter: "commentMan23",
-    hashtag: "nyc"
-  },
-  {
-    id: 2,
-    artist_name: "Ace Frehley",
-    song_title: "New York Groove",
-    username: "username745",
-    post_title: "Nice #nyc",
-    post_comment: "Nice, thanks",
-    post_commenter: "commentMan23",
-    hashtag: "nyc"
-  },
-  {
-    id: 3,
-    artist_name: "Dumb artist",
-    song_title: "Dumb song",
-    username: "username82",
-    post_title: "Dumb song!",
-    post_comment: "That was pretty dumb",
-    post_commenter: "commentMan23",
-    hashtag: "dumbsongs"
-  }
-];
-
-
 //mock users followed database
 const following = [
   {
@@ -303,11 +271,9 @@ app.get('/mainFeed/:userId', async (req, res) => {
 
   const userID = req.params.userId;
 
-  const followedUsers = getFollowedUsers(userID);
-
   let following = [];
 
-  let userDoc = await userModel.findById(userID)
+  await userModel.findById(userID)
     .then(doc => {
       following = doc.following;
     })

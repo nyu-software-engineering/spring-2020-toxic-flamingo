@@ -12,9 +12,14 @@ const Post = (props) => {
 
     const data = props.data;
 
-    const commentsData = props.data.post_comments;
-    const initialComment = commentsData[0];
-    const remainingComments = commentsData.length-1;
+    const commentsData = data.comments;
+    let initialComment = "No comments here";
+    let remainingComments = 0;
+    if (commentsData.length > 0) {
+        initialComment = commentsData[0];
+        remainingComments = commentsData.length-1;
+    }
+    
 
 
     // make sure you dont see "see more comments if there are none"
@@ -22,14 +27,14 @@ const Post = (props) => {
     if (remainingComments > 0) {
     button = (
         <nav>
-            <Link to={"/PostComments/" + data.post_id}>See {remainingComments} more comments</Link>
+            <Link to={"/PostComments/" + data._id}>See {remainingComments} more comments</Link>
         </nav>
     );
     }
 
     if (shouldRedirect) {
         return (
-            <Redirect to={"/PostComments/" + data.post_id}/>
+            <Redirect to={"/PostComments/" + data._id}/>
         )
     }
 
@@ -38,15 +43,15 @@ const Post = (props) => {
         <div className="FeedPost">
             <div className='postHeader'>
                 <div className='posterInfo'>
-                    <img className='profileImage' alt='avatar' src={data.profile_picture} />
+                    <img className='profileImage' alt='avatar' src={data.picture} />
                     <h4>{data.username}</h4>
                 </div>
                 <h3>{data.post_title}</h3>
             </div>
             <div className='postContent'>
                 <div className='songInfo'>
-                    <p>Artist: {data.artist_name}</p>
-                    <p>Title: {data.song_title}</p>
+                    <p>Artist: {data.artistName}</p>
+                    <p>Title: {data.songName}</p>
                 </div>
                 <div className='playInfo'>
                     <MusicPlayer/>
@@ -55,7 +60,7 @@ const Post = (props) => {
             <div className="commentsTitle"><h5>Comments</h5></div>
             <div className='postComments'>
                 <div className='initialComment'>
-                    <p className='user'>@{initialComment.commenter_username}</p><p className='comment'>{initialComment.comment}</p>
+                    <p className='user'>@PLACEHOLDER UNTIL COMENTS WORK</p><p className='comment'>PLACEHOLDER UNTIL COMENTS WORK</p>
                 </div>
                 {button}
             </div>
