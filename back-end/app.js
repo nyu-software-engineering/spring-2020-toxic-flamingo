@@ -29,7 +29,7 @@ let postModel = require('./src/models/Post.js');
 
 
 let user123 = new userModel({
-        userID: "1jjj",   
+        userID: "1jjjww",   
         Username: "bob",
         Password: "1234",
         Email: "bob25@gmail.com",
@@ -38,32 +38,34 @@ let user123 = new userModel({
         Trophies: [true, false, true, true, false, false, false, false]
 })
 
-let post123 = new postModel({
-  userID: "testID",
-  postID: "123456",
-  hashID: "nyc",
-  harmony: true,
-  songName: "Imagine",
-  artistName: "Waiyu",
-  albumName: "Imagine",
-  picture: "pictureURL",
-  spotify: "spotifyURL",
-  comments: []
-});
+// let post123 = new postModel({
+//   userID: "testID",
+//   postID: "123456",
+//   hashID: "nyc",
+//   harmony: true,
+//   songName: "Imagine",
+//   artistName: "Waiyu",
+//   albumName: "Imagine",
+//   picture: "pictureURL",
+//   spotify: "spotifyURL",
+//   comments: []
+// });
 
-// user123.save().then(doc => {
-//   console.log(doc);
-// })
-
-userModel.findOneAndUpdate({Username: 'updatedUsername'},{Username: 'test test test'}, 
-{
-  new : true,
-  runValidators: true
-}).then(doc => {
+user123.save({runValidators:true}).then(doc => {
   console.log(doc);
 }).catch(err => {
   console.log(err);
-})
+});
+
+// userModel.findOneAndUpdate({Username: 'updatedUsername'},{Username: 'test test test'}, 
+// {
+//   new : true,
+//   runValidators: true
+// }).then(doc => {
+//   console.log(doc);
+// }).catch(err => {
+//   console.log(err);
+// })
 
 app.get("/", (req, res) => {
     res.send("Hello!");
