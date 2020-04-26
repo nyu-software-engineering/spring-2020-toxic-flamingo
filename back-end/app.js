@@ -2,9 +2,11 @@
 const axios = require("axios");
 const express = require("express"); // CommonJS import style!
 const bodyParser = require("body-parser");
+const morgan = require("morgan");
 const app = express(); // instantiate an Express object
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(morgan('dev'));
 const request = require("request");
 const querystring = require('querystring');
 let mongoose = require('mongoose');
@@ -24,6 +26,20 @@ let postModel = require('./src/models/Post.js');
   //console.log("connected with ")
 //});
 
+
+const router = require('express-promise-router')();
+const { validateBody, schemas } = require('./src/authentification/Helper.js');
+const UsersController = require('./src/authentification/UserController.js');
+const passport = require('passport');
+const passportConf = require('./src/authentification/passport');
+router.route('/signup')
+  .post(validateBody(schemas.authSchema), UsersController.signUp);
+
+router.route('/')
+      .post(validateBody(schemas.authSchema), passport.authenticate('local', {session: false}), UsersController.logIn);
+
+router.route('/secret')
+      .get(passport.authenticate('jwt', {session: false}), UsersController.secret);
 
 
 
