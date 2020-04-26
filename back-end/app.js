@@ -35,7 +35,9 @@ let user123 = new userModel({
         Email: "bob25@gmail.com",
         Bio: "hello my name is asdasdas",
         Profile_Pic: "link to picture",
-        Trophies: [true, false, true, true, false, false, false, false]
+        Trophies: [true, false, true, true, false, false, false, false],
+        Follower: [],
+        Following: []
 })
 
 // let post123 = new postModel({
