@@ -28,30 +28,30 @@ let postModel = require('./src/models/Post.js');
 
 
 let user123 = new userModel({
-        userID: "1jjjww",   
-        Username: "bob",
+        userID: "1jjjww2",   
+        Username: "testuser123",
         Password: "1234",
-        Email: "bob25@gmail.com",
+        Email: "bob253@gmail.com",
         Bio: "hello my name is asdasdas",
         Profile_Pic: "link to picture",
         Trophies: [true, false, true, true, false, false, false, false],
-        Follower: [],
-        Following: []
+        follower: ["musicman123"],
+        following: ["musicman123"]
 })
 
-// let post123 = new postModel({
-//   userID: "testID",
-//   postID: "123456",
-//   hashID: "nyc",
-//   timestamp: '2020-01-20',
-//   harmony: true,
-//   songName: "Imagine",
-//   artistName: "Waiyu",
-//   albumName: "Imagine",
-//   picture: "pictureURL",
-//   spotify: "spotifyURL",
-//   comments: []
-// });
+let post123 = new postModel({
+  userID: "testID",
+  postID: "123456",
+  hashID: "nyc",
+  timestamp: '2020-01-20',
+  harmony: true,
+  songName: "Imagine",
+  artistName: "Waiyu",
+  albumName: "Imagine",
+  picture: "pictureURL",
+  spotify: "spotifyURL",
+  comments: []
+});
 
 // post123.save({runValidators:true}).then(doc => {
 //   console.log(doc);
@@ -293,20 +293,43 @@ app.get('/loadComments/:postId', async (req, res) => {
 // load a main feed of only followed users' posts
 app.get('/mainFeed/:userId', async (req, res) => {
 
-  const userId = req.params.userId;
+  const userID = req.params.userId;
 
-  const followedUsers = getFollowedUsers(userId);
+  const followedUsers = getFollowedUsers(userID);
 
-  let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+  let following = [];
 
-  // this logic would assumedly be taken care of in the eventual database queries
-  let followedPosts = [];
-  let data = response.data;
-  for (let i=0; i<data.length; i++) {
-    const post = data[i];
-    if (followedUsers.includes(post.username)) followedPosts.push(post);
-  }
-  res.json(followedPosts);
+  let userDoc = await userModel.findById(userID)
+    .then(doc => {
+      following = doc.following;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  postModel.find({
+    'userID': { $in: following.map((id, i) => {
+      return mongoose.Types.ObjectId(id);
+    })},
+  })
+  .then(result => {
+    console.log(result);
+    res.json(result);
+  })
+  .catch(err => {
+    console.log(err);
+  })
+
+  // let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+
+  // // this logic would assumedly be taken care of in the eventual database queries
+  // let followedPosts = [];
+  // let data = response.data;
+  // for (let i=0; i<data.length; i++) {
+  //   const post = data[i];
+  //   if (followedUsers.includes(post.username)) followedPosts.push(post);
+  // }
+  // res.json(followedPosts);
 });
 
 function getFollowedUsers(userId) {
