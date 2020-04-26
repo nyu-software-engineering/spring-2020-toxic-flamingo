@@ -9,9 +9,12 @@ import queryString from 'query-string';
 const Make_Post = (props) => {
 
   const [data, setData] = useState([]);
+  const [search, setSearch] = useState([]);
 
-  useEffect( () => {
-    axios.get("/login")
+  function submitSearch() {
+    console.log("BUTTON?");
+    
+    axios.get("/Make_Post/" + search)
     //.then(response => JSON.parse(response))
     .then ((response) => {
       
@@ -30,8 +33,13 @@ const Make_Post = (props) => {
       console.log("error");
       console.log(err);
     })
-    
-  }, []);
+  }
+
+  function handleSearch(e) {
+    setSearch(e.target.value);
+    console.log("is this????")
+  }
+
 /*
 // actual data from spotify 
   useEffect( () => {
@@ -75,7 +83,8 @@ const Make_Post = (props) => {
   </div>
 
   <div className="SearchBar">
-    <input type="text" placeholder="Search (Artist, Title, Album):"></input>
+    <input type="text" placeholder="Search (Artist, Title, Album):" onChange={handleSearch}></input>
+    <button onClick={submitSearch}>Submit</button>
   </div>
 
 

@@ -179,10 +179,10 @@ app.get('/refresh_token', function(req, res) {
         json: true
     };
   })
-app.get('/login', function(req, res){
+app.get('/Make_Post/:search', function(req, res, next){
 var client_id = '691936c2acfc4bad82db2fe642f023ec'; // Your client id
 var client_secret = '2907a5de299c4052a6f9b3f738030a7a'; // Your secret
-
+let search = req.params.search;
 // your application requests authorization
 var authOptions = {
   url: 'https://accounts.spotify.com/api/token',
@@ -197,11 +197,11 @@ var authOptions = {
 
 request.post(authOptions, function(error, response, body) {
   if (!error && response.statusCode === 200) {
-
+    let url = `https://api.spotify.com/v1/search?q=${search}&type=artist`
     // use the access token to access the Spotify Web API
     var token = body.access_token;
     var options = {
-      url: 'https://api.spotify.com/v1/search?q=<artist name>&type=artist',
+      url: url,
       headers: {
         'Authorization': 'Bearer ' + token
       },
@@ -213,12 +213,15 @@ request.post(authOptions, function(error, response, body) {
       res.json(body);
       //res.redirect(querystring.stringify(body), 'http://localhost:3000/Make_Post');
     });
-
+    
     //let uri = process.env.FRONTEND_URI || 'http://localhost:3000/Make_Post'
     //res.redirect(uri)
   }
 });
-})
+next();
+});
+
+
 
 
 //post request for submitting a comment
