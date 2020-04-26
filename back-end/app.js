@@ -10,7 +10,6 @@ const querystring = require('querystring');
 let mongoose = require('mongoose');
 let db = require('./src/database.js');
 let userModel = require('./src/models/User.js');
-let followModel = require('./src/models/Follow.js');
 let postModel = require('./src/models/Post.js');
 //require('dotenv').config();
 // we will put some server logic here later...
@@ -44,6 +43,7 @@ let user123 = new userModel({
 //   userID: "testID",
 //   postID: "123456",
 //   hashID: "nyc",
+//   timestamp: '2020-01-20',
 //   harmony: true,
 //   songName: "Imagine",
 //   artistName: "Waiyu",
@@ -53,11 +53,11 @@ let user123 = new userModel({
 //   comments: []
 // });
 
-user123.save({runValidators:true}).then(doc => {
-  console.log(doc);
-}).catch(err => {
-  console.log(err);
-});
+// post123.save({runValidators:true}).then(doc => {
+//   console.log(doc);
+// }).catch(err => {
+//   console.log(err);
+// });
 
 // userModel.findOneAndUpdate({Username: 'updatedUsername'},{Username: 'test test test'}, 
 // {

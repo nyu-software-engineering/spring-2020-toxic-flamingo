@@ -7,6 +7,7 @@ let postSchema = new mongoose.Schema({
     type: String,
     unique: true, },
   hashID: Array,
+  timestamp: Date,
   harmony: Boolean,
   songName: {
     type: String,
