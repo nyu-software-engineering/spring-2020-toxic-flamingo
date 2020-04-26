@@ -2,9 +2,11 @@
 const axios = require("axios");
 const express = require("express"); // CommonJS import style!
 const bodyParser = require("body-parser");
+const morgan = require("morgan");
 const app = express(); // instantiate an Express object
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(morgan('dev'));
 const request = require("request");
 const querystring = require('querystring');
 let mongoose = require('mongoose');
@@ -12,7 +14,6 @@ let db = require('./src/database.js');
 let userModel = require('./src/models/User.js');
 let followModel = require('./src/models/Follow.js');
 let postModel = require('./src/models/Post.js');
-let trophyModel = require('./src/models/Trophy.js');
 //require('dotenv').config();
 // we will put some server logic here later...
 //console.log(process.env.DB_USER);
@@ -27,6 +28,18 @@ let trophyModel = require('./src/models/Trophy.js');
 //});
 
 
+const router = require('express-promise-router')();
+const { validateBody, schemas } = require('./authentification/Helper.js');
+const UsersController = require('./authentification/UserController.js');
+router.route('/signup')
+  .post(validateBody(schemas.authSchema), UsersController.signUp);
+
+
+app.get("/LogIn", (req,res) => {
+  //get email, username, etc.
+  //find it in the database
+  //if its there redirect if not throw err
+});
 
 
 let user123 = new userModel({
