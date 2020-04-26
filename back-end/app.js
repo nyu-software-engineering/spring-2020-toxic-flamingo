@@ -86,15 +86,6 @@ let post123 = new postModel({
 //   console.log(err);
 // });
 
-userModel.findOneAndUpdate({userID: '1jjjww'},{Email: 'testtesttest@gmail.com'}, 
-{
-  new : true,
-  runValidators: true
-}).then(doc => {
-  console.log(doc);
-}).catch(err => {
-  console.log(err);
-})
 
 app.get("/", (req, res) => {
     res.send("Hello!");
@@ -257,15 +248,6 @@ app.post("/submitComment/:comment", (req, res) => {
 });
 
 
-//mock users followed database
-const following = [
-  {
-    id: "ilovemusic14",
-    followedUsers: [
-      "user123", "musiclov3r",
-    ]
-  }
-]
 
 //load comments for a particular post
 app.get('/loadComments/:postId', async (req, res) => {
@@ -322,19 +304,6 @@ app.get('/mainFeed/:userId', async (req, res) => {
   // res.json(followedPosts);
 });
 
-function getFollowedUsers(userId) {
-
-  const database = following;
-
-  for (let i=0; i < database.length; i++) {
-    let jsonObj = database[i];
-
-    if (jsonObj.id == userId) {
-      return jsonObj.followedUsers;
-    }
-  }
-}
-
 app.get('/trophies/', async (req, res) => {
   
   //const userID = req.params.userID; 
@@ -356,18 +325,17 @@ app.get('/hashtagFeed/:hashtag', async (req, res) => {
 
   const hashtag = req.params.hashtag; 
 
-  let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
+  postModel.find({
+    'hashID': hashtag,
+  })
+  .then(result => {
+    console.log(result);
+    res.json(result);
+  })
+  .catch(err => {
+    console.log(err);
+  })
 
-  let postsResponse = [];
-
-  for (let i=0; i<response.data.length; i++) {
-    const post = response.data[i];
-    if (post.hashtag == hashtag) {
-      postsResponse.push(post);
-    }
-  }
-
-  res.json(postsResponse);
 });
 
 
