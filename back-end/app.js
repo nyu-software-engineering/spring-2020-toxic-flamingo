@@ -12,7 +12,6 @@ const querystring = require('querystring');
 let mongoose = require('mongoose');
 let db = require('./src/database.js');
 let userModel = require('./src/models/User.js');
-let followModel = require('./src/models/Follow.js');
 let postModel = require('./src/models/Post.js');
 //require('dotenv').config();
 // we will put some server logic here later...
@@ -29,17 +28,19 @@ let postModel = require('./src/models/Post.js');
 
 
 const router = require('express-promise-router')();
-const { validateBody, schemas } = require('./authentification/Helper.js');
-const UsersController = require('./authentification/UserController.js');
+const { validateBody, schemas } = require('./src/authentification/Helper.js');
+const UsersController = require('./src/authentification/UserController.js');
+const passport = require('passport');
+const passportConf = require('./src/authentification/passport');
 router.route('/signup')
   .post(validateBody(schemas.authSchema), UsersController.signUp);
 
+router.route('/')
+      .post(validateBody(schemas.authSchema), passport.authenticate('local', {session: false}), UsersController.logIn);
 
-app.get("/LogIn", (req,res) => {
-  //get email, username, etc.
-  //find it in the database
-  //if its there redirect if not throw err
-});
+router.route('/secret')
+      .get(passport.authenticate('jwt', {session: false}), UsersController.secret);
+
 
 
 let user123 = new userModel({

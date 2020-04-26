@@ -18,15 +18,21 @@
   "homepage": "https://github.com/nyu-software-engineering/spring-2020-toxic-flamingo#readme",
   "dependencies": {
     "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "express": "^4.17.1",
+    "express-promise-router": "^3.0.3",
     "istanbul": "^0.4.5",
     "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
     "mocha": "^7.1.1",
     "mongoose": "^5.9.10",
     "morgan": "^1.10.0",
     "nyc": "^15.0.1",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "validator": "^13.0.0"
   },
   "devDependencies": {
