@@ -4,7 +4,11 @@ import Axios from '../../back-end/node_modules/axios';
 
 const Make_Post2 = (props) => {
     const data = props.songData;
+    console.log(data);
     console.log("got data " + props.songData + " in make post 2");
+    for(let i = 0; i < data.artists.length; i++){
+        console.log(data.artists[i].name);
+    }
     const [description, updatedescription] = useState("");   
     function handledescription(e) {
         updatedescription(e.target.value);
@@ -18,21 +22,28 @@ const Make_Post2 = (props) => {
 
 
     function postIt() {
-        const dataaaaa =  {
+        console.log("Posting test")
+        let artists = [];
+        for(let i = 0; i < data.artists.length; i++){
+            artists.push(data.artists[i].name);
+        }
+        let dataaaaa =  {
             userID: null,   // import 
             postID: null,   // import 
             hashID: "la",
             timestamp: '2020-01-21',
             harmony: true,  // import 
-            songName: "I Love LA",
-            artistName: "Randy Newman",
-            albumName: "I Love LA",
-            picture: "pictureURL",
-            spotify: "spotifyURL",
+            songName: data.name,
+            artistName: artists,
+            albumName: data.album.name,
+            picture: data.album.images[0].url,
+            spotify: data.external_urls.spotify,
             description: description,
             comments: []
           }
-        Axios.get('/createpost'+ dataaaaa)
+        dataaaaa= JSON.stringify(dataaaaa);
+
+        Axios.get('/createPost'+ dataaaaa)
     }
 
     return(
