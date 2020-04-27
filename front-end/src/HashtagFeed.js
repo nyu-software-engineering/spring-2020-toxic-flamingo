@@ -9,7 +9,7 @@ const HashtagFeed = (props) => {
     const [data, setData] = useState([]);
     const [noPosts, setPosts] = useState(false);
 
-    // this will be passed in from hashtag search page, for now it is hardcoded as Computers based on mockaroo data
+    // this will be passed in from hashtag search page, for now it is hardcoded
     const hashtag = "la"; //props.hashtag; 
 
     // load in posts

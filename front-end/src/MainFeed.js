@@ -26,13 +26,15 @@ const MainFeed = (props) => {
         
     }, []);
 
-    
+    function handle(postID) {
+        console.log("woah! " + postID);
+    }
 
     return(
         <div className="MainFeed">
             <h1>Appbar</h1>
             {data.map((jsonObj, i) => (
-                <Post key={jsonObj._id} data={jsonObj}/>
+                <Post key={jsonObj._id} data={jsonObj} loadComments={((postID) => handle(postID))}/>
             ))}
         </div>
     );

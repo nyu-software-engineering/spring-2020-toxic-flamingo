@@ -8,7 +8,6 @@ import { Redirect } from 'react-router-dom';
 
 const Post = (props) => {
 
-    const [shouldRedirect, setRedirect] = useState(false);
 
     const data = props.data;
 
@@ -19,24 +18,24 @@ const Post = (props) => {
         initialComment = commentsData[0];
         remainingComments = commentsData.length-1;
     }
+
+    function handleClick(e) {
+        props.loadComments(data._id)
+    }
     
 
 
     // make sure you dont see "see more comments if there are none"
     let button;
-    if (remainingComments > 0) {
+    if (remainingComments > -5) {
     button = (
-        <nav>
-            <Link to={"/PostComments/" + data._id}>See {remainingComments} more comments</Link>
-        </nav>
+        // <nav>
+        //     <Link to={"/PostComments/" + data._id}>See {remainingComments} more comments</Link>
+        // </nav>
+        <button onClick={handleClick}>Click me!</button>
     );
     }
 
-    if (shouldRedirect) {
-        return (
-            <Redirect to={"/PostComments/" + data._id}/>
-        )
-    }
 
 
     return (
