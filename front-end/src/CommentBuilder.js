@@ -7,10 +7,14 @@ const CommentBuilder = (props) => {
 
     const [commentText, updateCommentText] = useState("");
 
+    const [userID, updateUserID] = useState("PLACEHOLDER_ID");
+
+    const postID = props.postID;
+
     function submitComment(e) {
         e.preventDefault();
         
-        axios.post("/submitComment/" +commentText);
+        axios.post("/submitComment/" + commentText + "/" + userID + "/" + postID);
     }
 
     function handleComment(e) {

@@ -97,7 +97,7 @@ const Make_Post = (props) => {
  
   <div className="content"> 
     {data.map((jsonObj,i) => (
-          <div class ="post" key={i.toString()} onClick={(jsonObj) => choose(data[i])}>  
+          <div class ="post" key={i.toString()} onClick={(jsonObj) => choose(jsonObj)}>  
           <img src="/content-img.jpg" alt="temp"></img>
           <p>{jsonObj.artists.map((artist, i) => {return artist.name + ", "})}, {jsonObj.name}</p>
           <br/>
