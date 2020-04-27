@@ -364,5 +364,23 @@ app.get("/changeEmail/:email", (req, res) => {
   })
   });
 
+app.get("/createPost/:dataaaaa", (req,res) => {
+  const data = req.params.dataaaaa
+  console.log(data);
+  
+  
+  //search for harmony here if there is previous post with same song - songname and artist
+  
+  
+  //post data and send it to monodb atlas here 
+  //postModel.save({runValidators:true}).then(doc => {
+      //console.log(data);
+      //}).catch(err => {
+      //console.log(err);
+     //});
+  //search for harmony here if there is previous post with same song - songname and artist
+  //get post data and send it to monodb atlas here 
+
+});
 
 module.exports = app;
