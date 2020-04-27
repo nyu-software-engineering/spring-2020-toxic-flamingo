@@ -236,7 +236,7 @@ request.post(authOptions, function(error, response, body) {
     //res.redirect(uri)
   }
 });
-next();
+
 });
 
 

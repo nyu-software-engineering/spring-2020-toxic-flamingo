@@ -40,6 +40,12 @@ const Make_Post = (props) => {
     console.log("is this????")
   }
 
+  function choose(e) {
+    console.log("picked a song!!!!!!!!!!");
+    console.log(e);
+    // make call to the wrapper here
+  }
+
 /*
 // actual data from spotify 
   useEffect( () => {
@@ -97,7 +103,7 @@ const Make_Post = (props) => {
  
   <div className="content"> 
     {data.map((jsonObj,i) => (
-          <div class ="post">
+          <div class ="post" onClick={(jsonObj) => choose(data[i])}>  
           <img src="/content-img.jpg" alt="temp"></img>
           <p>{jsonObj}</p>
           <br/>
