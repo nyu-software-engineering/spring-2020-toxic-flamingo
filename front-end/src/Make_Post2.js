@@ -5,9 +5,15 @@ import Axios from '../../back-end/node_modules/axios';
 const Make_Post2 = (props) => {
     const data = props.songData;
     console.log("got data " + props.songData + " in make post 2");
-    const [description, updatedescription] = useState("");   
+    const [description, updatedescription] = useState(""); 
+    const [hashtags, updateHashtags] = useState("");  
     function handledescription(e) {
         updatedescription(e.target.value);
+        console.log("description:" + e.target.value);
+        let descrp = e.target.value;
+        let tags = descrp.match(/#\w+/g);
+        console.log("hashtags:" + tags);
+        updateHashtags(tags);
         // I love this music #rock because #cool so I like this song. 
         //# => make them link to search result with the hash name 
         // we store them. 
