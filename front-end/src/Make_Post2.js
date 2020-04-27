@@ -3,7 +3,7 @@ import './Make_Post2.css';
 
 const Make_Post2 = (props) => {
 
-
+    console.log("got data " + props.songData + " in make post 2");
 
     return(
         <div className="Header">
