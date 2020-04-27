@@ -239,9 +239,6 @@ request.post(authOptions, function(error, response, body) {
 next();
 });
 
-
-
-
 //post request for submitting a comment
 app.post("/submitComment/:comment", (req, res) => {
 
@@ -340,6 +337,23 @@ app.get('/hashtagFeed/:hashtag', async (req, res) => {
   })
 
 });
+
+
+app.get("/changeEmail/:userID/:email", (req, res) => {
+
+  const email = req.params.email;
+  const uID = req.params.userID;
+
+  userModel.findOneAndUpdate({userID: uID},{Email: email}, 
+  {
+    new : true,
+    runValidators: true
+  }).then(doc => {
+    console.log(doc);
+  }).catch(err => {
+    console.log(err);
+  })
+  });
 
 
 module.exports = app;
