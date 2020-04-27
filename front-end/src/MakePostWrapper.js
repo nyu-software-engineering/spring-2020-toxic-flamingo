@@ -1,36 +1,42 @@
 import React, {useState, useEffect, Component} from 'react';
+import axios from 'axios';
+import Make_Post from './Make_Post'
+import Make_Post2 from './Make_Post2'
+import queryString from 'query-string';
 
-import Make_Post from './Make_Post';
-import Make_Post2 from './Make_Post2';
+// import logo from './logo.svg';
+//import './About.css';
 
+const MainFeed = (props) => {
 
-const MakePostWrapper = (props) => {
+    const [data, setData] = useState(true);
 
-    const [showScreenOne, setScreenOne] = useState(props.showScreenOne);
-    const [songJSON, setSong] = useState({});
+    const userId = "5ea5f57f46ba2e699831ae3f";
 
+    // load in posts
+    useEffect( () => {
+        //fetch data
 
-    function handleSongSelect(songInfo) {
-
-        console.log("got data " + songInfo);
+        axios.get("/mainFeed/" + userId)
+        .then ((response) => {
+            
+            setData(response.data);
+        })
+        .catch( err => {
+            console.log("ERROR!");
+            console.error(err);
+        })
         
-        if (songInfo != null) {
-            setSong(songInfo);
-            setScreenOne(false);
-        }
+    }, []);
+
+    function handle(postID) {
+        console.log("woah! " + postID);
     }
 
-    if (showScreenOne) {
-        return (
-            <Make_Post passSongData={(songInfo) => handleSongSelect(songInfo)}/>
-        );
-    }
-    else {
-        return (
-            <Make_Post2 songData={songJSON}/>
-        )
-    }
+    return(
+        
+    );
+
 }
 
-
-export default MakePostWrapper;
+export default MainFeed;
