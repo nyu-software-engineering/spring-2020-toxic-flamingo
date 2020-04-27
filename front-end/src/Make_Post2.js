@@ -1,9 +1,39 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Make_Post2.css';
+import Axios from '../../back-end/node_modules/axios';
 
 const Make_Post2 = (props) => {
-
+    const data = props.songData;
     console.log("got data " + props.songData + " in make post 2");
+    const [description, updatedescription] = useState("");   
+    function handledescription(e) {
+        updatedescription(e.target.value);
+        // I love this music #rock because #cool so I like this song. 
+        //# => make them link to search result with the hash name 
+        // we store them. 
+        // dscription : texts including hash 
+        
+    }
+
+
+
+    function postIt() {
+        const dataaaaa =  {
+            userID: null,   // import 
+            postID: null,   // import 
+            hashID: "la",
+            timestamp: '2020-01-21',
+            harmony: true,  // import 
+            songName: "I Love LA",
+            artistName: "Randy Newman",
+            albumName: "I Love LA",
+            picture: "pictureURL",
+            spotify: "spotifyURL",
+            description: description,
+            comments: []
+          }
+        Axios.get('/createpost'+ dataaaaa)
+    }
 
     return(
         <div className="Header">
@@ -18,15 +48,18 @@ const Make_Post2 = (props) => {
 
             </div>
 
-            <div class="picture"> <img src="/post2.jpg"></img> </div>
-
+         
+            <div class="picture"><img src = {data.album.images[0].url} alt="image over"></img></div>
+            <div>{data.name}</div>
             <div class="text"> 
-            <input type="text" placeholder="Write your music!"></input>
+            <input type="text" placeholder="Write your music!" onChange ={handledescription}></input>
             </div>
 
             <div class="post">
                 <form action="/MainFeed">
-                    <input type="submit" value="Create Post"/>
+                    {/* this is where we create post object and send it to back end*/}
+
+                    <button onClick={postIt}>Create Post</button>
                  </form>
             </div>
 

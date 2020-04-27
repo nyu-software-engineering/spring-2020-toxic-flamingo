@@ -215,7 +215,7 @@ var authOptions = {
 
 request.post(authOptions, function(error, response, body) {
   if (!error && response.statusCode === 200) {
-    let url = `https://api.spotify.com/v1/search?q=${search}&type=artist`
+    let url = `https://api.spotify.com/v1/search?q=${search}&type=track`
     // use the access token to access the Spotify Web API
     var token = body.access_token;
     var options = {
@@ -226,7 +226,8 @@ request.post(authOptions, function(error, response, body) {
       json: true
     };
     request.get(options, function(error, response, body) {
-      console.log(body);
+      console.log("TRACK DATA!!!!!!!!!!!!!!!!!!!!!");
+      console.log(body.tracks.items[0].album.images);
       //console.log(body.artists.items);
       res.json(body);
       //res.redirect(querystring.stringify(body), 'http://localhost:3000/Make_Post');
