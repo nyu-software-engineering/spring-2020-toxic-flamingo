@@ -37,12 +37,18 @@ const HashtagFeed = (props) => {
         </div>
     );
 
+    function handleCommentClick(postID) {
+        console.log("woah! " + postID);
+
+        props.loadComments(postID);
+    }
+
     return(
         <div className="HashtagFeed">
             <h1>Appbar</h1>
             <h3>#{hashtag}</h3>
             {data.map((jsonObj, i) => (
-                <Post key={jsonObj._id} data={jsonObj}/>
+                <Post key={jsonObj._id} data={jsonObj} loadComments={((postID) => handleCommentClick(postID))}/>
             ))}
         </div>
     );

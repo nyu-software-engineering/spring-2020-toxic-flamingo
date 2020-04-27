@@ -7,15 +7,17 @@ import CommentBuilder from './CommentBuilder';
 
 const PostComments = (props) => {
     
-    let postId = window.location.pathname;
+    let postID = props.postID;
 
-    postId = postId.replace("/PostComments/", "");
+    console.log("got post id " + postID);
+
+    postID = postID.replace("/PostComments/", "");
 
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get('/loadComments/' + postId)
+        axios.get('/loadComments/' + postID)
         .then((response) => {
             setComments(response.data);
             setLoading(false);
