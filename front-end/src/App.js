@@ -24,6 +24,7 @@ import Harmonies from './Harmonies';
 import PostComments from './PostComments';
 import Notifications from './Notifications';
 import SharmonyHeader from './SharmonyHeader';
+import FeedWrapper from './FeedWrapper.js';
 
 
 const App = (props) => {
@@ -79,7 +80,7 @@ const App = (props) => {
                   </Route>
                   <Route path="/MainFeed">
                   <SharmonyHeader />
-                        <MainFeed />
+                        <FeedWrapper isMainFeed={true} />
                         <PrimaryNav />
                   </Route>
                   <Route path="/Make_Post2">
@@ -107,7 +108,7 @@ const App = (props) => {
                   </Route> 
                   <Route path="/HashtagFeed">
                    <SharmonyHeader />
-                    <HashtagFeed />
+                   <FeedWrapper isMainFeed={false} />
                     <PrimaryNav />
                   </Route>        
                   <Route path="/PostComments/:postId">
