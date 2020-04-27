@@ -20,7 +20,7 @@ const MakePostWrapper = (props) => {
         }
     }
 
-    if (showScreenOne) {
+    if (showScreenOne) {xcvxcvcxv
         return (
             <Make_Post passSongData={(songInfo) => handleSongSelect(songInfo)}/>
         );
