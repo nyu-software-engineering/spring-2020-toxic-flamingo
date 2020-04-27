@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 import SharmonyLogo from './SharmonyLogo.PNG';
 
 
+function onSubmit() {
 
+}
 
 const SignUp = (props) => {
   const entry = useState({
@@ -30,7 +32,7 @@ const SignUp = (props) => {
             <input type="password" value={entry.email} />
             <br/>
             <br/>
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" onSubmit={onSubmit}/>
           </form>
           
     </div>
