@@ -38,7 +38,7 @@ const Make_Post2 = (props) => {
         let dataaaaa =  {
             userID: null,   // import 
             postID: null,   // import 
-            hashID: "la",
+            hashID: hashtags, //array of hashtags with '#' behind every tag
             timestamp: '2020-01-21',
             harmony: true,  // import 
             songName: data.name,
