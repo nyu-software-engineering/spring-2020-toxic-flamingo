@@ -8,12 +8,13 @@ const MakePostWrapper = (props) => {
 
     const [showScreenOne, setScreenOne] = useState(props.showScreenOne);
     const [songJSON, setSong] = useState({});
+    
 
 
     function handleSongSelect(songInfo) {
 
         console.log("got data " + songInfo);
-        
+
         if (songInfo != null) {
             setSong(songInfo);
             setScreenOne(false);

@@ -5,8 +5,8 @@ import './CommentView.css'
 
 const CommentView = (props) => {
 
-    const comment = props.data.comment;
-    const commenter = props.data.commenter_username;
+    const comment = props.data.text;
+    const commenter = props.data.username;
 
     return (
         <div className="CommentView">

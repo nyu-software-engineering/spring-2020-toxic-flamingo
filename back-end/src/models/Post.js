@@ -16,7 +16,7 @@ let postSchema = new mongoose.Schema({
     type: String,
     required: true,},
   artistName: {
-    type: String,
+    type: Array,
     required: true,},
   albumName: {
     type: String,
