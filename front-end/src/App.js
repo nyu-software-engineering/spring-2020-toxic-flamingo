@@ -25,6 +25,7 @@ import PostComments from './PostComments';
 import Notifications from './Notifications';
 import SharmonyHeader from './SharmonyHeader';
 import FeedWrapper from './FeedWrapper.js';
+import MakePostWrapper from './MakePostWrapper';
 
 
 const App = (props) => {
@@ -38,7 +39,7 @@ const App = (props) => {
                     <PrimaryNav />
                   </Route>
                   <Route path="/Make_Post">
-                    <Make_Post />
+                    <MakePostWrapper showScreenOne={true}/>
                     <PrimaryNav />
                   </Route>
   
@@ -84,7 +85,7 @@ const App = (props) => {
                         <PrimaryNav />
                   </Route>
                   <Route path="/Make_Post2">
-                    <Make_Post2 />
+                  <MakePostWrapper showScreenOne={false}/>
                     <PrimaryNav />
                   </Route>
                   <Route path="/Follower">
