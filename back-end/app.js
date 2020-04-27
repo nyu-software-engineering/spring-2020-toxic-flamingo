@@ -13,6 +13,7 @@ let mongoose = require('mongoose');
 let db = require('./src/database.js');
 let userModel = require('./src/models/User.js');
 let postModel = require('./src/models/Post.js');
+let commentModel = require('./src/models/Comment');
 //require('dotenv').config();
 // we will put some server logic here later...
 //console.log(process.env.DB_USER);
@@ -43,7 +44,10 @@ router.route('/secret')
 
 
 
-
+let comment = new commentModel({
+  userID: "test",
+  text: "cool comment"
+})
 
 let post123 = new postModel({
   userID: "testID",
@@ -56,10 +60,10 @@ let post123 = new postModel({
   albumName: "I Love LA",
   picture: "pictureURL",
   spotify: "spotifyURL",
-  comments: []
+  comments: [comment]
 });
 
-// user123.save({runValidators:true}).then(doc => {
+// post123.save({runValidators:true}).then(doc => {
 //   console.log(doc);
 // }).catch(err => {
 //   console.log(err);
@@ -171,20 +175,6 @@ app.get("/Follower", async (req, res) => {
 
 
 
-app.get('/loadComments/:postId', async (req, res) => {
-
-  const postId = req.params.postId;
-
-  let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
-  for (let i=0; i < response.data.length; i++) {
-    if (response.data[i].post_id.toString() == postId) {
-      console.log("found post with id " + postId);
-      res.json(response.data[i].post_comments);
-      break;
-    }
-  }
-});
-
 app.get('/refresh_token', function(req, res) {
     let refresh_token = req.query.refresh_token;
     let authOptions = {
@@ -242,11 +232,27 @@ request.post(authOptions, function(error, response, body) {
 
 
 //post request for submitting a comment
-app.post("/submitComment/:comment", (req, res) => {
+app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
 
     const comment = req.params.comment;
+    const userID = req.params.userID;
+    const postID = req.params.postID;
 
-    console.log("comment is: " + comment);
+    let commentToSubmit = new commentModel({
+      userID: userID,
+      text: comment
+    });
+
+    await postModel.updateOne(
+      {_id: postID},
+      {$push: {comments: commentToSubmit}}
+    )
+    .then(doc => {
+      console.log(doc);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 
@@ -254,16 +260,37 @@ app.post("/submitComment/:comment", (req, res) => {
 //load comments for a particular post
 app.get('/loadComments/:postId', async (req, res) => {
 
-    const postId = req.params.postId;
+    const postID = req.params.postId;
 
-    let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=20&key=ffab93f0");
-    for (let i=0; i < response.data.length; i++) {
-      if (response.data[i].post_id.toString() == postId) {
-        console.log("found post with id " + postId);
-        res.json(response.data[i].post_comments);
-        break;
-      }
+    let comments = [];
+    let formattedComments = [];
+
+    await postModel.findById(postID)
+      .then(doc => {
+        
+        comments = doc.comments;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    for (let i=0; i < comments.length; i++) {
+      let comment = comments[i];
+
+      await userModel.findById(comment.userID)
+      .then(doc => {
+        formattedComments.push({
+          username: doc.Username,
+          text: comment.text,
+          timestamp: comment.createdAt
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      });
     }
+
+    res.json(formattedComments);
 });
 
 // load a main feed of only followed users' posts

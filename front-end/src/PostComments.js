@@ -9,8 +9,6 @@ const PostComments = (props) => {
     
     let postID = props.postID;
 
-    console.log("got post id " + postID);
-
     postID = postID.replace("/PostComments/", "");
 
     const [comments, setComments] = useState([]);
@@ -42,7 +40,7 @@ const PostComments = (props) => {
             {comments.map((commentJson, i) => (
                 <CommentView key={i} data={commentJson}/>
             ))}
-            <CommentBuilder/>
+            <CommentBuilder postID={postID}/>
         </div>
     );
 
