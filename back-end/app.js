@@ -63,6 +63,18 @@ let post123 = new postModel({
   comments: [comment]
 });
 
+// let user123 = new userModel({
+//   userID: "testtesttest",
+//   Username: "gary333",
+//   Password: "gary123",
+//   Email: "gary@d.com",
+//   Bio: "dfsdf",
+//   Profile_Pic: "String",
+//   Trophies: [],
+//   follower: [],
+//   following: [],
+// })
+
 // post123.save({runValidators:true}).then(doc => {
 //   console.log(doc);
 // }).catch(err => {
@@ -125,10 +137,10 @@ const users = [
 ];
 
 
-app.get("/user/:userID", (req, res) => {
-  const userID = req.params.userID;
-  res.send(user[userID]);
-})
+// app.get("/user/:userID", (req, res) => {
+//   const userID = req.params.userID;
+//   res.send(user[userID]);
+// })
 
 app.get("/profileposts/:userID", async (req,res) => {
   const userID = req.params.userID;
@@ -205,7 +217,7 @@ var authOptions = {
 
 request.post(authOptions, function(error, response, body) {
   if (!error && response.statusCode === 200) {
-    let url = `https://api.spotify.com/v1/search?q=${search}&type=artist`
+    let url = `https://api.spotify.com/v1/search?q=${search}&type=track`
     // use the access token to access the Spotify Web API
     var token = body.access_token;
     var options = {
@@ -216,7 +228,8 @@ request.post(authOptions, function(error, response, body) {
       json: true
     };
     request.get(options, function(error, response, body) {
-      console.log(body);
+      console.log("TRACK DATA!!!!!!!!!!!!!!!!!!!!!");
+      console.log(body.tracks.items[0].album.images);
       //console.log(body.artists.items);
       res.json(body);
       //res.redirect(querystring.stringify(body), 'http://localhost:3000/Make_Post');
@@ -227,9 +240,6 @@ request.post(authOptions, function(error, response, body) {
   }
 });
 });
-
-
-
 
 //post request for submitting a comment
 app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
@@ -366,6 +376,23 @@ app.get('/hashtagFeed/:hashtag', async (req, res) => {
   })
 
 });
+
+
+app.get("/changeEmail/:email", (req, res) => {
+
+  const email = req.params.email;
+  console.log(email);
+  const uID = "testtesttest";
+  userModel.findOneAndUpdate({userID: uID},{Email: email}, 
+  {
+    new : true,
+    runValidators: true
+  }).then(doc => {
+    console.log(doc);
+  }).catch(err => {
+    console.log(err);
+  })
+  });
 
 
 module.exports = app;

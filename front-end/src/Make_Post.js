@@ -18,16 +18,8 @@ const Make_Post = (props) => {
     //.then(response => JSON.parse(response))
     .then ((response) => {
       
-      console.log('testset')
       console.log(response.data);
-
-      let row = [];
-      for(const i of response.data.artists.items){
-        row.push(i.name);
-      }
-
-      console.log(row);
-      setData(row);
+      setData(response.data.tracks.items);
     })
     .catch(err => {
       console.log("error");
@@ -107,7 +99,7 @@ const Make_Post = (props) => {
     {data.map((jsonObj,i) => (
           <div class ="post" key={i.toString()} onClick={(jsonObj) => choose(jsonObj)}>  
           <img src="/content-img.jpg" alt="temp"></img>
-          <p>{jsonObj}</p>
+          <p>{jsonObj.artists.map((artist, i) => {return artist.name + ", "})}, {jsonObj.name}</p>
           <br/>
           <div class="line"></div>
           </div>
