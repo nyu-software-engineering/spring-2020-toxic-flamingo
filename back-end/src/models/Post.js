@@ -2,6 +2,7 @@ let mongoose = require('mongoose')
 let validator = require('validator')
 const timestampPlugin = require('./../plugins/timestamp');
 const duplicatePlugin = require('./../plugins/duplicate');
+const commentModel = require('./Comment');
 
 
 let postSchema = new mongoose.Schema({
@@ -27,7 +28,7 @@ let postSchema = new mongoose.Schema({
     type: String,
     required: true,},
   description: String,
-  comments: []
+  comments: [commentModel.schema]
 }, {collection: "PostCollection"})
 
 postSchema.plugin(timestampPlugin);
