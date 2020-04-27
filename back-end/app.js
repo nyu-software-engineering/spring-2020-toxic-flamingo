@@ -43,21 +43,30 @@ router.route('/secret')
 
 
 
-
-
-let post123 = new postModel({
-  userID: "testID",
-  postID: "4234234",
-  hashID: "la",
-  timestamp: '2020-01-21',
-  harmony: true,
-  songName: "I Love LA",
-  artistName: "Randy Newman",
-  albumName: "I Love LA",
-  picture: "pictureURL",
-  spotify: "spotifyURL",
-  comments: []
-});
+// let user123 = new userModel({
+//   userID: "testtesttest",
+//   Username: "gary333",
+//   Password: "gary123",
+//   Email: "gary@d.com",
+//   Bio: "dfsdf",
+//   Profile_Pic: "String",
+//   Trophies: [],
+//   follower: [],
+//   following: [],
+// })
+// let post123 = new postModel({
+//   userID: "testID",
+//   postID: "4234234",
+//   hashID: "la",
+//   timestamp: '2020-01-21',
+//   harmony: true,
+//   songName: "I Love LA",
+//   artistName: "Randy Newman",
+//   albumName: "I Love LA",
+//   picture: "pictureURL",
+//   spotify: "spotifyURL",
+//   comments: []
+// });
 
 // user123.save({runValidators:true}).then(doc => {
 //   console.log(doc);
@@ -121,10 +130,10 @@ const users = [
 ];
 
 
-app.get("/user/:userID", (req, res) => {
-  const userID = req.params.userID;
-  res.send(user[userID]);
-})
+// app.get("/user/:userID", (req, res) => {
+//   const userID = req.params.userID;
+//   res.send(user[userID]);
+// })
 
 app.get("/profileposts/:userID", async (req,res) => {
   const userID = req.params.userID;
@@ -238,9 +247,6 @@ request.post(authOptions, function(error, response, body) {
 });
 });
 
-
-
-
 //post request for submitting a comment
 app.post("/submitComment/:comment", (req, res) => {
 
@@ -339,6 +345,23 @@ app.get('/hashtagFeed/:hashtag', async (req, res) => {
   })
 
 });
+
+
+app.get("/changeEmail/:email", (req, res) => {
+
+  const email = req.params.email;
+  console.log(email);
+  const uID = "testtesttest";
+  userModel.findOneAndUpdate({userID: uID},{Email: email}, 
+  {
+    new : true,
+    runValidators: true
+  }).then(doc => {
+    console.log(doc);
+  }).catch(err => {
+    console.log(err);
+  })
+  });
 
 
 module.exports = app;
