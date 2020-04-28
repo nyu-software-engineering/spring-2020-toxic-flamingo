@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import './Make_Post2.css';
 import axios from 'axios';
+import {NavLink} from 'react-router-dom';
+import {hashHistory} from 'react';
 
 const Make_Post2 = (props) => {
     const data = props.songData;
@@ -56,11 +58,14 @@ const Make_Post2 = (props) => {
         // if second request is ok, receive a notification 
         .then((res) => {
             console.log('request is ok');
+            hashHistory.push('/MainFeed')
+            //return <Redirect to ="/MainFeed"/>
         })
         // if there is an error, receive a notification
         .catch((err) => {
             console.log(err);
         })
+        
     }
 
     return(
@@ -86,8 +91,9 @@ const Make_Post2 = (props) => {
             <div class="post">
                 <form>
                     {/* this is where we create post object and send it to back end*/}
-
+                    <NavLink to="/MainFeed">
                     <button onClick={postIt}>Create Post</button>
+                    </NavLink>
                  </form>
             </div>
 
