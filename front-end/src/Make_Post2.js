@@ -32,6 +32,7 @@ const Make_Post2 = (props) => {
     function postIt(e) {
         e.preventDefault();
         console.log("Posting test")
+        console.log(data.preview_url)
         let artists = [];
         for(let i = 0; i < data.artists.length; i++){
             artists.push(data.artists[i].name);
@@ -44,7 +45,7 @@ const Make_Post2 = (props) => {
             artistName: artists,
             albumName: data.album.name,
             picture: data.album.images[0].url,
-            spotify: data.external_urls.spotify,
+            spotify: data.preview_url,
             description: description,
             comments: []
           }

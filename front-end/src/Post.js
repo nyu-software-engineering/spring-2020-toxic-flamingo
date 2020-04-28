@@ -5,10 +5,12 @@ import axios from 'axios';
 import './Post.css';
 import MusicPlayer from './MusicPlayer';
 import { Redirect } from 'react-router-dom';
+//onst cors = require('cors');
 
 const Post = (props) => {
     const [audioPlayer] = useState(new Audio());
-
+    let val = "Play";
+    const [playPause, setData] = useState(val);
     const data = props.data;
 
     const commentsData = data.comments;
@@ -23,9 +25,19 @@ const Post = (props) => {
         props.loadComments(data._id)
     }
     
-    function play() {
-        audioPlayer.src(data.spotify)
+    function musicPlayer() {
+        let spotifyLink = data.spotify
+        console.log(spotifyLink)
+        if (playPause == 'Pause') {
+            audioPlayer.pause();
+            setData('Play');
+        }
+        else {val = 'Pause';
+        setData(val);
+        
+        audioPlayer.src=spotifyLink
         audioPlayer.play();
+        }
     }
 
 
@@ -56,8 +68,8 @@ const Post = (props) => {
                     <p>Artist: {data.artistName}</p>
                     <p>Title: {data.songName}</p>
                 </div>
-                <div className='playInfo'>
-                    <button onClick={play}>Play</button>
+                <div className='musicPlayerInfo'>
+                    <button onClick={musicPlayer}>{playPause}</button>
                 </div>
             </div>
             <div className='description'>
