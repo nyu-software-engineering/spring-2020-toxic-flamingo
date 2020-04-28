@@ -263,6 +263,8 @@ app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
     .catch(err => {
       console.log(err);
     });
+
+    res.send("hey!");
 });
 
 
