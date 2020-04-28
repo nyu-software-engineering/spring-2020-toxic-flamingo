@@ -332,6 +332,7 @@ app.get('/mainFeed/:userId', async (req, res) => {
   await userModel.findById(userID)
     .then(doc => {
       following = doc.following;
+      following.push(userID)
     })
     .catch(err => {
       console.log(err);
@@ -450,7 +451,6 @@ app.post("/createPost/", (req,res) => {
 
   let newPost = new postModel({
     userID: data.userID,
-    postID: data.postID,
     hashID: data.hashID,
     harmony: true, //figure that out after search
     songName: data.songName,

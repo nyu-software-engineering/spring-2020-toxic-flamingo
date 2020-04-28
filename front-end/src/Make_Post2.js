@@ -37,8 +37,7 @@ const Make_Post2 = (props) => {
             artists.push(data.artists[i].name);
         }
         let songData =  {
-            userID: null,   // import 
-            postID: null,   // import 
+            userID: "5ea5f57f46ba2e699831ae3f",   // import 
             hashID: hashtags, //array of hashtags with '#' behind every tag
             harmony: true,  // import 
             songName: data.name,

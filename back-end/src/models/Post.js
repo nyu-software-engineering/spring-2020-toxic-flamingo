@@ -1,15 +1,12 @@
 let mongoose = require('mongoose')
 let validator = require('validator')
 const timestampPlugin = require('./../plugins/timestamp');
-const duplicatePlugin = require('./../plugins/duplicate');
+//const duplicatePlugin = require('./../plugins/duplicate');
 const commentModel = require('./Comment');
 
 
 let postSchema = new mongoose.Schema({
   userID: String,
-  postID: {
-    type: String,
-    unique: true, },
   hashID: Array,
   harmony: Boolean,
   songName: {
@@ -32,6 +29,6 @@ let postSchema = new mongoose.Schema({
 }, {collection: "PostCollection"})
 
 postSchema.plugin(timestampPlugin);
-postSchema.plugin(duplicatePlugin);
+//postSchema.plugin(duplicatePlugin);
 
 module.exports = mongoose.model('Post', postSchema);

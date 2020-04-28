@@ -28,7 +28,7 @@ const Followee = (props) => {
             <button class="btn"></button>
             </div>
             <div>
-                <h3>Followee</h3>
+                <h3>Following</h3>
             </div>
             </div>
 
