@@ -14,6 +14,7 @@ let db = require('./src/database.js');
 let userModel = require('./src/models/User.js');
 let postModel = require('./src/models/Post.js');
 let commentModel = require('./src/models/Comment');
+let notificationModel = require('./src/models/Notification');
 let tagModel = require('./src/models/Tag');
 //require('dotenv').config();
 // we will put some server logic here later...
@@ -352,6 +353,16 @@ app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
       console.log(err);
     });
 
+    let newNotification = new notificationModel({
+      userID: 'testtestest',//data.userID,
+      text: `user made a new comment!` //`${data.userID has a new post!}`
+    })
+    newNotification.save({runValidators:true}).then(doc => {
+      console.log(data);
+      }).catch(err => {
+      console.log(err);
+     });     
+
     res.send("hey!");
 });
 
@@ -520,8 +531,8 @@ app.post("/createPost/", (req,res) => {
   //search for harmony here if there is previous post with same song - songname and artist
 
   let newPost = new postModel({
-    userID: data.userID,
-    postID: data.postID,
+    userID: 'testtestest',//data.userID,
+    postID: 'testsetset',//data.postID,
     hashID: data.hashID,
     harmony: true, //figure that out after search
     songName: data.songName,
@@ -530,19 +541,28 @@ app.post("/createPost/", (req,res) => {
     picture: data.picture,
     spotify: data.spotify,
     description: data.description,
-    comments: data.comments
+    comments: [{user:'godddamnit'}]//data.comments
   });
 
   //post data and send it to monodb atlas here 
   newPost.save({runValidators:true}).then(doc => {
+      console.log('this is pushing data to DB')
       console.log(data);
       }).catch(err => {
       console.log(err);
      });
-
   //search for harmony here if there is previous post with same song - songname and artist
   //get post data and send it to monodb atlas here 
-
-});
+  
+  let newNotification = new notificationModel({
+    userID: 'testtestest',//data.userID,
+    text: `user has a new post!` //`${data.userID has a new post!}`
+  })
+  newNotification.save({runValidators:true}).then(doc => {
+    console.log(data);
+    }).catch(err => {
+    console.log(err);
+   });  
+})
 
 module.exports = app;
