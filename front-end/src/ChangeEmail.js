@@ -4,15 +4,18 @@ import axios from 'axios';
 import "./ChangeEmail.css";
 const ChangeEmail = (props) => {
   const [data, setData] = useState("");
-  const userId = "5ea5f57f46ba2e699831ae3f";
+  let dataArray = {
+    email: data,
+    userID: "5ea5f57f46ba2e699831ae3f"
+  }
   function submitEmail(e) {
+    e.preventDefault();
     console.log(data)
-    axios.get("/changeEmail/"+ data)
-        .then ((response) => {
-            setData(response.data);
+    axios.post("/changeEmail/", dataArray)
+        .then ((res) => {
+            console.log('request is ok');
         })
         .catch( err => {
-            console.log("ERROR!");
             console.error(err);
         })
 }
@@ -29,9 +32,8 @@ function handleData(e) {
         <form>
               <p>Enter your new email: </p>
               <input className='newEmail' type='text' name='email' onChange={handleData} />
-              <NavLink to="/MainFeed">
+              
                 <button onClick={submitEmail}>Submit</button>
-              </NavLink>
               </form>
 
     </section>
