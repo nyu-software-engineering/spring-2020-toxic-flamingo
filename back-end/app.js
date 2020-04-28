@@ -414,6 +414,7 @@ app.get('/mainFeed/:userId', async (req, res) => {
   await userModel.findById(userID)
     .then(doc => {
       following = doc.following;
+      following.push(userID)
     })
     .catch(err => {
       console.log(err);
@@ -531,8 +532,7 @@ app.post("/createPost/", (req,res) => {
   //search for harmony here if there is previous post with same song - songname and artist
 
   let newPost = new postModel({
-    userID: 'testtestest',//data.userID,
-    postID: 'testsetset',//data.postID,
+    userID: data.userID,
     hashID: data.hashID,
     harmony: true, //figure that out after search
     songName: data.songName,

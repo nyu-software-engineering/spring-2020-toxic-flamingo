@@ -7,7 +7,7 @@ import MusicPlayer from './MusicPlayer';
 import { Redirect } from 'react-router-dom';
 
 const Post = (props) => {
-
+    const [audioPlayer] = useState(new Audio());
 
     const data = props.data;
 
@@ -23,6 +23,10 @@ const Post = (props) => {
         props.loadComments(data._id)
     }
     
+    function play() {
+        audioPlayer.src(data.spotify)
+        audioPlayer.play();
+    }
 
 
     // make sure you dont see "see more comments if there are none"
@@ -53,8 +57,11 @@ const Post = (props) => {
                     <p>Title: {data.songName}</p>
                 </div>
                 <div className='playInfo'>
-                    <MusicPlayer/>
+                    <button onClick={play}>Play</button>
                 </div>
+            </div>
+            <div className='description'>
+                <p>{data.description}</p>
             </div>
             <div className="commentsTitle"><h5>Comments</h5></div>
             <div className='postComments'>
