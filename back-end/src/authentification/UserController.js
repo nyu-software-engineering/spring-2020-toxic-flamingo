@@ -50,12 +50,14 @@ module.exports = {
 
     logIn: async (req, res, next) => {
         //generate tokens
-        
+        console.log("log in called");
         const token = signToken(req.user);
         res.status(200).json({token});
 
 
     },
+
+    
 
     secret: async (req, res, next) => {
         //generate tokens

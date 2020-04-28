@@ -15,6 +15,7 @@ let userModel = require('./src/models/User.js');
 let postModel = require('./src/models/Post.js');
 let commentModel = require('./src/models/Comment');
 let notificationModel = require('./src/models/Notification');
+let tagModel = require('./src/models/Tag');
 //require('dotenv').config();
 // we will put some server logic here later...
 //console.log(process.env.DB_USER);
@@ -28,14 +29,16 @@ let notificationModel = require('./src/models/Notification');
   //console.log("connected with ")
 //});
 
-
+/*
 const router = require('express-promise-router')();
 const { validateBody, schemas } = require('./src/authentification/Helper.js');
 const UsersController = require('./src/authentification/UserController.js');
 const passport = require('passport');
 const passportConf = require('./src/authentification/passport');
+
 router.route('/signup')
   .post(validateBody(schemas.authSchema), UsersController.signUp);
+
 
 router.route('/')
       .post(validateBody(schemas.authSchema), passport.authenticate('local', {session: false}), UsersController.logIn);
@@ -44,25 +47,78 @@ router.route('/secret')
       .get(passport.authenticate('jwt', {session: false}), UsersController.secret);
 
 
+let tag = new tagModel({
+  tag: "waiyu",
+  posts: []
+});
 
-let comment = new commentModel({
-  userID: "test",
-  text: "cool comment"
+app.use("/routes", require("./src/authentification/routes"));
+*/
+
+const JWT = require('jsonwebtoken');
+const {JWT_SECRET} = require('./src/configuration'); 
+
+signToken = (user) => {
+    return JWT.sign({
+        iss: 'Sharmony',
+        sub: user._id,
+        iat: new Date().getTime(), //current time
+        exp: new Date().setDate(new Date().getDate + 1) // current time + 1 day
+    }, JWT_SECRET)
+}
+
+app.post("/signUp", async (req, res, next) => {
+        
+  console.log('UsersController.signUp() called!');
+  //console.log(req);
+  let data = req.body;
+  console.log(data);
+
+  let email = data.email;
+  let password = data.password;
+  let username = data.username;
+  console.log("email:" + email);
+  console.log("password:" + password);
+  console.log("username:" + username);
+
+  //check if theres a user w same email or 
+  let foundEmail = await userModel.findOne({email: email});
+  if (foundEmail) {
+       return res.status(409).json({error: 'Email is already in use'})
+  }
+
+  let foundUser = await userModel.findOne({username: username});
+  if (foundUser) {
+       return res.status(409).json({error: 'Username is already in use'})
+  }
+
+  //create new user
+  let newUser = new userModel({
+      Email: email,
+      Password: password,
+      Username: username
+  })
+  await newUser.save();
+  
+  //generate token
+  let token = signToken(newUser);
+
+  //respond w token
+  res.status(200).json({token: token});
+
+
 })
 
-let post123 = new postModel({
-  userID: "testID",
-  postID: "4234234",
-  hashID: "la",
-  timestamp: '2020-01-21',
-  harmony: true,
-  songName: "I Love LA",
-  artistName: "Randy Newman",
-  albumName: "I Love LA",
-  picture: "pictureURL",
-  spotify: "spotifyURL",
-  comments: [comment]
-});
+app.get("/logIn", async (req, res, next) => {
+  //generate tokens
+  console.log("log in called");
+  const token = signToken(req.user);
+  res.status(200).json({token});
+
+
+})
+
+
 
 // let user123 = new userModel({
 //   userID: "testtesttest",
@@ -158,11 +214,12 @@ app.get("/Search/:searchUsers/:searchQuery", async (req, res) => {
   //const user  = req.params.userid;
 
   const searchUsers = req.params.searchUsers;
-  const searchQuery = req.params.searchQuery;
+  const searchQuery = req.params.searchQuery.trim();
 
   console.log(searchUsers + " " + searchQuery);
 
-  if (searchUsers) {
+  if (searchUsers == 'true') {
+    console.log("looking for user " + searchQuery);
     userModel.find(
       { "Username": { "$regex": searchQuery, "$options": "i" } }
     )
@@ -174,8 +231,22 @@ app.get("/Search/:searchUsers/:searchQuery", async (req, res) => {
       console.log(err);
     });
   }
+  else {
+    console.log("looking for tag " + searchQuery);
+    tagModel.find(
+      { "tag": { "$regex": searchQuery, "$options": "i" }}
+    )
+    .then(result => {
+      console.log(result);
+      res.json(result);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
 
-})
+});
+
  function getProfilePosts(userID){
    let posts = [];
   console.log(userID);

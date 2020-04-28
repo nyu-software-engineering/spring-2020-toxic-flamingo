@@ -2,6 +2,7 @@ import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import './Make_Post.css';
 import UserSearchTile from './UserSearchTile';
+import TagSearchTile from './TagSearchTile';
 // import logo from './logo.svg';
 //import './About.css';
 
@@ -79,20 +80,32 @@ const Search = (props) => {
   </div>
 
   <div class="flex-container">
-  <div className="Users"><button className="company" onClick={() => setSearchUsers(true)}>Users</button></div>
-  <div className="Tags"><button className="company" onClick={() => setSearchUsers(false)}>Tags</button></div>
+  <div className="Users"><button className="company" onClick={() => {
+    setData([]);
+    setQuery("");
+    setSearchUsers(true);
+  }}>Users</button></div>
+  <div className="Tags"><button className="company" onClick={() => {
+    setData([]);
+    setQuery("");
+    setSearchUsers(false);
+  }}>Tags</button></div>
 
   </div>
  
  
   <div className="content"> 
       {data.map((jsonObj,i) => {
+
+        if (data.length == 0) {
+          return (<h2>No Results</h2>)
+        }
       
         if (searchUsers) {
           return <UserSearchTile key={i.toString()} jsonObj={jsonObj} />
         }
         else {
-          
+          return <TagSearchTile key={i.toString()} jsonObj={jsonObj}/>
         }
       })}
   </div>
