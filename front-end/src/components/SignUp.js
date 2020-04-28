@@ -6,8 +6,15 @@ import axios from 'axios';
 
 
 const SignUp = (props) => {
-  const [data, setData] = useState("");
+  const [myEmail, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [userName, setUsername] = useState("");
 
+  let dataArray = {
+    email: myEmail,
+    password: pass,
+    username: userName
+  }
   function onSubmit(e) {
     console.log("submitted!");
     e.preventDefault()
@@ -15,7 +22,7 @@ const SignUp = (props) => {
     
     
     // Send request to the server
-    axios.post("/signUp/"+ data)
+    axios.post("/signUp/", dataArray)
         .then ((response) => {
           console.log(response);
           if (response.status === 200) {
@@ -32,24 +39,36 @@ const SignUp = (props) => {
 
   }
 
-  function handleData(e) {
+  function handleEmail(e) {
     console.log(e.target.value);
-    setData(e.target.value)
+    setEmail(e.target.value)
   }
+
+  function handlePass(e) {
+    console.log(e.target.value);
+    setPass(e.target.value)
+  }
+    
+
+  function handleUsername(e) {
+    console.log(e.target.value);
+    setUsername(e.target.value)
+  }
+    
     
   return (
     <div className="SignUp">
 
           <img alt="Sharmony Logo" src={SharmonyLogo} width="200" height="150"/>
-          <form onSubmit={onSubmit} onChange={handleData}>
+          <form onSubmit={onSubmit}>
             Email:
-            <input type="email" value={data.email} /> 
+            <input type="email"  onChange={handleEmail}/> 
             <br/>
             Username:
-            <input type="text" value={data.username}  /> 
+            <input type="text" onChange={handleUsername}/> 
             <br/>
             Password:
-            <input type="password" value={data.password} />
+            <input type="password" onChange={handlePass}/>
             <br/>
             <br/>
             <input type="submit" value="Submit" />

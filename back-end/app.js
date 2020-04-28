@@ -66,14 +66,16 @@ signToken = (user) => {
     }, JWT_SECRET)
 }
 
-app.post("/signUp/:data", async (req, res, next) => {
+app.post("/signUp", async (req, res, next) => {
         
   console.log('UsersController.signUp() called!');
   //console.log(req);
+  let data = req.body;
+  console.log(data);
 
-  let email = req.params.email;
-  let password = req.params.password;
-  let username = req.params.username;
+  let email = data.email;
+  let password = data.password;
+  let username = data.username;
   console.log("email:" + email);
   console.log("password:" + password);
   console.log("username:" + username);
@@ -90,7 +92,7 @@ app.post("/signUp/:data", async (req, res, next) => {
   }
 
   //create new user
-  let newUser = new User({
+  let newUser = new userModel({
       Email: email,
       Password: password,
       Username: username
