@@ -9,7 +9,31 @@
 **Contribute:** https://github.com/nyu-software-engineering/spring-2020-toxic-flamingo/blob/master/CONTRIBUTING.md
 
 **How to Build:**
-Coming soon.
+To build the app, first fork this repo. Navigate to the front-end directory
+
+```bash
+npm install
+```
+And run the front end
+```bash
+npm start
+```
+
+Then navigate to the back-end directory and build
+ ```bash
+ npm install
+ ```
+ And run back end 
+ ```bash
+ nodemon server
+ ```
+
+ To run unit tests
+ ```bash
+ npm test
+ ```
+
+
 
 **Additional Info:**
 Coming soon to a theater near you!
