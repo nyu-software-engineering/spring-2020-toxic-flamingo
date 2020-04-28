@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './Make_Post2.css';
-import Axios from '../../back-end/node_modules/axios';
+import axios from 'axios';
 
 const Make_Post2 = (props) => {
     const data = props.songData;
@@ -10,11 +10,11 @@ const Make_Post2 = (props) => {
     for(let i = 0; i < data.artists.length; i++){
         console.log(data.artists[i].name);
     }
-    const [description, updatedescription] = useState("");
+    const [description, updateDescription] = useState("");
     const [hashtags, updateHashtags] = useState("");
   
     function handledescription(e) {
-        updatedescription(e.target.value);
+        updateDescription(e.target.value);
         console.log("description:" + e.target.value);
         let descrp = e.target.value;
         let tags = descrp.match(/#\w+/g);
@@ -29,17 +29,17 @@ const Make_Post2 = (props) => {
 
 
 
-    function postIt() {
+    function postIt(e) {
+        e.preventDefault();
         console.log("Posting test")
         let artists = [];
         for(let i = 0; i < data.artists.length; i++){
             artists.push(data.artists[i].name);
         }
-        let dataaaaa =  {
+        let songData =  {
             userID: null,   // import 
             postID: null,   // import 
             hashID: hashtags, //array of hashtags with '#' behind every tag
-            timestamp: '2020-01-21',
             harmony: true,  // import 
             songName: data.name,
             artistName: artists,
@@ -49,9 +49,18 @@ const Make_Post2 = (props) => {
             description: description,
             comments: []
           }
-        dataaaaa= JSON.stringify(dataaaaa);
+        //dataaaaa= JSON.stringify(dataaaaa);
 
-        Axios.get('/createPost'+ dataaaaa)
+        //Axios.get('/createPost', {data: dataaaaa})
+        axios.post('/createPost/', songData)
+        // if second request is ok, receive a notification 
+        .then((res) => {
+            console.log('request is ok');
+        })
+        // if there is an error, receive a notification
+        .catch((err) => {
+            console.log(err);
+        })
     }
 
     return(
@@ -75,7 +84,7 @@ const Make_Post2 = (props) => {
             </div>
 
             <div class="post">
-                <form action="/MainFeed">
+                <form>
                     {/* this is where we create post object and send it to back end*/}
 
                     <button onClick={postIt}>Create Post</button>

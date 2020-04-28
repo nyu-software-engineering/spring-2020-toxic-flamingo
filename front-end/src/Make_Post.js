@@ -46,13 +46,11 @@ const Make_Post = (props) => {
     axios.get("https://api.mockaroo.com/api/36d63960?count=10&key=5296eab0")
     .then ((response) => {
       setData(response.data);
-
     })
     .catch(err => {
       console.log("error");
       console.log(err);
     })
-
   }, []);
   */
   /*const list = [];
@@ -125,19 +123,14 @@ const Make_Post = (props) => {
 /*
 <div className="searchBar"> 
 this.props.history.push('/') //this will go to home page
-
     or
-
     this.props.history.goBack() //this will go to previous page
     </div>
     <div className="select_type">
-
     </div>
     <div className="post">
-
     </div>
     <div className="nav_Bar">
-
     </div>
     */
   );
