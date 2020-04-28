@@ -7,10 +7,28 @@ const CommentBuilder = (props) => {
 
     const [commentText, updateCommentText] = useState("");
 
+    const [userID, updateUserID] = useState("5ea5f57f46ba2e699831ae3f");
+
+    const postID = props.postID;
+
     function submitComment(e) {
         e.preventDefault();
+
+        if (commentText.trim() == "") {
+            // NO COMMENT IN THE BOX
+
+            console.log("NOPE");
+            return;
+        }
         
-        axios.post("/submitComment/" +commentText);
+        axios.post("/submitComment/" + commentText + "/" + userID + "/" + postID)
+        .then(res => {
+            console.log("GOT A RESPONSE");
+            console.log(res);
+            updateCommentText("");
+            props.updateComments();
+        })
+
     }
 
     function handleComment(e) {
@@ -19,9 +37,9 @@ const CommentBuilder = (props) => {
 
     return (
         <div className="CommentBuilder">
-            <form>
+            <form autoComplete="off">
                 <p>Enter a comment</p>
-                <input className="commentText" type='text' name='comment' onChange={handleComment}/>
+                <input className="commentText" type='text' name='comment' value={commentText} onChange={handleComment}/>
                 <br/>
                 <button onClick={submitComment}>Submit</button>
             </form>

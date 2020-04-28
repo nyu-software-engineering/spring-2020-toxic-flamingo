@@ -1,9 +1,67 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Make_Post2.css';
+import axios from 'axios';
 
 const Make_Post2 = (props) => {
-
+    const data = props.songData;
+    console.log(data);
     console.log("got data " + props.songData + " in make post 2");
+
+    for(let i = 0; i < data.artists.length; i++){
+        console.log(data.artists[i].name);
+    }
+    const [description, updateDescription] = useState("");
+    const [hashtags, updateHashtags] = useState("");
+  
+    function handledescription(e) {
+        updateDescription(e.target.value);
+        console.log("description:" + e.target.value);
+        let descrp = e.target.value;
+        let tags = descrp.match(/#\w+/g);
+        console.log("hashtags:" + tags);
+        updateHashtags(tags);
+        // I love this music #rock because #cool so I like this song. 
+        //# => make them link to search result with the hash name 
+        // we store them. 
+        // dscription : texts including hash 
+        
+    }
+
+
+
+    function postIt(e) {
+        e.preventDefault();
+        console.log("Posting test")
+        let artists = [];
+        for(let i = 0; i < data.artists.length; i++){
+            artists.push(data.artists[i].name);
+        }
+        let songData =  {
+            userID: null,   // import 
+            postID: null,   // import 
+            hashID: hashtags, //array of hashtags with '#' behind every tag
+            harmony: true,  // import 
+            songName: data.name,
+            artistName: artists,
+            albumName: data.album.name,
+            picture: data.album.images[0].url,
+            spotify: data.external_urls.spotify,
+            description: description,
+            comments: []
+          }
+        //dataaaaa= JSON.stringify(dataaaaa);
+
+        //Axios.get('/createPost', {data: dataaaaa})
+        axios.post('/createPost/', songData)
+        // if second request is ok, receive a notification 
+        .then((res) => {
+            console.log('request is ok');
+        })
+        // if there is an error, receive a notification
+        .catch((err) => {
+            console.log(err);
+        })
+    }
 
     return(
         <div className="Header">
@@ -18,15 +76,18 @@ const Make_Post2 = (props) => {
 
             </div>
 
-            <div class="picture"> <img src="/post2.jpg"></img> </div>
-
+         
+            <div class="picture"><img src = {data.album.images[0].url} alt="image over"></img></div>
+            <div>{data.name}</div>
             <div class="text"> 
-            <input type="text" placeholder="Write your music!"></input>
+            <input type="text" placeholder="Write your music!" onChange ={handledescription}></input>
             </div>
 
             <div class="post">
-                <form action="/MainFeed">
-                    <input type="submit" value="Create Post"/>
+                <form>
+                    {/* this is where we create post object and send it to back end*/}
+
+                    <button onClick={postIt}>Create Post</button>
                  </form>
             </div>
 

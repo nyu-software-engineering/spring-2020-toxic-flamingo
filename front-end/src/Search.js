@@ -1,6 +1,8 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import './Make_Post.css';
+import UserSearchTile from './UserSearchTile';
+import TagSearchTile from './TagSearchTile';
 // import logo from './logo.svg';
 //import './About.css';
 
@@ -8,17 +10,20 @@ const Search = (props) => {
 
   const [data, setData] = useState([]);
 
-  useEffect( () => {
-    axios.get("/Search")
-    .then ((response) => {
-      setData(response.data);
-    })
-    .catch(err => {
-      console.log("error");
-      console.log(err);
-    })
+  const [searchUsers, setSearchUsers] = useState(true);
+  const [searchQuery, setQuery] = useState("");
+
+  // useEffect( () => {
+  //   axios.get("/Search/" + searchUsers)
+  //   .then ((response) => {
+  //     setData(response.data);
+  //   })
+  //   .catch(err => {
+  //     console.log("error");
+  //     console.log(err);
+  //   })
     
-  }, []);
+  // }, []);
 
   /*const list = [];
   for(const x of data){
@@ -28,6 +33,32 @@ const Search = (props) => {
     list.push(<br/>)
     list.push(<div class="line"></div>)
   }*/
+
+  function handleChange(e) {
+    setQuery(e.target.value)
+  }
+
+  function sendSearch(e) {
+    e.preventDefault();
+
+    if (searchQuery.trim() == "") {
+      // NO COMMENT IN THE BOX
+
+      console.log("NOPE");
+      return;
+  }
+    console.log("searchUsers = " + searchUsers);
+    console.log(searchQuery);
+
+    axios.get("/Search/" + searchUsers + "/" + searchQuery)
+    .then(result => {
+
+      setData(result.data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
 
 
   return (
@@ -43,30 +74,41 @@ const Search = (props) => {
   </div>
 
   <div className="SearchBar">
-    <input type="text" placeholder="Search:"></input>
+    <form onSubmit={sendSearch}>
+      <input type="text" placeholder="Search:" onChange={handleChange} ></input>
+    </form>
   </div>
 
   <div class="flex-container">
-  <form action="/Search">  
-  <div className="Users"><button class="company">Users</button></div>
-  </form>
-  <form action="/HashtagFeed"> 
-  <div className="Tags"><button class="company">Tags</button></div>
-  </form>
+  <div className="Users"><button className="company" onClick={() => {
+    setData([]);
+    setQuery("");
+    setSearchUsers(true);
+  }}>Users</button></div>
+  <div className="Tags"><button className="company" onClick={() => {
+    setData([]);
+    setQuery("");
+    setSearchUsers(false);
+  }}>Tags</button></div>
+
   </div>
  
  
   <div className="content"> 
-                {data.map((jsonObj,i) => (
-                <div class ="post">
-                <img src={jsonObj.icon} ></img>
-                <p>{jsonObj.user}</p>
-                <br/>
-                <div class="line"></div>
-                </div>
-                
-                ))}
-            </div>
+      {data.map((jsonObj,i) => {
+
+        if (data.length == 0) {
+          return (<h2>No Results</h2>)
+        }
+      
+        if (searchUsers) {
+          return <UserSearchTile key={i.toString()} jsonObj={jsonObj} />
+        }
+        else {
+          return <TagSearchTile key={i.toString()} jsonObj={jsonObj}/>
+        }
+      })}
+  </div>
 
   <div className="nav_bar"> 
     <div class="flex-container">

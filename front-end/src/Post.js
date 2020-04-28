@@ -27,12 +27,12 @@ const Post = (props) => {
 
     // make sure you dont see "see more comments if there are none"
     let button;
-    if (remainingComments > -5) {
+    if (remainingComments > 0) {
     button = (
         // <nav>
         //     <Link to={"/PostComments/" + data._id}>See {remainingComments} more comments</Link>
         // </nav>
-        <button onClick={handleClick}>Click me!</button>
+        <button onClick={handleClick}>See {remainingComments} more comment(s)</button>
     );
     }
 
@@ -59,7 +59,7 @@ const Post = (props) => {
             <div className="commentsTitle"><h5>Comments</h5></div>
             <div className='postComments'>
                 <div className='initialComment'>
-                    <p className='user'>@PLACEHOLDER UNTIL COMENTS WORK</p><p className='comment'>PLACEHOLDER UNTIL COMENTS WORK</p>
+                    <p className='comment'>{initialComment.text}</p>
                 </div>
                 {button}
             </div>
