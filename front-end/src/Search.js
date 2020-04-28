@@ -1,6 +1,7 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import './Make_Post.css';
+import UserSearchTile from './UserSearchTile';
 // import logo from './logo.svg';
 //import './About.css';
 
@@ -85,16 +86,16 @@ const Search = (props) => {
  
  
   <div className="content"> 
-                {data.map((jsonObj,i) => (
-                <div key={i.toString()} className ="post">
-                <img src={"#"} alt="no img" ></img>
-                <p>{jsonObj.Username}</p>
-                <br/>
-                <div className="line"></div>
-                </div>
-                
-                ))}
-            </div>
+      {data.map((jsonObj,i) => {
+      
+        if (searchUsers) {
+          return <UserSearchTile key={i.toString()} jsonObj={jsonObj} />
+        }
+        else {
+          
+        }
+      })}
+  </div>
 
   <div className="nav_bar"> 
     <div class="flex-container">
