@@ -14,6 +14,7 @@ let db = require('./src/database.js');
 let userModel = require('./src/models/User.js');
 let postModel = require('./src/models/Post.js');
 let commentModel = require('./src/models/Comment');
+let tagModel = require('./src/models/Tag');
 //require('dotenv').config();
 // we will put some server logic here later...
 //console.log(process.env.DB_USER);
@@ -43,24 +44,9 @@ router.route('/secret')
       .get(passport.authenticate('jwt', {session: false}), UsersController.secret);
 
 
-
-let comment = new commentModel({
-  userID: "test",
-  text: "cool comment"
-})
-
-let post123 = new postModel({
-  userID: "testID",
-  postID: "4234234",
-  hashID: "la",
-  timestamp: '2020-01-21',
-  harmony: true,
-  songName: "I Love LA",
-  artistName: "Randy Newman",
-  albumName: "I Love LA",
-  picture: "pictureURL",
-  spotify: "spotifyURL",
-  comments: [comment]
+let tag = new tagModel({
+  tag: "waiyu",
+  posts: []
 });
 
 // let user123 = new userModel({
@@ -157,11 +143,12 @@ app.get("/Search/:searchUsers/:searchQuery", async (req, res) => {
   //const user  = req.params.userid;
 
   const searchUsers = req.params.searchUsers;
-  const searchQuery = req.params.searchQuery;
+  const searchQuery = req.params.searchQuery.trim();
 
   console.log(searchUsers + " " + searchQuery);
 
-  if (searchUsers) {
+  if (searchUsers == 'true') {
+    console.log("looking for user " + searchQuery);
     userModel.find(
       { "Username": { "$regex": searchQuery, "$options": "i" } }
     )
@@ -173,8 +160,22 @@ app.get("/Search/:searchUsers/:searchQuery", async (req, res) => {
       console.log(err);
     });
   }
+  else {
+    console.log("looking for tag " + searchQuery);
+    tagModel.find(
+      { "tag": { "$regex": searchQuery, "$options": "i" }}
+    )
+    .then(result => {
+      console.log(result);
+      res.json(result);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
 
-})
+});
+
  function getProfilePosts(userID){
    let posts = [];
   console.log(userID);
