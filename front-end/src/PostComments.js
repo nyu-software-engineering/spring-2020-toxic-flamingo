@@ -9,12 +9,12 @@ const PostComments = (props) => {
     
     let postID = props.postID;
 
-    postID = postID.replace("/PostComments/", "");
-
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [reloadCount, setReload] = useState(0);
 
     useEffect(() => {
+        console.log("useEFfecting");
         axios.get('/loadComments/' + postID)
         .then((response) => {
             setComments(response.data);
@@ -24,7 +24,7 @@ const PostComments = (props) => {
             console.log("ERRor in postComments.js");
             console.log(err);
         })
-    }, []);
+    }, [reloadCount]);
 
     if (loading == true) {
         return (
@@ -40,7 +40,11 @@ const PostComments = (props) => {
             {comments.map((commentJson, i) => (
                 <CommentView key={i} data={commentJson}/>
             ))}
-            <CommentBuilder postID={postID}/>
+            <CommentBuilder postID={postID} updateComments={() => {
+                console.log("HEY IM DOING SOMETHING");
+                setReload(reloadCount + 1);
+            }}/>
+            <div className="buffer"></div>
         </div>
     );
 
