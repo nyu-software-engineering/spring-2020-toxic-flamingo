@@ -51,6 +51,11 @@ const Post = (props) => {
         <button onClick={handleClick}>See {remainingComments} more comment(s)</button>
     );
     }
+    else {
+        button = (
+            <button onClick={handleClick}>Add a comment</button>
+        )
+    }
 
 
 
