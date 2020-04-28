@@ -153,10 +153,26 @@ app.get("/Followee", async (req, res) => {
   res.json(response.data);
 })
 
-app.get("/Search", async (req, res) => {
+app.get("/Search/:searchUsers/:searchQuery", async (req, res) => {
   //const user  = req.params.userid;
-  let response = await axios.get("https://api.mockaroo.com/api/87521f10?count=10&key=5296eab0").catch();
-  res.json(response.data);
+
+  const searchUsers = req.params.searchUsers;
+  const searchQuery = req.params.searchQuery;
+
+  console.log(searchUsers + " " + searchQuery);
+
+  if (searchUsers) {
+    userModel.find(
+      { "Username": { "$regex": searchQuery, "$options": "i" } }
+    )
+    .then(result => {
+      console.log(result);
+      res.json(result)
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
 
 })
  function getProfilePosts(userID){
