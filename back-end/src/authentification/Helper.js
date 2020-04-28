@@ -7,7 +7,7 @@ module.exports = {
             if (result.error) {
                 return res.status(400).json(result.error);
             }
-
+            console.log("validating body");
             if (!req.value){ req.value = {};}
             req.value['body'] = result.value;
             next();

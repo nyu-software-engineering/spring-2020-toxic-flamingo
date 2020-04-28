@@ -26,20 +26,88 @@ let postModel = require('./src/models/Post.js');
   //console.log("connected with ")
 //});
 
-
+/*
 const router = require('express-promise-router')();
 const { validateBody, schemas } = require('./src/authentification/Helper.js');
 const UsersController = require('./src/authentification/UserController.js');
 const passport = require('passport');
 const passportConf = require('./src/authentification/passport');
+
 router.route('/signup')
   .post(validateBody(schemas.authSchema), UsersController.signUp);
+
 
 router.route('/')
       .post(validateBody(schemas.authSchema), passport.authenticate('local', {session: false}), UsersController.logIn);
 
 router.route('/secret')
       .get(passport.authenticate('jwt', {session: false}), UsersController.secret);
+
+
+
+app.use("/routes", require("./src/authentification/routes"));
+*/
+
+const JWT = require('jsonwebtoken');
+const {JWT_SECRET} = require('./src/configuration'); 
+
+signToken = (user) => {
+    return JWT.sign({
+        iss: 'Sharmony',
+        sub: user._id,
+        iat: new Date().getTime(), //current time
+        exp: new Date().setDate(new Date().getDate + 1) // current time + 1 day
+    }, JWT_SECRET)
+}
+
+app.post("/signUp/:data", async (req, res, next) => {
+        
+  console.log('UsersController.signUp() called!');
+  //console.log(req);
+
+  let email = req.params.email;
+  let password = req.params.password;
+  let username = req.params.username;
+  console.log("email:" + email);
+  console.log("password:" + password);
+  console.log("username:" + username);
+
+  //check if theres a user w same email or 
+  let foundEmail = await userModel.findOne({email: email});
+  if (foundEmail) {
+       return res.status(409).json({error: 'Email is already in use'})
+  }
+
+  let foundUser = await userModel.findOne({username: username});
+  if (foundUser) {
+       return res.status(409).json({error: 'Username is already in use'})
+  }
+
+  //create new user
+  let newUser = new User({
+      Email: email,
+      Password: password,
+      Username: username
+  })
+  await newUser.save();
+  
+  //generate token
+  let token = signToken(newUser);
+
+  //respond w token
+  res.status(200).json({token: token});
+
+
+})
+
+app.get("/logIn", async (req, res, next) => {
+  //generate tokens
+  console.log("log in called");
+  const token = signToken(req.user);
+  res.status(200).json({token});
+
+
+})
 
 
 
