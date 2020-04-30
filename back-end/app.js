@@ -256,9 +256,17 @@ app.get("/Search/:searchUsers/:searchQuery", async (req, res) => {
 
 
 app.get("/Notifications", async (req, res) => {
+  notificationModel.find()
+  .sort({'createdAt': 'desc'})
+  .limit(10)
+  .then(result => {
+    console.log(result);
+    res.json(result);
+  })
+  .catch(err => {
+    console.log(err);
+  })
   //const user  = req.params.userid;
-  let response = await axios.get("https://api.mockaroo.com/api/1a0149e0?count=20&key=ffab93f0").catch();
-  res.json(response.data);
 })
 
 app.get("/Harmonies", async (req, res) => {
