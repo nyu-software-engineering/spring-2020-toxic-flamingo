@@ -1,8 +1,8 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
-import './Make_Post.css';
 import UserSearchTile from './UserSearchTile';
 import TagSearchTile from './TagSearchTile';
+import './Search.css';
 // import logo from './logo.svg';
 //import './About.css';
 
@@ -62,6 +62,7 @@ const Search = (props) => {
 
 
   return (
+    <div className="Search">
 <div className="Header">
   <div class="flex-container">
     <div class="back_button">
@@ -124,6 +125,7 @@ const Search = (props) => {
     </div>
   
 
+</div>
 </div>
 /*
 <div className="searchBar"> 

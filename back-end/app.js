@@ -497,38 +497,38 @@ app.post("/changeEmail/", (req, res) => {
   })
   });
 
-  app.post("/changePassword/", async (req, res) => {
-    let data = req.body;
-    console.log(data);
-    const oldPass = data.oldPassword;
-    const newPass = data.newPassword;
-    const uID = data.userID;
-    console.log(oldPass);
-    console.log(newPass);
-    console.log(uID);
-    const user = await userModel.findById(uID);
-    const isMatch = await user.isValidPassword(oldPass);
-    if (isMatch) {
-      userModel.findByIdAndUpdate(uID,{Password: newPass}, 
-        {
-          new : true,
-          runValidators: true
-        }).then(doc => {
-          console.log(doc);
-        }).catch(err => {
-          console.log(err);
-        })
-    } else {
-      console.log("incorrect current password");
-    }
-  });
+app.post("/changePassword/", async (req, res) => {
+  let data = req.body;
+  console.log(data);
+  const oldPass = data.oldPassword;
+  const newPass = data.newPassword;
+  const uID = data.userID;
+  console.log(oldPass);
+  console.log(newPass);
+  console.log(uID);
+  const user = await userModel.findById(uID);
+  const isMatch = await user.isValidPassword(oldPass);
+  if (isMatch) {
+    userModel.findByIdAndUpdate(uID,{Password: newPass}, 
+      {
+        new : true,
+        runValidators: true
+      }).then(doc => {
+        console.log(doc);
+      }).catch(err => {
+        console.log(err);
+      })
+  } else {
+    console.log("incorrect current password");
+  }
+});
 
 app.post("/createPost/", (req,res) => {
   let data = req.body
   console.log(req.body)
   //data = JSON.parse(data)
   //console.log(data.hashID);
-  
+
   //search for harmony here if there is previous post with same song - songname and artist
 
   let newPost = new postModel({
@@ -550,19 +550,19 @@ app.post("/createPost/", (req,res) => {
       console.log(data);
       }).catch(err => {
       console.log(err);
-     });
+      });
   //search for harmony here if there is previous post with same song - songname and artist
   //get post data and send it to monodb atlas here 
-  
+
   let newNotification = new notificationModel({
     userID: 'testtestest',//data.userID,
     text: `user has a new post!` //`${data.userID has a new post!}`
   })
   newNotification.save({runValidators:true}).then(doc => {
     console.log(data);
-    }).catch(err => {
+  }).catch(err => {
     console.log(err);
-   });  
+  });  
 })
 
 module.exports = app;
