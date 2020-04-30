@@ -18,11 +18,25 @@
     position: absolute;
     right: 15px;
     top: 15px;
-    
 }
+
+
+.headerImage {
+    width: 50%;
+    height: auto;
+}
+
+.profileImage {
+    position: relative;
+    width: 20%;
+    float: right;
+    height: auto;
+}
+
 
 .headerParent {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
+    z-index: 50;
 }

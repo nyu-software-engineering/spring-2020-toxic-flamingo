@@ -71,7 +71,7 @@ const Post = (props) => {
             </div>
             <div className='posterInfo'>
                     <div className='musicPlayer'><button onClick={musicPlayer}>{playPause}</button></div>
-                    <img className='profileImage' alt='avatar' src={data.picture} />
+                    <img className='albumImage' alt='avatar' src={data.picture} />
                 </div>
             <div className='description'>
                 <p>{data.description}</p>

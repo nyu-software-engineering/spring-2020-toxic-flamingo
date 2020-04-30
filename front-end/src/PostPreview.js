@@ -1,7 +1,7 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 
-import './MainFeed.css';
+import "./PostPreview.css";
 import Post from './Post';
 
 const PostPreview = (props) => {
@@ -32,15 +32,16 @@ const PostPreview = (props) => {
         
     }, []);
 
-    
 
     return(
         <div className="PreviewPost">
-            {data.map((jsonObj, i) => (
-                <div className='coverart'>
-                    <img className='pic' src={data.coverart} height="300" width="300" />
-                </div>
-            ))}
+            <div className="flex-container-post">
+                {data.map((jsonObj, i) => (
+                    <div className="coverArt">
+                        <img src={data.coverart} height="300" width="300" />
+                    </div>
+                ))}
+            </div>
         </div>
     );
 
