@@ -8,7 +8,7 @@ const MainFeed = (props) => {
 
     const [data, setData] = useState([]);
 
-    const userId = "5ea5f57f46ba2e699831ae3f";
+    const userId = "5eab5536cfcc1f47a02d55cf";
 
     // load in posts
     useEffect( () => {
