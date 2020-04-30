@@ -62,21 +62,17 @@ const Post = (props) => {
     return (
         <div className="FeedPost">
             <div className='postHeader'>
-                <div className='posterInfo'>
-                    <img className='profileImage' alt='avatar' src={data.picture} />
-                    <h4>{data.username}</h4>
-                </div>
-                <h3>{data.post_title}</h3>
+                <h4>Test_User</h4>
             </div>
             <div className='postContent'>
                 <div className='songInfo'>
-                    <p>Artist: {data.artistName}</p>
-                    <p>Title: {data.songName}</p>
-                </div>
-                <div className='musicPlayerInfo'>
-                    <button onClick={musicPlayer}>{playPause}</button>
+                    <p>{data.artistName} -- {data.songName}</p>
                 </div>
             </div>
+            <div className='posterInfo'>
+                    <div className='musicPlayer'><button onClick={musicPlayer}>{playPause}</button></div>
+                    <img className='profileImage' alt='avatar' src={data.picture} />
+                </div>
             <div className='description'>
                 <p>{data.description}</p>
             </div>

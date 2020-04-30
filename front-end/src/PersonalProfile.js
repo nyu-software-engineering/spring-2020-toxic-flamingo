@@ -63,9 +63,6 @@ const PersonalProfile = (props) => {
             <div className="ProfileHeader">
             
                 <div className="flex-container">
-                      <div className="profilePic">
-                      <img alt="Profile Pic" src={jsonObj.pic} width="100" height="100"/>
-                      </div>
                     <h1>{jsonObj.name}</h1>
                  </div>
                       <div className="bio">
