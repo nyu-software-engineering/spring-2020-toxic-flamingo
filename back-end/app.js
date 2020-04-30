@@ -119,9 +119,6 @@ app.post("/signUp", async (req, res, next) => {
     httpOnly: true
   });
   res.status(200).json({ success: true });
-
-
-
 })
 
 app.get("/logIn", async (req, res, next) => {
@@ -131,6 +128,7 @@ app.get("/logIn", async (req, res, next) => {
   //passport.authenticate('local', {session: false})
 
   const token = signToken(req.user);
+
   res.cookie('access_token', token, {
     httpOnly: true
   });
