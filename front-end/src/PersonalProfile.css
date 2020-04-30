@@ -5,13 +5,15 @@ html,body {
 
 .flex-container {
     bottom: 50px;
+    align-items: center;
 }
 
 .buttons {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    align-items: center;
+    position: relative; 
+    left: 40%;
 }
 
 
@@ -19,7 +21,6 @@ html,body {
     padding: 30px 20px 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
     margin-bottom: 150px;
 }
 
@@ -28,6 +29,12 @@ html,body {
     line-height: 18px;
     text-align: start;
     flex-basis: 0;
-   
+    position: relative; 
+    left: 40%;   
+}
+
+.contain{
+    position: relative; 
+    left: 14%;
 }
 

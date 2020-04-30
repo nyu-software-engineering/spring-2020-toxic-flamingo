@@ -91,7 +91,9 @@ const PersonalProfile = (props) => {
             </div>
          
           ))}
+        <div className="contain">
       <PostPreview />
+        </div>
       </div> </div>
     );
  }
