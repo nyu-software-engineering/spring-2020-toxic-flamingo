@@ -24,9 +24,10 @@ const SignUp = (props) => {
     // Send request to the server
     axios.post("/signUp/", dataArray)
         .then ((response) => {
-          console.log(response);
+          //console.log(response);
           if (response.status === 200) {
-            this.props.history.push('/MainFeed');
+            console.log("sign up success");
+            console.log(document.cookie);
           } else {
             const error = new Error(response.error);
             throw error;

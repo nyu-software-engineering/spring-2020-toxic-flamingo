@@ -16,6 +16,8 @@ let postModel = require('./src/models/Post.js');
 let commentModel = require('./src/models/Comment');
 let notificationModel = require('./src/models/Notification');
 let tagModel = require('./src/models/Tag');
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
 //require('dotenv').config();
 // we will put some server logic here later...
 //console.log(process.env.DB_USER);
@@ -58,10 +60,10 @@ app.use("/routes", require("./src/authentification/routes"));
 const JWT = require('jsonwebtoken');
 const {JWT_SECRET} = require('./src/configuration'); 
 
-signToken = (user) => {
+signToken = (user_id) => {
     return JWT.sign({
         iss: 'Sharmony',
-        sub: user._id,
+        sub: user_id,
         iat: new Date().getTime(), //current time
         exp: new Date().setDate(new Date().getDate + 1) // current time + 1 day
     }, JWT_SECRET)
@@ -96,24 +98,50 @@ app.post("/signUp", async (req, res, next) => {
   let newUser = new userModel({
       Email: email,
       Password: password,
-      Username: username
+      Username: username,
+      Bio: "I'm new here",
+      Profile_Pic: "https://www.dictionary.com/e/wp-content/uploads/2018/04/kawaii.jpg",
+      Trophies: [false],
+      follower: ["fds"],
+      following: ["dsf"]
   })
-  await newUser.save();
+  let ID;
+  await newUser.save()
+    .then(doc => {
+      ID = doc._id
+      console.log(ID)});
   
   //generate token
-  let token = signToken(newUser);
-
-  //respond w token
-  res.status(200).json({token: token});
+  const token = signToken(ID);
+  console.log(token);
+  // Send a cookie containing JWT
+  res.cookie('access_token', token, {
+    httpOnly: true
+  });
+  res.status(200).json({ success: true });
 })
 
 app.get("/logIn", async (req, res, next) => {
   //generate tokens
   console.log("log in called");
+
+  //passport.authenticate('local', {session: false})
+
   const token = signToken(req.user);
-  res.status(200).json({token});
+
+  res.cookie('access_token', token, {
+    httpOnly: true
+  });
+  res.status(200).json({ success: true });
+
+
 })
 
+app.get("/signOut", async (req, res, next) => {
+  res.clearCookie('access_token');
+  // console.log('I managed to get here!');
+  res.json({ success: true });
+})
 
 
 // let user123 = new userModel({
@@ -252,9 +280,17 @@ app.get("/Search/:searchUsers/:searchQuery", async (req, res) => {
 
 
 app.get("/Notifications", async (req, res) => {
+  notificationModel.find()
+  .sort({'createdAt': 'desc'})
+  .limit(10)
+  .then(result => {
+    console.log(result);
+    res.json(result);
+  })
+  .catch(err => {
+    console.log(err);
+  })
   //const user  = req.params.userid;
-  let response = await axios.get("https://api.mockaroo.com/api/1a0149e0?count=20&key=ffab93f0").catch();
-  res.json(response.data);
 })
 
 app.get("/Harmonies", async (req, res) => {
