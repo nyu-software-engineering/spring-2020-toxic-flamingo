@@ -7,7 +7,7 @@ const CommentBuilder = (props) => {
 
     const [commentText, updateCommentText] = useState("");
 
-    const [userID, updateUserID] = useState("5ea5f57f46ba2e699831ae3f");
+    const [userID, updateUserID] = useState("5eab5536cfcc1f47a02d55cf");
 
     const postID = props.postID;
 
