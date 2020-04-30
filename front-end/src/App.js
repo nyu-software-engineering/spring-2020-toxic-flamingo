@@ -39,6 +39,7 @@ const App = (props) => {
                     <PrimaryNav />
                   </Route>
                   <Route path="/Make_Post">
+                    <SharmonyHeader />
                     <MakePostWrapper showScreenOne={true}/>
                     <PrimaryNav />
                   </Route>

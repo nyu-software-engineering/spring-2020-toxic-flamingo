@@ -38,7 +38,7 @@ const PrimaryNav = (props) => {
                     <li><a href="/Make_Post">New Post</a></li>
                     <li><a href="/Notifications">Notifications</a></li>
                    
-                    <Link to="/">Log_Out</Link>
+                    <li><a href="/">Log Out</a></li>
                     <li><a href="/HashtagFeed">Hashtags</a></li>
                     </ul>
                 </nav>
