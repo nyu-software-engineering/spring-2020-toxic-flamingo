@@ -89,7 +89,7 @@ const Make_Post2 = (props) => {
             </div>
 
             <div class="post">
-                <form>
+                <form action="/MainFeed">
                     {/* this is where we create post object and send it to back end*/}
                     <NavLink to="/MainFeed">
                     <button onClick={postIt}>Create Post</button>
