@@ -7,9 +7,6 @@ const duplicatePlugin = require('./../plugins/duplicate');
 
 
 let userSchema = new mongoose.Schema({
-  userID: {
-      type: String,
-      unique: true, },
   Username: {
       type: String,
       required: true,
