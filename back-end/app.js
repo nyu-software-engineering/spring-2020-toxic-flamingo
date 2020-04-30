@@ -105,8 +105,6 @@ app.post("/signUp", async (req, res, next) => {
 
   //respond w token
   res.status(200).json({token: token});
-
-
 })
 
 app.get("/logIn", async (req, res, next) => {
@@ -114,8 +112,6 @@ app.get("/logIn", async (req, res, next) => {
   console.log("log in called");
   const token = signToken(req.user);
   res.status(200).json({token});
-
-
 })
 
 
