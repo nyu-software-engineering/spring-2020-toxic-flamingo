@@ -18,6 +18,7 @@ let notificationModel = require('./src/models/Notification');
 let tagModel = require('./src/models/Tag');
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
+const cors = require("cors")
 //require('dotenv').config();
 // we will put some server logic here later...
 //console.log(process.env.DB_USER);
@@ -57,6 +58,16 @@ let tag = new tagModel({
 app.use("/routes", require("./src/authentification/routes"));
 */
 
+const corsOptions = {
+  origin: "http://localhost:3000",    // reqexp will match all prefixes
+  methods: "GET,HEAD,POST,PATCH,DELETE,OPTIONS",
+  credentials: true,                // required to pass
+  allowedHeaders: "Content-Type, Authorization, X-Requested-With",
+}
+// intercept pre-flight check for all routes
+//app.options('*', cors(corsOptions))
+app.use(cors(corsOptions));
+
 const JWT = require('jsonwebtoken');
 const {JWT_SECRET} = require('./src/configuration'); 
 
@@ -69,12 +80,12 @@ signToken = (user_id) => {
     }, JWT_SECRET)
 }
 
-app.post("/signUp", async (req, res, next) => {
-        
+app.get("/signUp", cors(corsOptions), async (req, res, next) => {
+  console.log(req.header("cookie"));      
   console.log('UsersController.signUp() called!');
   //console.log(req);
   let data = req.body;
-  console.log(data);
+  //console.log(data);
 
   let email = data.email;
   let password = data.password;
@@ -115,11 +126,13 @@ app.post("/signUp", async (req, res, next) => {
   const token = signToken(ID);
   console.log(token);
   // Send a cookie containing JWT
-  res.cookie('access_token', token, {
-    httpOnly: true
-  });
-  res.status(200).json({ success: true });
-})
+  return res
+    .cookie('access_token', token, {
+      httpOnly: true,
+      domain: "http://localhost:3000"
+    })
+    .status(200).json({ success: true });
+  })
 
 app.get("/logIn", async (req, res, next) => {
   //generate tokens
