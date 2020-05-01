@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 //import './About.css';
 import SharmonyLogo from './SharmonyLogo.PNG';
 import axios from 'axios';
+import superagent from 'superagent';
 
 
 const SignUp = (props) => {
@@ -18,16 +19,17 @@ const SignUp = (props) => {
   function onSubmit(e) {
     console.log("submitted!");
     e.preventDefault()
-    e.stopPropagation()
+    //e.stopPropagation()
     
     
     // Send request to the server
-    axios.post("/signUp/", dataArray)
+    axios.get("/signUp/", dataArray)
+        .withCredentials()
         .then ((response) => {
           //console.log(response);
           if (response.status === 200) {
             console.log("sign up success");
-            console.log(document.cookie);
+            console.log(response);
           } else {
             const error = new Error(response.error);
             throw error;
@@ -37,8 +39,9 @@ const SignUp = (props) => {
             console.log("ERROR!");
             console.error(err);
         })
-
   }
+
+  
 
   function handleEmail(e) {
     console.log(e.target.value);
