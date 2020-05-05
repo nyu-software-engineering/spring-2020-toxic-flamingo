@@ -106,7 +106,7 @@ app.post("/signUp", cors(corsOptions), async (req, res, next) => {
   const token = signToken(ID);
   console.log(token);
   // Send a cookie containing JWT
-  return res.cookie('access_token', token, {
+  res.cookie('access_token', token, {
       httpOnly: true,
       domain: "http://localhost:3000"
     })
