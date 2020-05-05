@@ -19,6 +19,7 @@ let tagModel = require('./src/models/Tag');
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 const cors = require("cors")
+const bcrypt = require('bcryptjs');
 //require('dotenv').config();
 // we will put some server logic here later...
 //console.log(process.env.DB_USER);
@@ -61,7 +62,7 @@ signToken = (user_id) => {
 }
 
 app.post("/signUp", cors(corsOptions), async (req, res, next) => {
-  console.log(req.header("cookie"));      
+  //console.log(req.header("cookie"));      
   console.log('UsersController.signUp() called!');
   //console.log(req);
   let data = req.body;
@@ -86,32 +87,38 @@ app.post("/signUp", cors(corsOptions), async (req, res, next) => {
   }
 
   //create new user
-  let newUser = new userModel({
-      Email: email,
-      Password: password,
-      Username: username,
-      Bio: "I'm new here",
-      Profile_Pic: "https://www.dictionary.com/e/wp-content/uploads/2018/04/kawaii.jpg",
-      Trophies: [false],
-      follower: ["fds"],
-      following: ["dsf"]
-  })
-  let ID;
-  await newUser.save()
-    .then(doc => {
-      ID = doc._id
-      console.log(ID)});
+  bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(password, salt, async function(err, hash) {
+      console.log("Hash:" + hash);
+      let newUser = new userModel({
+          Email: email,
+          Password: hash,
+          Username: username,
+          Bio: "I'm new here",
+          Profile_Pic: "https://www.dictionary.com/e/wp-content/uploads/2018/04/kawaii.jpg",
+          Trophies: [false],
+          follower: ["fds"],
+          following: ["dsf"]
+      })
+      let ID;
+      await newUser.save()
+        .then(doc => {
+          ID = doc._id
+          console.log(ID)});
+      //generate token
+      const token = signToken(ID);
+      console.log(token);
+      // Send a cookie containing JWT
+      return res.cookie('access_token', token, {
+          httpOnly: true,
+          //domain: "http://localhost:3000"
+        })
+        .status(200).json({ success: true });
+      })
+    });
+  });
   
-  //generate token
-  const token = signToken(ID);
-  console.log(token);
-  // Send a cookie containing JWT
-  return res.cookie('access_token', token, {
-      httpOnly: true,
-      //domain: "http://localhost:3000"
-    })
-    .status(200).json({ success: true });
-  })
+  
 
 app.post("/logIn", async (req, res, next) => {
   //generate tokens

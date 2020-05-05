@@ -30,30 +30,52 @@ let userSchema = new mongoose.Schema({
 }, {collection: "UserCollection"})
 
 
-userSchema.pre('save', async function(next) {
-    try{
-        console.log('entered');
-    //if (!this.methods.includes('local')) {
-      //next();
-    //}
-    //the user schema is instantiated
-    const user = this;
-    //check if the user has been modified to know if the password has already been hashed
-    if (!user.isModified('local.password')) {
-      next();
-    }
-        //generate a salt
-        const salt = await bcrypt.genSalt(10);
-        //generate a password hash
-        const passwordHash = bcrypt.hash(this.Password, salt);
-        // Re-assign hashed version over original, plain text password
-        this.local.password = passwordHash;
-        console.log('exited');
-        next();
-    } catch (error) {
-        next(error);
-    }
-})
+// userSchema.pre('save', async function(next) {
+//     const SALTROUNDS = 10;
+//     const user = this;
+//     try{
+//         console.log('entered');
+//     //if (!this.methods.includes('local')) {
+//       //next();
+//     //}
+//     //the user schema is instantiated
+    
+//     //check if the user has been modified to know if the password has already been hashed
+//     if (!user.isModified('password')) {
+//       next();
+//     }
+
+//     bcrypt
+//         .genSalt(SALTROUNDS)
+//         .then(salt =>{
+//             console.log(`Salt: ${salt}`)
+
+//             return bcrypt.hash(user.Password, salt);
+//         })
+//         .then(hash => {
+//             console.log(`Hash: ${hash}`);
+        
+//             // Store hash in your password DB.
+//         })
+//         .catch(err => console.error(err.message));
+ 
+
+//         //generate a salt
+//         // const salt = await bcrypt.genSalt(10);
+//         // //generate a password hash
+//         // const passwordHash = bcrypt.hash(user.Password, salt);
+//         // console.log(user.Password)
+//         // console.log(passwordHash);
+//         // // Re-assign hashed version over original, plain text password
+//         // user.local.password = passwordHash;
+//         // console.log(user.local.password);
+//         // console.log('exited');
+//         //next();
+//     } catch (error) {
+//         console.log("I caught an error!");
+//         next(error);
+//     }
+// })
 
 userSchema.methods.isValidPassword = async function(newPassword) {
     try{

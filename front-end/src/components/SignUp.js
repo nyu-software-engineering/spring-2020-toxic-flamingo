@@ -26,7 +26,7 @@ const SignUp = (props) => {
           //console.log(response);
           if (response.status === 200) {
             console.log("sign up success");
-            console.log(response);
+            //console.log(response);
           } else {
             const error = new Error(response.error);
             throw error;
