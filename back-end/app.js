@@ -32,31 +32,11 @@ const cors = require("cors")
   //console.log("connected with ")
 //});
 
-/*
-const router = require('express-promise-router')();
-const { validateBody, schemas } = require('./src/authentification/Helper.js');
-const UsersController = require('./src/authentification/UserController.js');
-const passport = require('passport');
-const passportConf = require('./src/authentification/passport');
 
-router.route('/signup')
-  .post(validateBody(schemas.authSchema), UsersController.signUp);
-
-
-router.route('/')
-      .post(validateBody(schemas.authSchema), passport.authenticate('local', {session: false}), UsersController.logIn);
-
-router.route('/secret')
-      .get(passport.authenticate('jwt', {session: false}), UsersController.secret);
-
-
-let tag = new tagModel({
-  tag: "waiyu",
-  posts: []
-});
+//const router = require('express-promise-router')();
 
 app.use("/routes", require("./src/authentification/routes"));
-*/
+
 
 const corsOptions = {
   origin: "http://localhost:3000",    // reqexp will match all prefixes
@@ -133,7 +113,7 @@ app.post("/signUp", cors(corsOptions), async (req, res, next) => {
     .status(200).json({ success: true });
   })
 
-app.get("/logIn", async (req, res, next) => {
+app.post("/logIn", async (req, res, next) => {
   //generate tokens
   console.log("log in called");
 

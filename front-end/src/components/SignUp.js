@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 //import './About.css';
 import SharmonyLogo from './SharmonyLogo.PNG';
 import axios from 'axios';
-import superagent from 'superagent';
-
 
 const SignUp = (props) => {
   const [myEmail, setEmail] = useState("");
