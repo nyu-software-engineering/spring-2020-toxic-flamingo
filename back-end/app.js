@@ -35,7 +35,7 @@ const cors = require("cors")
 
 //const router = require('express-promise-router')();
 
-app.use("/routes", require("./src/authentification/routes"));
+//app.use("/routes", require("./src/authentification/routes"));
 
 
 const corsOptions = {
@@ -47,7 +47,7 @@ const corsOptions = {
 // intercept pre-flight check for all routes
 //app.options('*', cors(corsOptions))
 app.use(cors(corsOptions));
-
+const passportSignIn = passport.authenticate('local', { session: false });
 const JWT = require('jsonwebtoken');
 const {JWT_SECRET} = require('./src/configuration'); 
 
@@ -117,7 +117,10 @@ app.post("/logIn", async (req, res, next) => {
   //generate tokens
   console.log("log in called");
 
-  //passport.authenticate('local', {session: false})
+  passport.authenticate('local', {session: false, successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true });
+
 
   const token = signToken(req.user);
 
@@ -127,13 +130,17 @@ app.post("/logIn", async (req, res, next) => {
   res.status(200).json({ success: true });
 
 
-})
+});
 
 app.get("/signOut", async (req, res, next) => {
   res.clearCookie('access_token');
-  // console.log('I managed to get here!');
+  console.log('I managed to get here!');
   res.json({ success: true });
 })
+
+app.get("/userStatus"), async (req, res, ) => {
+  
+}
 
 
 // let user123 = new userModel({
