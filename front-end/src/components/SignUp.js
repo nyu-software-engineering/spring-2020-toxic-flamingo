@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 //import './About.css';
 import SharmonyLogo from './SharmonyLogo.PNG';
 import axios from 'axios';
-import superagent from 'superagent';
-
 
 const SignUp = (props) => {
   const [myEmail, setEmail] = useState("");
@@ -28,7 +26,7 @@ const SignUp = (props) => {
           //console.log(response);
           if (response.status === 200) {
             console.log("sign up success");
-            console.log(response);
+            //console.log(response);
           } else {
             const error = new Error(response.error);
             throw error;

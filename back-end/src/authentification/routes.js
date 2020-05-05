@@ -8,10 +8,10 @@ const passportSignIn = passport.authenticate('local', { session: false });
 const passportJWT = passport.authenticate('jwt', { session: false });
 
 router.route('/signup')
-  .post(validateBody(schemas.authSchema), passportSignIn, UsersController.signUp);
+  .post(validateBody(schemas.authSchema), UsersController.signUp);
 
 router.route('/signIn')
-  .post(validateBody(schemas.authSchema), passportSignIn, UsersController.signUp);
+  .post(validateBody(schemas.authSchema), passportSignIn, UsersController.logIn);
 
 router.route('/')
     .post(validateBody(schemas.authSchema), passport.authenticate('local', {session: false}), UsersController.logIn);
@@ -19,5 +19,5 @@ router.route('/')
 router.route('/secret')
     .get(passport.authenticate('jwt', {session: false}), UsersController.secret);
 
-module.exports = router;
+    module.exports = router;
 

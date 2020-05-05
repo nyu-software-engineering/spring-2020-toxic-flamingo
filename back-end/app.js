@@ -19,6 +19,7 @@ let tagModel = require('./src/models/Tag');
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 const cors = require("cors")
+const bcrypt = require('bcryptjs');
 //require('dotenv').config();
 // we will put some server logic here later...
 //console.log(process.env.DB_USER);
@@ -32,31 +33,11 @@ const cors = require("cors")
   //console.log("connected with ")
 //});
 
-/*
-const router = require('express-promise-router')();
-const { validateBody, schemas } = require('./src/authentification/Helper.js');
-const UsersController = require('./src/authentification/UserController.js');
-const passport = require('passport');
-const passportConf = require('./src/authentification/passport');
 
-router.route('/signup')
-  .post(validateBody(schemas.authSchema), UsersController.signUp);
-
-
-router.route('/')
-      .post(validateBody(schemas.authSchema), passport.authenticate('local', {session: false}), UsersController.logIn);
-
-router.route('/secret')
-      .get(passport.authenticate('jwt', {session: false}), UsersController.secret);
-
-
-let tag = new tagModel({
-  tag: "waiyu",
-  posts: []
-});
+//const router = require('express-promise-router')();
 
 app.use("/routes", require("./src/authentification/routes"));
-*/
+
 
 const corsOptions = {
   origin: "http://localhost:3000",    // reqexp will match all prefixes
@@ -81,7 +62,7 @@ signToken = (user_id) => {
 }
 
 app.post("/signUp", cors(corsOptions), async (req, res, next) => {
-  console.log(req.header("cookie"));      
+  //console.log(req.header("cookie"));      
   console.log('UsersController.signUp() called!');
   //console.log(req);
   let data = req.body;
@@ -106,34 +87,40 @@ app.post("/signUp", cors(corsOptions), async (req, res, next) => {
   }
 
   //create new user
-  let newUser = new userModel({
-      Email: email,
-      Password: password,
-      Username: username,
-      Bio: "I'm new here",
-      Profile_Pic: "https://www.dictionary.com/e/wp-content/uploads/2018/04/kawaii.jpg",
-      Trophies: [false],
-      follower: ["fds"],
-      following: ["dsf"]
-  })
-  let ID;
-  await newUser.save()
-    .then(doc => {
-      ID = doc._id
-      console.log(ID)});
+  bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(password, salt, async function(err, hash) {
+      console.log("Hash:" + hash);
+      let newUser = new userModel({
+          Email: email,
+          Password: hash,
+          Username: username,
+          Bio: "I'm new here",
+          Profile_Pic: "https://www.dictionary.com/e/wp-content/uploads/2018/04/kawaii.jpg",
+          Trophies: [false],
+          follower: ["fds"],
+          following: ["dsf"]
+      })
+      let ID;
+      await newUser.save()
+        .then(doc => {
+          ID = doc._id
+          console.log(ID)});
+      //generate token
+      const token = signToken(ID);
+      console.log(token);
+      // Send a cookie containing JWT
+      return res.cookie('access_token', token, {
+          httpOnly: true,
+          //domain: "http://localhost:3000"
+        })
+        .status(200).json({ success: true });
+      })
+    });
+  });
   
-  //generate token
-  const token = signToken(ID);
-  console.log(token);
-  // Send a cookie containing JWT
-  return res.cookie('access_token', token, {
-      httpOnly: true,
-      domain: "http://localhost:3000"
-    })
-    .status(200).json({ success: true });
-  })
+  
 
-app.get("/logIn", async (req, res, next) => {
+app.post("/logIn", async (req, res, next) => {
   //generate tokens
   console.log("log in called");
 
