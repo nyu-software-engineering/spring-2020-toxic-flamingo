@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 //import './About.css';
 import SharmonyLogo from './SharmonyLogo.PNG';
 import axios from 'axios';
+import {Redirect} from 'react-router';
 
 const SignUp = (props) => {
   const [myEmail, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [userName, setUsername] = useState("");
+  const [shouldRedirect, setshouldRedirect] = useState(false);
 
   let dataArray = {
     email: myEmail,
@@ -26,6 +28,7 @@ const SignUp = (props) => {
           //console.log(response);
           if (response.status === 200) {
             console.log("sign up success");
+            setshouldRedirect(true);
             //console.log(response);
           } else {
             const error = new Error(response.error);
@@ -36,6 +39,7 @@ const SignUp = (props) => {
             console.log("ERROR!");
             console.error(err);
         })
+        
   }
 
   
@@ -55,8 +59,10 @@ const SignUp = (props) => {
     console.log(e.target.value);
     setUsername(e.target.value)
   }
-    
-    
+  if(shouldRedirect) {
+  return <Redirect push to='../MainFeed/'/>  
+  }
+  else{
   return (
     <div className="SignUp">
 
@@ -78,6 +84,7 @@ const SignUp = (props) => {
     </div>
      
   );
+  }
 }
 
 
