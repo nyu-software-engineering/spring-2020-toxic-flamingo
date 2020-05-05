@@ -38,22 +38,27 @@ module.exports = {
             Username: username
         })
         await newUser.save();
-        
         //generate token
-        let token = signToken(newUser);
-
-        //respond w token
-        res.status(200).json({token: token});
-
-
+        const token = signToken(ID);
+        console.log(token);
+        // Send a cookie containing JWT
+        return res.cookie('access_token', token, {
+         httpOnly: true,
+        domain: "http://localhost:3000"
+    })
+    .status(200).json({ success: true });
     },
 
     logIn: async (req, res, next) => {
         //generate tokens
         console.log("log in called");
-        const token = signToken(req.user);
-        res.status(200).json({token});
+        
+  const token = signToken(req.user);
 
+  res.cookie('access_token', token, {
+    httpOnly: true
+  });
+  res.status(200).json({ success: true });
 
     },
 

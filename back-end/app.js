@@ -32,31 +32,11 @@ const cors = require("cors")
   //console.log("connected with ")
 //});
 
-/*
-const router = require('express-promise-router')();
-const { validateBody, schemas } = require('./src/authentification/Helper.js');
-const UsersController = require('./src/authentification/UserController.js');
-const passport = require('passport');
-const passportConf = require('./src/authentification/passport');
 
-router.route('/signup')
-  .post(validateBody(schemas.authSchema), UsersController.signUp);
+//const router = require('express-promise-router')();
 
+//app.use("/routes", require("./src/authentification/routes"));
 
-router.route('/')
-      .post(validateBody(schemas.authSchema), passport.authenticate('local', {session: false}), UsersController.logIn);
-
-router.route('/secret')
-      .get(passport.authenticate('jwt', {session: false}), UsersController.secret);
-
-
-let tag = new tagModel({
-  tag: "waiyu",
-  posts: []
-});
-
-app.use("/routes", require("./src/authentification/routes"));
-*/
 
 const corsOptions = {
   origin: "http://localhost:3000",    // reqexp will match all prefixes
@@ -67,7 +47,7 @@ const corsOptions = {
 // intercept pre-flight check for all routes
 //app.options('*', cors(corsOptions))
 app.use(cors(corsOptions));
-
+const passportSignIn = passport.authenticate('local', { session: false });
 const JWT = require('jsonwebtoken');
 const {JWT_SECRET} = require('./src/configuration'); 
 
@@ -133,11 +113,14 @@ app.post("/signUp", cors(corsOptions), async (req, res, next) => {
     .status(200).json({ success: true });
   })
 
-app.get("/logIn", async (req, res, next) => {
+app.post("/logIn", async (req, res, next) => {
   //generate tokens
   console.log("log in called");
 
-  //passport.authenticate('local', {session: false})
+  passport.authenticate('local', {session: false, successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true });
+
 
   const token = signToken(req.user);
 
@@ -147,13 +130,17 @@ app.get("/logIn", async (req, res, next) => {
   res.status(200).json({ success: true });
 
 
-})
+});
 
 app.get("/signOut", async (req, res, next) => {
   res.clearCookie('access_token');
-  // console.log('I managed to get here!');
+  console.log('I managed to get here!');
   res.json({ success: true });
 })
+
+app.get("/userStatus"), async (req, res, ) => {
+  
+}
 
 
 // let user123 = new userModel({
