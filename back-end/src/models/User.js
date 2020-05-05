@@ -33,9 +33,9 @@ let userSchema = new mongoose.Schema({
 userSchema.pre('save', async function(next) {
     try{
         console.log('entered');
-    if (!this.methods.includes('local')) {
-      next();
-    }
+    //if (!this.methods.includes('local')) {
+      //next();
+    //}
     //the user schema is instantiated
     const user = this;
     //check if the user has been modified to know if the password has already been hashed
