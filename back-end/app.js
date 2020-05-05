@@ -138,9 +138,7 @@ app.get("/signOut", async (req, res, next) => {
   res.json({ success: true });
 })
 
-app.get("/userStatus"), async (req, res, ) => {
-  
-}
+
 
 
 // let user123 = new userModel({
