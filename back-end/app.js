@@ -36,7 +36,7 @@ const bcrypt = require('bcryptjs');
 
 //const router = require('express-promise-router')();
 
-app.use("/routes", require("./src/authentification/routes"));
+//app.use("/routes", require("./src/authentification/routes"));
 
 
 const corsOptions = {
@@ -48,9 +48,10 @@ const corsOptions = {
 // intercept pre-flight check for all routes
 //app.options('*', cors(corsOptions))
 app.use(cors(corsOptions));
-
+//const passportSignIn = passport.authenticate('local', { session: false });
 const JWT = require('jsonwebtoken');
 const {JWT_SECRET} = require('./src/configuration'); 
+const passport = require('passport');
 
 signToken = (user_id) => {
     return JWT.sign({
@@ -118,15 +119,27 @@ app.post("/signUp", cors(corsOptions), async (req, res, next) => {
     });
   });
   
-  
+ 
 
 app.post("/logIn", async (req, res, next) => {
   //generate tokens
   console.log("log in called");
+  console.log("before " + req.body.username);
+  passport.authenticate('local', {session: false, successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true });
+  const username = req.body.username;
+  console.log("after " + req.body.username);
+  const user = await userModel.findOne({Username: username});
+  //if not, handle that
+  if (!user){
+    console.log("no user");
+      return;
+  }
 
-  //passport.authenticate('local', {session: false})
-
-  const token = signToken(req.user);
+  const id = user._id;
+  console.log(id);
+  const token = signToken(id);
 
   res.cookie('access_token', token, {
     httpOnly: true
@@ -134,13 +147,15 @@ app.post("/logIn", async (req, res, next) => {
   res.status(200).json({ success: true });
 
 
-})
+});
 
 app.get("/signOut", async (req, res, next) => {
   res.clearCookie('access_token');
-  // console.log('I managed to get here!');
+  console.log('I managed to get here!');
   res.json({ success: true });
 })
+
+
 
 
 // let user123 = new userModel({

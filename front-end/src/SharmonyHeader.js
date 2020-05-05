@@ -3,6 +3,10 @@ import SharmonyLogoCropped from "./SharmonyLogoCropped.PNG";
 import './SharmonyHeader.css';
 
 const SharmonyHeader = (props) => {
+
+
+    console.log(document.cookies);
+
     return(
         <div className="headerParent">
             <div className="header">
