@@ -3,10 +3,15 @@ const router = require('express-promise-router')();
 const { validateBody, schemas } = require('./Helper.js');
 const UsersController = require('./UserController.js');
 const passport = require('passport');
-const passportConf = require('./passport');
+
+const passportSignIn = passport.authenticate('local', { session: false });
+const passportJWT = passport.authenticate('jwt', { session: false });
 
 router.route('/signup')
-  .post(validateBody(schemas.authSchema), UsersController.signUp);
+  .post(validateBody(schemas.authSchema), passportSignIn, UsersController.signUp);
+
+router.route('/signIn')
+  .post(validateBody(schemas.authSchema), passportSignIn, UsersController.signUp);
 
 router.route('/')
     .post(validateBody(schemas.authSchema), passport.authenticate('local', {session: false}), UsersController.logIn);

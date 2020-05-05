@@ -23,8 +23,7 @@ const SignUp = (props) => {
     
     
     // Send request to the server
-    axios.get("/signUp/", dataArray)
-        .withCredentials()
+    axios.post("/signUp/", dataArray, {withCredentials: true})
         .then ((response) => {
           //console.log(response);
           if (response.status === 200) {
