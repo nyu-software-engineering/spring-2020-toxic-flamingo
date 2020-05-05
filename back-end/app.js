@@ -80,7 +80,7 @@ signToken = (user_id) => {
     }, JWT_SECRET)
 }
 
-app.get("/signUp", cors(corsOptions), async (req, res, next) => {
+app.post("/signUp", cors(corsOptions), async (req, res, next) => {
   console.log(req.header("cookie"));      
   console.log('UsersController.signUp() called!');
   //console.log(req);
@@ -126,8 +126,7 @@ app.get("/signUp", cors(corsOptions), async (req, res, next) => {
   const token = signToken(ID);
   console.log(token);
   // Send a cookie containing JWT
-  return res
-    .cookie('access_token', token, {
+  return res.cookie('access_token', token, {
       httpOnly: true,
       domain: "http://localhost:3000"
     })

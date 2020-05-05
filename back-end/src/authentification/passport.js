@@ -6,9 +6,17 @@ const { JWT_SECRET } = require('../configuration');
 const User = require('../models/User');
 
 
+const cookieExtractor = req => {
+    let token = null;
+    if (req && req.cookies){
+        console.log('req.cookies', req.cookies);
+        token = req.cookies['access_token'];
+    }
+}
+
 //JSON WEB TOKEN STRATEGY
 passport.use(new JwtStrategy({
-    jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+    jwtFromRequest: cookieExtractor,
     secretOrKey: JWT_SECRET
 }, async(payload, done) => {
     try {
