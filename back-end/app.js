@@ -530,8 +530,10 @@ app.get('/hashtagFeed/:hashtag', async (req, res) => {
 
   const hashtag = req.params.hashtag; 
 
+  console.log("hashtag = " + hashtag);
+
   postModel.find({
-    'hashID': hashtag,
+    'hashID': "#"+hashtag,
   })
   .then(result => {
     console.log(result);
@@ -587,13 +589,18 @@ app.post("/changePassword/", async (req, res) => {
   }
 });
 
-app.post("/createPost/", (req,res) => {
+app.post("/createPost/", async (req,res) => {
   let data = req.body
   console.log(req.body)
   //data = JSON.parse(data)
   //console.log(data.hashID);
 
   //search for harmony here if there is previous post with same song - songname and artist
+
+  if (data.spotify == null) {
+    console.log("NO LINK");
+    data.spotify = "#";
+  }
 
   let newPost = new postModel({
     userID: data.userID,
@@ -608,15 +615,57 @@ app.post("/createPost/", (req,res) => {
     comments: [{user:'godddamnit'}]//data.comments
   });
 
+  let postID = "";
   //post data and send it to monodb atlas here 
-  newPost.save({runValidators:true}).then(doc => {
+  await newPost.save({runValidators:true}).then(doc => {
       console.log('this is pushing data to DB')
-      console.log(data);
+      postID = doc._id;
       }).catch(err => {
       console.log(err);
       });
   //search for harmony here if there is previous post with same song - songname and artist
   //get post data and send it to monodb atlas here 
+
+  let tags = data.hashID;
+
+  for (let i=0; i < tags.length; i++) {
+    let tag = tags[i].replace("#", "");
+    
+    await tagModel.findOne(
+      {tag: tag}
+    )
+    .then(doc => {
+      
+      if (doc == null) {
+        let newTag = new tagModel({
+          posts: [postID],
+          tag: tag
+        })
+        newTag.save({runValidators:true})
+        .then(doc => {
+          console.log("logged the tag");
+        })
+        .catch(err => {
+          console.log("failed to log tag");
+        }) 
+      }
+      else {
+        doc.updateOne(
+          {$push: {posts: postID}}
+        )
+        .then(doc => {
+          console.log("updated? " + doc)
+        })
+        .catch(err => {
+          console.log("failed to update: " + err);
+        })
+      }
+
+    })
+    .catch(err => {
+      console.log("ERROR: " + err);
+    })
+  }
 
   let newNotification = new notificationModel({
     userID: 'testtestest',//data.userID,
