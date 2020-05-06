@@ -36,7 +36,7 @@ const MainFeed = (props) => {
 
     return(
         <div className="MainFeed">
-            <h1>Appbar</h1>
+            <h1>MainFeed</h1>
             {data.map((jsonObj, i) => (
                 <Post key={jsonObj._id} data={jsonObj} loadComments={((postID) => handleCommentClick(postID))}/>
             ))}

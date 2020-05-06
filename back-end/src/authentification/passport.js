@@ -62,3 +62,5 @@ passport.use(new LocalStrategy({
          done(error, false);
      }
 }))
+
+module.exports = passport;

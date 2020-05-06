@@ -20,23 +20,9 @@ var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 const cors = require("cors")
 const bcrypt = require('bcryptjs');
-//require('dotenv').config();
-// we will put some server logic here later...
-//console.log(process.env.DB_USER);
-//mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@toxicflamingo-isrgh.mongodb.net/test?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true} );
-//Get the default connection
-//let db = mongoose.connection;
-//Bind connection to error event (to get notification of connection errors)
-
-//db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-//db.on('connected', () => {
-  //console.log("connected with ")
-//});
-
-
-//const router = require('express-promise-router')();
-
-//app.use("/routes", require("./src/authentification/routes"));
+const JWT = require('jsonwebtoken');
+const {JWT_SECRET} = require('./src/configuration'); 
+const passport = require('passport');
 
 
 const corsOptions = {
@@ -48,10 +34,43 @@ const corsOptions = {
 // intercept pre-flight check for all routes
 //app.options('*', cors(corsOptions))
 app.use(cors(corsOptions));
+//app.use(require('serve-static')(__dirname + '/../../public'));
+//app.use(require('cookie-parser')());
+//app.use(require('body-parser').urlencoded({ extended: true }));
+//app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+const LocalStrategy = require('passport-local').Strategy;
+//require('./src/authentication/passport')(passport);
 //const passportSignIn = passport.authenticate('local', { session: false });
-const JWT = require('jsonwebtoken');
-const {JWT_SECRET} = require('./src/configuration'); 
-const passport = require('passport');
+
+passport.use(new LocalStrategy({
+  usernameField: 'username'
+}, async (username, password, done) => {
+  try{
+      //find the user given the 
+      const user = await userModel.findOne({Username: username});
+      //if not, handle that
+      if (!user){
+          console.log("hello");
+          return done(null, false);
+      }
+      //check if passport correct
+      const isMatch = await user.isValidPassword(password);
+      
+      //if not handle that
+      if (!isMatch){
+          console.log("hello2");
+          return done(null, false);
+      }
+      console.log("passport using local");
+      //otherwise return user
+      done(null, user);
+   } catch (error) {
+      console.log("hello3");
+       done(error, false);
+   }
+}))
 
 signToken = (user_id) => {
     return JWT.sign({
@@ -121,13 +140,12 @@ app.post("/signUp", cors(corsOptions), async (req, res, next) => {
   
  
 
-app.post("/logIn", async (req, res, next) => {
+app.post("/logIn", passport.authenticate('local', {session: false, 
+failureFlash: true }), async (req, res, next) => {
   //generate tokens
   console.log("log in called");
   console.log("before " + req.body.username);
-  passport.authenticate('local', {session: false, successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true });
+  
   const username = req.body.username;
   console.log("after " + req.body.username);
   const user = await userModel.findOne({Username: username});
