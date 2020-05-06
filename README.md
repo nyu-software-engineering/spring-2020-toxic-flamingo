@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/nyu-software-engineering/spring-2020-toxic-flamingo.svg?branch=master)](https://travis-ci.com/nyu-software-engineering/spring-2020-toxic-flamingo)
+
 # This is the final project of TOXIC FLAMINGO
 
 **Product Vision Statement:**
