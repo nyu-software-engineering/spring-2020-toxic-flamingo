@@ -23,8 +23,7 @@ const bcrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
 const {JWT_SECRET} = require('./src/configuration'); 
 const passport = require('passport');
-
-
+const JwtCookieComboStrategy = require('passport-jwt-cookiecombo');
 const corsOptions = {
   origin: "http://localhost:3000",    // reqexp will match all prefixes
   methods: "GET,HEAD,POST,PATCH,DELETE,OPTIONS",
@@ -41,8 +40,49 @@ app.use(cors(corsOptions));
 app.use(passport.initialize());
 app.use(passport.session());
 const LocalStrategy = require('passport-local').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
 //require('./src/authentication/passport')(passport);
 //const passportSignIn = passport.authenticate('local', { session: false });
+
+// Pass a secret to sign the secured http cookie
+app.use(cookieParser(JWT_SECRET));
+
+const cookieExtractor = req => {
+  let token = null;
+  if (req && req.cookies){
+      //console.log('req.cookies', req.cookies);
+      token = req.cookies['access_token'];
+      //console.log("token received: " + token);
+  }
+  return token;
+}
+
+var opts = {}
+opts.jwtFromRequest = cookieExtractor;
+opts.secretOrKey = 'sharmonyauthentification';
+
+
+//JSON WEB TOKEN STRATEGY
+passport.use(new JwtStrategy(opts, async(payload, done) => {
+  
+  try {
+      console.log("what up");
+      //find the user specified token
+      const user = await User.findById(payload.sub);
+      
+      //if user no exist handle it bitch
+      if (!user){
+          return done(null, false);
+      }
+      console.log("passport using JWT Strategy");
+      //otherwise return the user son
+      done(null, user);
+
+  } catch (error) {
+      console.log('we got an error folks');
+      done(error, false);
+  }
+}))
 
 passport.use(new LocalStrategy({
   usernameField: 'username'
@@ -167,11 +207,34 @@ failureFlash: true }), async (req, res, next) => {
 
 });
 
+const jwtDecode = require('jwt-decode');
+app.get("/status", async (req, res, next) => {
+  console.log("gang in this b");
+  let token = cookieExtractor(req);
+  console.log(token);
+  let decodedToken = jwtDecode(token);
+  console.log(decodedToken);
+
+  let userID = decodedToken.sub;
+  let profPic;
+  await userModel.findById(userID)
+    .then(doc => {
+      profPic = doc.Profile_Pic;
+
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+
+  res.json({decodedToken, profPic});
+});
+
 app.get("/signOut", async (req, res, next) => {
   res.clearCookie('access_token');
   console.log('I managed to get here!');
   res.json({ success: true });
-})
+});
 
 
 
