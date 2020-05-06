@@ -3,6 +3,7 @@ import axios from 'axios';
 import UserSearchTile from './UserSearchTile';
 import TagSearchTile from './TagSearchTile';
 import './Search.css';
+import FeedWrapper from './FeedWrapper';
 // import logo from './logo.svg';
 //import './About.css';
 
@@ -12,6 +13,9 @@ const Search = (props) => {
 
   const [searchUsers, setSearchUsers] = useState(true);
   const [searchQuery, setQuery] = useState("");
+
+  const [clicked, setClicked] = useState(false); //when tag tile is clicked
+  const [tag, setTag] = useState(""); // tag state variable
 
   // useEffect( () => {
   //   axios.get("/Search/" + searchUsers)
@@ -60,6 +64,16 @@ const Search = (props) => {
     })
   }
 
+  function selectTag(tag) {
+    setTag(tag);
+    setClicked(true);
+  }
+
+  if (clicked) {
+    return (
+        <FeedWrapper isMainFeed={false} hashtag={tag}/>
+    )
+}
 
   return (
     <div className="Search">
@@ -106,7 +120,7 @@ const Search = (props) => {
           return <UserSearchTile key={i.toString()} jsonObj={jsonObj} />
         }
         else {
-          return <TagSearchTile key={i.toString()} jsonObj={jsonObj}/>
+          return <TagSearchTile key={i.toString()} jsonObj={jsonObj} onSelect={(tag) => selectTag(tag)}/>
         }
       })}
   </div>

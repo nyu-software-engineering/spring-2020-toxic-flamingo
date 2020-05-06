@@ -10,6 +10,8 @@ const FeedWrapper = (props) => {
     const [shouldLoadComments, setLoadComments] = useState(false);
     const [postID, setPostID] = useState("");
 
+    const hashtag = props.hashtag;
+
 
     function handleComments(postID) {
         
@@ -30,7 +32,7 @@ const FeedWrapper = (props) => {
     }
     else {
         return(
-            <HashtagFeed loadComments={(postID) => handleComments(postID)}/>
+            <HashtagFeed loadComments={(postID) => handleComments(postID)} hashtag={hashtag}/>
         );
     }
 }
