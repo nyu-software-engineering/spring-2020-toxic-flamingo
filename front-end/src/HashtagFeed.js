@@ -10,7 +10,7 @@ const HashtagFeed = (props) => {
     const [noPosts, setPosts] = useState(false);
 
     // this will be passed in from hashtag search page, for now it is hardcoded
-    const hashtag = "la"; //props.hashtag; 
+    const hashtag = props.hashtag; 
 
     // load in posts
     useEffect( () => {

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrimaryNav from './PrimaryNav';
 import SettingsNav from './SettingsNav';
@@ -29,13 +30,37 @@ import MakePostWrapper from './MakePostWrapper';
 
 
 const App = (props) => {
+  const [userID, setUserID] = useState("");
+  const [myPic, setMyPic] = useState("");
+
+  useEffect( () => {
+    //fetch data
+
+    axios.get("/status")
+    .then ((response) => {
+        console.log(response.data.profPic);
+        console.log(response.data.decodedToken.sub);
+
+        userID = response.data.decodedToken.sub;
+        console.log(userID);
+        
+        setUserID(userID);
+        setMyPic(response.data.profPic);
+    })
+    .catch( err => {
+        console.log("ERROR!");
+        console.error(err);
+    })
+    
+}, []);
+
     return (
       <div className="container">
           <Router>
               <Switch>
                     <Route path="/Search">
-                    <SharmonyHeader />
-                    <Search />
+                    <SharmonyHeader myPic={myPic}/>
+                    <Search userID={userID}/>
                     <PrimaryNav />
                   </Route>
                   <Route path="/Make_Post">
