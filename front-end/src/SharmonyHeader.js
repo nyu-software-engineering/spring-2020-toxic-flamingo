@@ -4,7 +4,7 @@ import SharmonyLogoCropped from "./SharmonyLogoCropped.PNG";
 import './SharmonyHeader.css';
 
 const SharmonyHeader = (props) => {
-    let {userID} = props;
+    //let {userID} = props;
     //console.log(userID);
     //const [userID, setUserID] = useState([]);
     const [myPic, setMyPic] = useState([]);
@@ -26,7 +26,6 @@ const SharmonyHeader = (props) => {
         
     }, []);
 
-
     return(
         <div className="headerParent">
             <div className="header">
@@ -40,5 +39,4 @@ const SharmonyHeader = (props) => {
         </div>
     );
 };
-
 export default SharmonyHeader;

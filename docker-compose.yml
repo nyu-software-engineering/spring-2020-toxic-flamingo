@@ -1,0 +1,22 @@
+version: "3.3"
+services:
+    frontend:
+        container_name: sharmony-front
+        build:
+            context: ./front-end
+            dockerfile: Dockerfile
+        image: will95/front-end
+        ports:
+            - "3001:3000"
+        volumes:
+            - ./front-end:/app
+    backend:
+        container_name: sharmony-baack
+        build:
+            context: ./back-end
+            dockerfile: Dockerfile
+        image: will95/back-end
+        ports:
+            - "5000:7000"
+        volumes:
+            - ./back-end:/app

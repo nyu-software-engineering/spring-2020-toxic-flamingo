@@ -12,6 +12,7 @@ const Post = (props) => {
     let val = "Play";
     const [playPause, setData] = useState(val);
     const [username, setUsername] = useState("");
+    const [shouldRedirect, setRedirect] = useState(false);
     
     const data = props.data;
     const userID = data.userID;
@@ -77,13 +78,18 @@ const Post = (props) => {
         )
     }
 
-    
+    if (shouldRedirect) {
+        return <Redirect push to='/UserProfile/'/>
+    }
 
     return (
         <div className="FeedPost">
             <div className='postHeader'>
 
-                <h4>{username}</h4>
+                <h4 onClick={() => {
+                    props.passUser(userID);
+                    setRedirect(true);
+                }}>{username}</h4>
 
             </div>
             <div className='postContent'>

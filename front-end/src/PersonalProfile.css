@@ -1,3 +1,9 @@
+
+.ProfileHeader {
+    align-items: center;
+    justify-content: center;
+}
+
 html,body {
     background: #efefef;
     font-family: "Verdana";
@@ -13,7 +19,7 @@ html,body {
     flex-wrap: wrap;
     flex-direction: row;
     position: relative; 
-    left: 40%;
+    left: 20%;
 }
 
 
@@ -22,6 +28,16 @@ html,body {
     display: flex;
     flex-direction: column;
     margin-bottom: 150px;
+}
+
+.PictureInProfile {
+    position: relative;
+    right: 30%;
+}
+
+.UserNameAndBio {
+    position: relative;
+    right: 28%;
 }
 
 .ProfileHeader {
@@ -37,5 +53,28 @@ html,body {
     margin-top: 100px;
     position: relative; 
     left: 10%;
+
 }
 
+.profileButton {
+    display: none;
+}
+
+.PictureInProfile:hover + .profileButton, .profileButton:hover {
+    display: inline-block;
+    position: absolute;
+    left: -30%;
+    font-size: 10px;
+}
+
+.bioButton {
+    display: none;
+}
+
+.UserNameAndBio:hover + .bioButton, .bioButton:hover {
+    display: inline-block;
+    position: absolute;
+    left: -5%;
+    bottom: -2%;
+    font-size: 10px;
+}

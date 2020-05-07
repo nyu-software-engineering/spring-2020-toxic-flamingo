@@ -224,20 +224,20 @@ app.get("/status", async (req, res, next) => {
 
   if (token != null) {
     let decodedToken = jwtDecode(token);
-    console.log("good token" + decodedToken);
+    console.log("good token");
 
-    //let userID = decodedToken.sub;
-    // let profPic;
-    // await userModel.findById(userID)
-    //   .then(doc => {
-    //     profPic = doc.Profile_Pic;
+    let userID = decodedToken.sub;
+    let profPic;
+    await userModel.findById(userID)
+      .then(doc => {
+        profPic = doc.Profile_Pic;
 
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
-    res.json(decodedToken);
+    res.json({decodedToken,profPic});
   }
   else {
     console.log("token = " + token);
@@ -333,11 +333,11 @@ const users = [
 app.get("/user/:isPersonal/:userID", async (req, res) => {
     let userID;
     let isPersonal = req.params.isPersonal;
-    if(isPersonal != "true") {
+    if(isPersonal == "false") {
       userID = req.params.userID;
       console.log("Not a personal profile");
     }
-    else {
+    else if (isPersonal == "true"){
       userID = cookieToID(req);
       console.log("this is my profile b");
     }
@@ -369,6 +369,7 @@ app.get("/profileposts/:userID", async (req,res) => {
   const userID = req.params.userID;
   let response;
   await postModel.find({'userID': userID})
+  .sort({createdAt: -1})
   .then(postArray => {
     response = postArray;
     console.log(postArray);
@@ -381,7 +382,7 @@ app.get("/profileposts/:userID", async (req,res) => {
 
 
 app.get("/Followee", async (req, res) => {
-  let response = await axios.get("https://api.mockaroo.com/api/87521f10?count=10&key=5296eab0").catch();
+  ;
   res.json(response.data);
 })
 
@@ -537,8 +538,8 @@ app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
     });
 
     let newNotification = new notificationModel({
-      userID: 'testtestest',//data.userID,
-      text: `user made a new comment!` //`${data.userID has a new post!}`
+      userID: userID,
+      text: `${userID} has a new post!`
     })
     newNotification.save({runValidators:true}).then(doc => {
       console.log(data);
@@ -574,6 +575,7 @@ app.get('/loadComments/:postId', async (req, res) => {
       await userModel.findById(comment.userID)
       .then(doc => {
         formattedComments.push({
+          userID: comment.userID,
           username: doc.Username,
           text: comment.text,
           timestamp: comment.createdAt
@@ -596,8 +598,10 @@ app.get('/mainFeed/', async (req, res) => {
 
   await userModel.findById(userID)
     .then(doc => {
-      following = doc.following;
-      following.push(userID)
+      if (!doc.following) {
+        following = doc.following;
+      }
+      following.push(userID);
     })
     .catch(err => {
       console.log(err);
@@ -608,6 +612,7 @@ app.get('/mainFeed/', async (req, res) => {
       return mongoose.Types.ObjectId(id);
     })},
   })
+  .sort({createdAt: -1})
   .then(result => {
     console.log(result);
     res.json(result);
@@ -654,6 +659,7 @@ app.get('/hashtagFeed/:hashtag', async (req, res) => {
   postModel.find({
     'hashID': "#"+hashtag,
   })
+  .sort({createdAt: -1})
   .then(result => {
     console.log(result);
     res.json(result);
@@ -664,6 +670,39 @@ app.get('/hashtagFeed/:hashtag', async (req, res) => {
 
 });
 
+app.post("/changeProfilePic/", (req, res) => {
+  console.log("gothere");
+  const profPic = req.body.profPic;
+  console.log(profPic);
+  const uID = cookieToID(req);
+  console.log(uID);
+  userModel.findByIdAndUpdate(uID,{Profile_Pic: profPic}, 
+  {
+    new : true,
+    runValidators: true
+  }).then(doc => {
+    console.log(doc);
+  }).catch(err => {
+    console.log(err);
+  })
+  });
+
+  app.post("/changeBio/", (req, res) => {
+    console.log("gothere");
+    const bio = req.body.userBio;
+    console.log(bio);
+    const uID = cookieToID(req);
+    console.log(uID);
+    userModel.findByIdAndUpdate(uID,{Bio: bio}, 
+    {
+      new : true,
+      runValidators: true
+    }).then(doc => {
+      console.log(doc);
+    }).catch(err => {
+      console.log(err);
+    })
+    });
 
 app.post("/changeEmail/", (req, res) => {
   let data = req.body;
@@ -709,6 +748,7 @@ app.post("/changePassword/", async (req, res) => {
 });
 
 app.post("/createPost/", async (req,res) => {
+  const userID = cookieToID(req);
   let data = req.body
   console.log(req.body)
   //data = JSON.parse(data)
@@ -790,8 +830,8 @@ app.post("/createPost/", async (req,res) => {
   }
 
   let newNotification = new notificationModel({
-    userID: 'testtestest',//data.userID,
-    text: `user has a new post!` //`${data.userID has a new post!}`
+    userID: userID,
+    text: `${userID} has a new post!`
   })
   newNotification.save({runValidators:true}).then(doc => {
     console.log(data);

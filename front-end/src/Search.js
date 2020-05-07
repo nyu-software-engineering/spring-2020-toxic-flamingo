@@ -95,16 +95,15 @@ const Search = (props) => {
   </div>
 
   <div class="flex-container">
-  <div className="Users"><button className="company" onClick={() => {
+  <div className="Users"><button className={searchUsers ? "selected": "notSelected"} onClick={() => {
     setData([]);
-    setQuery("");
     setSearchUsers(true);
   }}>Users</button></div>
-  <div className="Tags"><button className="company" onClick={() => {
+  <div className="Tags"><button className={searchUsers ? "notSelected": "selected"} onClick={() => {
     setData([]);
-    setQuery("");
     setSearchUsers(false);
   }}>Tags</button></div>
+
 
   </div>
  
@@ -117,7 +116,7 @@ const Search = (props) => {
         }
       
         if (searchUsers) {
-          return <UserSearchTile key={i.toString()} jsonObj={jsonObj} />
+          return <UserSearchTile key={i.toString()} jsonObj={jsonObj} passUser={(userID) => props.passUser(userID)}/>
         }
         else {
           return <TagSearchTile key={i.toString()} jsonObj={jsonObj} onSelect={(tag) => selectTag(tag)}/>

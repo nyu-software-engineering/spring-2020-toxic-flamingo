@@ -32,7 +32,6 @@ const HashtagFeed = (props) => {
 
     if (noPosts) return (
         <div className="HashtagFeed">
-            <h1>Appbar</h1>
             <h3>No posts with #{hashtag}</h3>
         </div>
     );
@@ -45,10 +44,9 @@ const HashtagFeed = (props) => {
 
     return(
         <div className="HashtagFeed">
-            <h1>Appbar</h1>
             <h3>#{hashtag}</h3>
             {data.map((jsonObj, i) => (
-                <Post key={jsonObj._id} data={jsonObj} loadComments={((postID) => handleCommentClick(postID))}/>
+                <Post key={jsonObj._id} data={jsonObj} loadComments={((postID) => handleCommentClick(postID))} passUser={(userID) => props.passUser(userID)}/>
             ))}
         </div>
     );

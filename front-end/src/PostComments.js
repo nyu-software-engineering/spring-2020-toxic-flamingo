@@ -4,17 +4,22 @@ import './PostComments.css';
 import CommentView from './CommentView';
 import axios from 'axios';
 import CommentBuilder from './CommentBuilder';
+import FeedWrapper from './FeedWrapper';
 
 const PostComments = (props) => {
     
     let postID = props.postID;
 
+    let isMainFeed = props.isMainFeed;
+    let hashtag = props.hashtag;
+
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [reloadCount, setReload] = useState(0);
 
+    const [shouldRedirect, setRedirect] = useState(false);
+
     useEffect(() => {
-        console.log("useEFfecting");
         axios.get('/loadComments/' + postID)
         .then((response) => {
             setComments(response.data);
@@ -25,6 +30,12 @@ const PostComments = (props) => {
             console.log(err);
         })
     }, [reloadCount]);
+
+    if (shouldRedirect) {
+        return (
+            <FeedWrapper isMainFeed={isMainFeed} hashtag={hashtag}/>
+        )
+    }
 
     if (loading == true) {
         return (
@@ -37,11 +48,15 @@ const PostComments = (props) => {
     return (
 
         <div className="PostComments">
+            <img src="/back-button.jpg" alt="where my button at" height="10" width="10" onClick={() => {
+                console.log("hashtag: " + hashtag);
+                console.log("isMainFeed: " + isMainFeed);
+                setRedirect(true);
+            }}></img>
             {comments.map((commentJson, i) => (
-                <CommentView key={i} data={commentJson}/>
+                <CommentView key={i} data={commentJson} passUser={(userID) => props.passUser(userID)}/>
             ))}
             <CommentBuilder postID={postID} updateComments={() => {
-                console.log("HEY IM DOING SOMETHING");
                 setReload(reloadCount + 1);
             }}/>
             <div className="buffer"></div>

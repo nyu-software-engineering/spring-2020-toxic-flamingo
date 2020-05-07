@@ -34,13 +34,19 @@ const App = (props) => {
   const [userID, setUserID] = useState("");
   const [myPic, setMyPic] = useState("");
 
+  function passUser(userID) {
+    console.log("PASSING USER ID " + userID);
+    setUserID(userID);
+
+  }
+
     return (
       <div className="container">
           <Router>
               <Switch>
                     <Route path="/Search">
-                    <SharmonyHeader myPic={myPic}/>
-                    <Search userID={userID}/>
+                    <SharmonyHeader/>
+                    <Search passUser={(userID) => passUser(userID)}/>
                     <PrimaryNav />
                   </Route>
                   <Route path="/Make_Post">
@@ -60,6 +66,12 @@ const App = (props) => {
                       <SharmonyHeader />
                       <PrimaryNav />
                       <PersonalProfile />
+                  </Route>
+
+                  <Route path="/UserProfile">
+                      <SharmonyHeader />
+                      <PrimaryNav />
+                      <UserProfile userID={userID}/>
                   </Route>
 
                   <Route path="/Home">
@@ -93,10 +105,11 @@ const App = (props) => {
                   </Route>
                   <Route path="/MainFeed">
                   <SharmonyHeader />
-                        <FeedWrapper isMainFeed={true} />
+                        <FeedWrapper isMainFeed={true} passUser={(userID) => passUser(userID)}/>
                         <PrimaryNav />
                   </Route>
                   <Route path="/Make_Post2">
+                  <SharmonyHeader />
                   <MakePostWrapper showScreenOne={false}/>
                     <PrimaryNav />
                   </Route>
@@ -121,7 +134,7 @@ const App = (props) => {
                   </Route> 
                   <Route path="/HashtagFeed">
                    <SharmonyHeader />
-                   <FeedWrapper isMainFeed={false} />
+                   <FeedWrapper isMainFeed={false} passUser={(userID) => passUser(userID)}/>
                     <PrimaryNav />
                   </Route>        
                   <Route path="/PostComments/:postId">

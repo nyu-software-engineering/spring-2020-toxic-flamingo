@@ -22,17 +22,17 @@ const FeedWrapper = (props) => {
 
     if (shouldLoadComments) {
         return(
-            <PostComments postID={postID}/>
+            <PostComments postID={postID} passUser={(userID) => props.passUser(userID)} isMainFeed={isMainFeed} hashtag={hashtag}/>
         );
     }
     else if (isMainFeed) {
         return(
-            <MainFeed loadComments={(postID) => handleComments(postID)}/>
+            <MainFeed loadComments={(postID) => handleComments(postID)} passUser={(userID) => props.passUser(userID)}/>
         );
     }
     else {
         return(
-            <HashtagFeed loadComments={(postID) => handleComments(postID)} hashtag={hashtag}/>
+            <HashtagFeed loadComments={(postID) => handleComments(postID)} hashtag={hashtag} passUser={(userID) => props.passUser(userID)}/>
         );
     }
 }
