@@ -7,13 +7,15 @@ import Post from './Post';
 const PostPreview = (props) => {
 
     const [data, setData] = useState([]);
-    const userID = 1;
+    const userID = props.userID;
+    console.log(userID);
     
     // load in posts or whatever
     useEffect( () => {
         //fetch data
 
-        axios.get("/profileposts/"+userID)
+
+        axios.get("/profileposts/" + userID)
         .then ((response) => {
             setData(response.data);
         })
@@ -37,11 +39,12 @@ const PostPreview = (props) => {
         <div className="PreviewPost">
             <div className="flex-container-post">
                 {data.map((jsonObj, i) => (
-                    <div className="coverArt">
-                        <img src={data.coverart} height="300" width="300" />
+                    <div className="coverArt" key={i}>
+                        <img src={jsonObj.picture} height="300" width="300" />
                     </div>
                 ))}
             </div>
+
         </div>
     );
 

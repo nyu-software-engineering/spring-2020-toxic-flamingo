@@ -10,6 +10,8 @@ const FeedWrapper = (props) => {
     const [shouldLoadComments, setLoadComments] = useState(false);
     const [postID, setPostID] = useState("");
 
+    const hashtag = props.hashtag;
+
 
     function handleComments(postID) {
         
@@ -20,17 +22,17 @@ const FeedWrapper = (props) => {
 
     if (shouldLoadComments) {
         return(
-            <PostComments postID={postID}/>
+            <PostComments postID={postID} passUser={(userID) => props.passUser(userID)}/>
         );
     }
     else if (isMainFeed) {
         return(
-            <MainFeed loadComments={(postID) => handleComments(postID)}/>
+            <MainFeed loadComments={(postID) => handleComments(postID)} passUser={(userID) => props.passUser(userID)}/>
         );
     }
     else {
         return(
-            <HashtagFeed loadComments={(postID) => handleComments(postID)}/>
+            <HashtagFeed loadComments={(postID) => handleComments(postID)} hashtag={hashtag} passUser={(userID) => props.passUser(userID)}/>
         );
     }
 }

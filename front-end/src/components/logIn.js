@@ -1,14 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {NavLink} from 'react-router-dom';
 import SharmonyLogo from './SharmonyLogo.PNG';
+import {Redirect} from 'react-router';
 import './logIn.css';
-
 import axios from 'axios';
 
 
 const LogIn = (props) => {
+
+  const [userID, setUserID] = useState("");
+  const [shouldRedirect, setRedirect] = useState(false);
+
+  useEffect( () => {
+    //fetch data
+
+    axios.get("/status")
+    .then ((response) => {
+
+        console.log(response.data);
+
+        if (!response.data) {
+          return;
+        }
+
+        console.log(response.data.sub);
+        
+        setUserID(response.data.sub);
+        setRedirect(true);
+    })
+    .catch( err => {
+        console.log("ERROR!");
+        console.error(err);
+    })
+    
+}, []);
+
   const [pass, setPass] = useState("");
   const [userName, setUsername] = useState("");
+
 
   let dataArray = {
     password: pass,
@@ -26,6 +55,7 @@ const LogIn = (props) => {
           //console.log(response);
           if (response.status === 200) {
             console.log("log in success");
+            setRedirect(true);
             //console.log(response);
           } else {
             const error = new Error(response.error);
@@ -51,6 +81,9 @@ const LogIn = (props) => {
   }
     
 
+  if (shouldRedirect) {
+    return <Redirect push to='../MainFeed/'/>
+  }
 
     return (
       <div className="LogIn">

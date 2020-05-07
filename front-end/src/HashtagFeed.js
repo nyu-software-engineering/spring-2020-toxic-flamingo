@@ -10,7 +10,7 @@ const HashtagFeed = (props) => {
     const [noPosts, setPosts] = useState(false);
 
     // this will be passed in from hashtag search page, for now it is hardcoded
-    const hashtag = "la"; //props.hashtag; 
+    const hashtag = props.hashtag; 
 
     // load in posts
     useEffect( () => {
@@ -32,7 +32,6 @@ const HashtagFeed = (props) => {
 
     if (noPosts) return (
         <div className="HashtagFeed">
-            <h1>Appbar</h1>
             <h3>No posts with #{hashtag}</h3>
         </div>
     );
@@ -48,7 +47,7 @@ const HashtagFeed = (props) => {
             <h1>Appbar</h1>
             <h3>#{hashtag}</h3>
             {data.map((jsonObj, i) => (
-                <Post key={jsonObj._id} data={jsonObj} loadComments={((postID) => handleCommentClick(postID))}/>
+                <Post key={jsonObj._id} data={jsonObj} loadComments={((postID) => handleCommentClick(postID))} passUser={(userID) => props.passUser(userID)}/>
             ))}
         </div>
     );

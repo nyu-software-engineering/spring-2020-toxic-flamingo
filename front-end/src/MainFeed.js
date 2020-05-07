@@ -8,13 +8,13 @@ const MainFeed = (props) => {
 
     const [data, setData] = useState([]);
 
-    const userId = "5eab5536cfcc1f47a02d55cf";
+    //const userId = "5eab5536cfcc1f47a02d55cf";
 
     // load in posts
     useEffect( () => {
         //fetch data
 
-        axios.get("/mainFeed/" + userId)
+        axios.get("/mainFeed/")
         .then ((response) => {
             
             setData(response.data);
@@ -32,13 +32,10 @@ const MainFeed = (props) => {
         props.loadComments(postID);
     }
 
-    console.log("HEeafjksbdfahsbdf");
-
     return(
         <div className="MainFeed">
-            <h1>MainFeed</h1>
             {data.map((jsonObj, i) => (
-                <Post key={jsonObj._id} data={jsonObj} loadComments={((postID) => handleCommentClick(postID))}/>
+                <Post key={jsonObj._id} data={jsonObj} loadComments={((postID) => handleCommentClick(postID))} passUser={(userID) => props.passUser(userID)}/>
             ))}
         </div>
     );

@@ -1,16 +1,26 @@
 import React, {useState, useEffect, Component} from 'react';
 
 import './CommentView.css'
+import { Redirect } from 'react-router-dom';
 
 
 const CommentView = (props) => {
 
+    const [shouldRedirect, setRedirect] = useState(false);
+
     const comment = props.data.text;
     const commenter = props.data.username;
 
+    if (shouldRedirect) {
+        return <Redirect push to='/UserProfile/'/>
+    }
+
     return (
         <div className="CommentView">
-            <p>{commenter}</p>
+            <p onClick={() => {
+                props.passUser(props.data.userID);
+                setRedirect(true);
+            }}>{commenter}</p>
             <p> commented: {comment}</p>
         </div>
     )

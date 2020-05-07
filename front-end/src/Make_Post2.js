@@ -3,11 +3,16 @@ import './Make_Post2.css';
 import axios from 'axios';
 import {NavLink} from 'react-router-dom';
 import {hashHistory} from 'react';
+import {Redirect} from 'react-router';
 
 const Make_Post2 = (props) => {
     const data = props.songData;
     console.log(data);
     console.log("got data " + props.songData + " in make post 2");
+    const [shouldRedirect, setshouldRedirect] = useState(false);
+
+   
+
 
     for(let i = 0; i < data.artists.length; i++){
         console.log(data.artists[i].name);
@@ -40,7 +45,7 @@ const Make_Post2 = (props) => {
             artists.push(data.artists[i].name);
         }
         let songData =  {
-            userID: "5eab5536cfcc1f47a02d55cf",   // import 
+            //userID: "5eab5536cfcc1f47a02d55cf",   // import 
             hashID: hashtags, //array of hashtags with '#' behind every tag
             harmony: true,  // import 
             songName: data.name,
@@ -58,8 +63,10 @@ const Make_Post2 = (props) => {
         // if second request is ok, receive a notification 
         .then((res) => {
             console.log('request is ok');
-            hashHistory.push('/MainFeed')
-            //return <Redirect to ="/MainFeed"/>
+            //hashHistory.push('/MainFeed')
+            if (res.status == 200){
+                setshouldRedirect(true);
+            }
         })
         // if there is an error, receive a notification
         .catch((err) => {
@@ -68,12 +75,18 @@ const Make_Post2 = (props) => {
         
     }
 
+    if(shouldRedirect) {
+        return <Redirect push to='./MainFeed/'/>  
+    }
+    
+
     return(
+        <div className="MakePost2">
         <div className="Header">
-            <div class="flex-container">
-                <div class="back_button">
+            <div className="flex-container">
+                <div className="back_button">
                 <img src="/back-button.jpg" alt="where my button at"></img>
-                <button class="btn">a</button>
+                <button className="btn">a</button>
                 </div>
                 <div>
                 <img src="/temp-logo.jpg" alt="logo plz" width="200" height="50"></img>
@@ -82,13 +95,13 @@ const Make_Post2 = (props) => {
             </div>
 
          
-            <div class="picture"><img src = {data.album.images[0].url} alt="image over"></img></div>
+            <div className="picture"><img src = {data.album.images[0].url} alt="image over"></img></div>
             <div>{data.name}</div>
-            <div class="text"> 
+            <div className="text"> 
             <input type="text" placeholder="Write your music!" onChange ={handledescription}></input>
             </div>
 
-            <div class="post">
+            <div className="post">
                 <form action="/MainFeed">
                     {/* this is where we create post object and send it to back end*/}
                     <NavLink to="/MainFeed">
@@ -99,9 +112,9 @@ const Make_Post2 = (props) => {
 
 
             <div className="nav_bar"> 
-                <div class="flex-container">
+                <div className="flex-container">
                 <nav>
-                    <ul class ="nav_link"> 
+                    <ul className ="nav_link"> 
                     <li><a href="/MainFeed">Home</a></li>
                     <li><a href="#">Search</a></li>
                     <li><a href="/Make_Post">New Post</a></li>
@@ -111,7 +124,7 @@ const Make_Post2 = (props) => {
                 </div>
                 </div>
         </div>
-        
+        </div>
     );
 }
 

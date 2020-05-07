@@ -1,3 +1,8 @@
+
+.ProfileHeader {
+    align-items: center;
+    justify-content: center;
+
 html,body {
     background: #efefef;
     font-family: "Verdana";
@@ -34,7 +39,9 @@ html,body {
 }
 
 .contain{
+    margin-top: 100px;
     position: relative; 
-    left: 14%;
+    left: 10%;
+
 }
 

@@ -23,8 +23,8 @@ const bcrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
 const {JWT_SECRET} = require('./src/configuration'); 
 const passport = require('passport');
-
-
+const JwtCookieComboStrategy = require('passport-jwt-cookiecombo');
+const jwtDecode = require('jwt-decode');
 const corsOptions = {
   origin: "http://localhost:3000",    // reqexp will match all prefixes
   methods: "GET,HEAD,POST,PATCH,DELETE,OPTIONS",
@@ -41,8 +41,58 @@ app.use(cors(corsOptions));
 app.use(passport.initialize());
 app.use(passport.session());
 const LocalStrategy = require('passport-local').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
 //require('./src/authentication/passport')(passport);
 //const passportSignIn = passport.authenticate('local', { session: false });
+
+// Pass a secret to sign the secured http cookie
+app.use(cookieParser(JWT_SECRET));
+
+const cookieExtractor = req => {
+  let token = null;
+  if (req && req.cookies){
+      //console.log('req.cookies', req.cookies);
+      token = req.cookies['access_token'];
+      //console.log("token received: " + token);
+  }
+  return token;
+}
+
+var opts = {}
+opts.jwtFromRequest = cookieExtractor;
+opts.secretOrKey = 'sharmonyauthentification';
+
+const cookieToID = req => {
+  let token = cookieExtractor(req);
+  console.log(token);
+
+  let decodedToken = jwtDecode(token);
+  let userID = decodedToken.sub;
+
+  return userID;
+}
+
+//JSON WEB TOKEN STRATEGY
+passport.use(new JwtStrategy(opts, async(payload, done) => {
+  
+  try {
+      console.log("what up");
+      //find the user specified token
+      const user = await User.findById(payload.sub);
+      
+      //if user no exist handle it bitch
+      if (!user){
+          return done(null, false);
+      }
+      console.log("passport using JWT Strategy");
+      //otherwise return the user son
+      done(null, user);
+
+  } catch (error) {
+      console.log('we got an error folks');
+      done(error, false);
+  }
+}))
 
 passport.use(new LocalStrategy({
   usernameField: 'username'
@@ -167,11 +217,41 @@ failureFlash: true }), async (req, res, next) => {
 
 });
 
+
+app.get("/status", async (req, res, next) => {
+  let token = cookieExtractor(req);
+  console.log(token);
+
+  if (token != null) {
+    let decodedToken = jwtDecode(token);
+    console.log("good token");
+
+    let userID = decodedToken.sub;
+    let profPic;
+    await userModel.findById(userID)
+      .then(doc => {
+        profPic = doc.Profile_Pic;
+
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    res.json({decodedToken,profPic});
+  }
+  else {
+    console.log("token = " + token);
+    res.json(token);
+  }
+
+  
+});
+
 app.get("/signOut", async (req, res, next) => {
   res.clearCookie('access_token');
   console.log('I managed to get here!');
-  res.json({ success: true });
-})
+  res.status(200).json({ success: true });
+});
 
 
 
@@ -250,19 +330,56 @@ const users = [
 ];
 
 
-// app.get("/user/:userID", (req, res) => {
-//   const userID = req.params.userID;
-//   res.send(user[userID]);
-// })
+app.get("/user/:isPersonal/:userID", async (req, res) => {
+    let userID;
+    let isPersonal = req.params.isPersonal;
+    if(isPersonal != "true") {
+      userID = req.params.userID;
+      console.log("Not a personal profile");
+    }
+    else {
+      userID = cookieToID(req);
+      console.log("this is my profile b");
+    }
+    let username, bio, pic, followers, following;
+    await userModel.findById(userID)
+    .then(doc => {
+      username = doc.Username;
+      console.log(username);
+      bio = doc.Bio;
+      pic = doc.Profile_Pic;
+      followers = doc.follower;
+      following = doc.following;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    res.json({
+      id: userID,
+      username: username,
+      bio: bio,
+      pic: pic,
+      followers: followers,
+      following: following,
+    })
+  })
 
 app.get("/profileposts/:userID", async (req,res) => {
   const userID = req.params.userID;
-  let response = await axios.get("https://api.mockaroo.com/api/cdf982f0?count=100&key=83e46730").catch();
-  res.json(response.data);
-})
+  let response;
+  await postModel.find({'userID': userID})
+  .sort({createdAt: -1})
+  .then(postArray => {
+    response = postArray;
+    console.log(postArray);
+  }).catch(err => {
+    console.log(err);
+  });
+  res.json(response);
+});
 
 app.get("/Followee", async (req, res) => {
-  let response = await axios.get("https://api.mockaroo.com/api/87521f10?count=10&key=5296eab0").catch();
+  ;
   res.json(response.data);
 })
 
@@ -398,7 +515,7 @@ request.post(authOptions, function(error, response, body) {
 app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
 
     const comment = req.params.comment;
-    const userID = req.params.userID;
+    const userID = cookieToID(req);
     const postID = req.params.postID;
 
     let commentToSubmit = new commentModel({
@@ -455,6 +572,7 @@ app.get('/loadComments/:postId', async (req, res) => {
       await userModel.findById(comment.userID)
       .then(doc => {
         formattedComments.push({
+          userID: comment.userID,
           username: doc.Username,
           text: comment.text,
           timestamp: comment.createdAt
@@ -469,9 +587,9 @@ app.get('/loadComments/:postId', async (req, res) => {
 });
 
 // load a main feed of only followed users' posts
-app.get('/mainFeed/:userId', async (req, res) => {
+app.get('/mainFeed/', async (req, res) => {
 
-  const userID = req.params.userId;
+  const userID = cookieToID(req);
 
   let following = [];
 
@@ -489,6 +607,7 @@ app.get('/mainFeed/:userId', async (req, res) => {
       return mongoose.Types.ObjectId(id);
     })},
   })
+  .sort({createdAt: -1})
   .then(result => {
     console.log(result);
     res.json(result);
@@ -530,9 +649,12 @@ app.get('/hashtagFeed/:hashtag', async (req, res) => {
 
   const hashtag = req.params.hashtag; 
 
+  console.log("hashtag = " + hashtag);
+
   postModel.find({
-    'hashID': hashtag,
+    'hashID': "#"+hashtag,
   })
+  .sort({createdAt: -1})
   .then(result => {
     console.log(result);
     res.json(result);
@@ -548,7 +670,7 @@ app.post("/changeEmail/", (req, res) => {
   let data = req.body;
   const email = data.email;
   console.log(email);
-  const uID = data.userID;
+  const uID = cookieToID(req);
   console.log(uID);
   userModel.findByIdAndUpdate(uID,{Email: email}, 
   {
@@ -566,7 +688,7 @@ app.post("/changePassword/", async (req, res) => {
   console.log(data);
   const oldPass = data.oldPassword;
   const newPass = data.newPassword;
-  const uID = data.userID;
+  const uID = cookieToID(req);
   console.log(oldPass);
   console.log(newPass);
   console.log(uID);
@@ -587,7 +709,7 @@ app.post("/changePassword/", async (req, res) => {
   }
 });
 
-app.post("/createPost/", (req,res) => {
+app.post("/createPost/", async (req,res) => {
   let data = req.body
   console.log(req.body)
   //data = JSON.parse(data)
@@ -595,8 +717,13 @@ app.post("/createPost/", (req,res) => {
 
   //search for harmony here if there is previous post with same song - songname and artist
 
+  if (data.spotify == null) {
+    console.log("NO LINK");
+    data.spotify = "#";
+  }
+
   let newPost = new postModel({
-    userID: data.userID,
+    userID: cookieToID(req),
     hashID: data.hashID,
     harmony: true, //figure that out after search
     songName: data.songName,
@@ -608,15 +735,60 @@ app.post("/createPost/", (req,res) => {
     comments: [{user:'godddamnit'}]//data.comments
   });
 
+  let postID = "";
   //post data and send it to monodb atlas here 
-  newPost.save({runValidators:true}).then(doc => {
+  await newPost.save({runValidators:true}).then(doc => {
       console.log('this is pushing data to DB')
-      console.log(data);
+      postID = doc._id;
       }).catch(err => {
       console.log(err);
       });
+
+  res.status(200).json({ success: true });    
   //search for harmony here if there is previous post with same song - songname and artist
   //get post data and send it to monodb atlas here 
+
+
+  let tags = data.hashID;
+
+  for (let i=0; i < tags.length; i++) {
+    let tag = tags[i].replace("#", "");
+    
+    await tagModel.findOne(
+      {tag: tag}
+    )
+    .then(doc => {
+      
+      if (doc == null) {
+        let newTag = new tagModel({
+          posts: [postID],
+          tag: tag
+        })
+        newTag.save({runValidators:true})
+        .then(doc => {
+          console.log("logged the tag");
+        })
+        .catch(err => {
+          console.log("failed to log tag");
+        }) 
+      }
+      else {
+        doc.updateOne(
+          {$push: {posts: postID}}
+        )
+        .then(doc => {
+          console.log("updated? " + doc)
+        })
+        .catch(err => {
+          console.log("failed to update: " + err);
+        })
+      }
+
+    })
+    .catch(err => {
+      console.log("ERROR: " + err);
+    })
+  }
 
   let newNotification = new notificationModel({
     userID: 'testtestest',//data.userID,
@@ -628,5 +800,20 @@ app.post("/createPost/", (req,res) => {
     console.log(err);
   });  
 })
+
+app.get("/getUsername/:userID", async (req, res, next) => {
+  console.log(req.params.userID);
+  const userID = req.params.userID;
+  let username;
+  await userModel.findById(userID)
+    .then(doc => {
+      username = doc.Username;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    console.log(username);
+  res.json(username);
+});
 
 module.exports = app;

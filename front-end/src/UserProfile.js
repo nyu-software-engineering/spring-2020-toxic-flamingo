@@ -14,15 +14,17 @@ const handleFollowersClick = (id) => {
   });
 }
 
-const PersonalProfile = (props) => {
+const UserProfile = (props) => {
 
   const [data, setData] = useState([]);
   const userID = 1;
 
+  console.log("AHHHHHHHHH " + props.userID);
+
   // load in posts or whatever
   useEffect( () => {
     //fetch data
-    axios.get("/userID"+userID)
+    axios.get("/userID/"+userID)
     .then ((response) => {
       setData(response.data);
     })
@@ -58,8 +60,8 @@ const PersonalProfile = (props) => {
       {data.map((jsonObj, i) => (
           
      
-          <div class='Profile'>
-            <BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
+          <div class='Profile' key={i}>
+           
             <div class="ProfileHeader">
             
                 <div class="flex-container">
@@ -87,4 +89,4 @@ const PersonalProfile = (props) => {
  }
   
 
-export default PersonalProfile;
+export default UserProfile;

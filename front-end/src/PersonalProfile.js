@@ -2,29 +2,40 @@ import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import BurgerMenu from './BurgerMenu';
 import './PersonalProfile.css';
+
 import './PostPreview';
 import PostPreview from './PostPreview';
+
 // import logo from './logo.svg';
 //import './About.css';
 
-const handleFollowersClick = (id) => {
-  axios.post('/user.:userID/followers', id)
-  .then(()=>console.log('going to followers'))
-  .catch(err => {console.log('followers error');
-  });
-}
-
 const PersonalProfile = (props) => {
 
-  const [data, setData] = useState([]);
-  const userID = 1;
 
+  const [data, setData] = useState({});
+  //const [showScreenOne, setScreenOne] = useState(false);
+  const [followingNum, setFollowingNum] = useState();
+  const [followerNum, setFollowerNum] = useState();
+
+  let userID = 1;
+  console.log(props);
   // load in posts or whatever
   useEffect( () => {
     //fetch data
-    axios.get("/user/"+userID)
+    axios.get("/user/" + "true/" + userID )
     .then ((response) => {
+      console.log("data: " + response.data.username);
       setData(response.data);
+      try {
+        setFollowingNum(response.data.following.length);
+      } catch {
+        setFollowingNum(0);  
+      }
+      try {
+        setFollowerNum(response.data.follower.length);
+      } catch {
+        setFollowerNum(0);
+      }
     })
     .catch( err => {
         console.log("ERROR!");
@@ -47,37 +58,36 @@ const PersonalProfile = (props) => {
 
 
     })
+
     
 }, []);
-
   
-
+console.log(data.id);
+if (!data.id) {
+  return (
+    <h1>Loading...</h1>
+  )
+} else {
     return (
-      <div>
-        <div>
-      {data.map((jsonObj, i) => (
-          
-     
           <div className='Profile'>
             <BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
             <div className="ProfileHeader">
-            
                 <div className="flex-container">
-                    <h1>{jsonObj.name}</h1>
+                    <h1>{data.username}</h1>
                  </div>
                       <div className="bio">
-                      <p>{jsonObj.bio}</p>
+                      <p>{data.bio}</p>
                       </div>
                     </div>
                       <div className='buttons'>
                           <div className='button1'>
                             <form action="/Followee">
-                            <button id="following">Following {jsonObj.following}</button>
+                            <button id="following">Following {followingNum}</button>
                             </form>
                           </div>
                           <div className='button2'>
                             <form action="/Follower">
-                            <button id="followers" onClick={handleFollowersClick(jsonObj.id)}>Followers {jsonObj.followers}</button>
+                            <button id="followers">Followers {followerNum}</button>
                             </form>
                           </div>
                           <div className='button3'>
@@ -88,15 +98,13 @@ const PersonalProfile = (props) => {
                             
                       </div>
                       
-            </div>
-         
-          ))}
+            
         <div className="contain">
-      <PostPreview />
+      <PostPreview userID = {data.id}/>
         </div>
-      </div> </div>
+      </div> 
     );
- }
-  
+  }
+}
 
 export default PersonalProfile;
