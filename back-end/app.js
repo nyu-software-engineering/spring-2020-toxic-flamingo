@@ -361,6 +361,7 @@ app.get("/user/:isPersonal/:userID", async (req, res) => {
       pic: pic,
       followers: followers,
       following: following,
+      personalID: cookieToID(req)
     })
   })
 
@@ -376,6 +377,8 @@ app.get("/profileposts/:userID", async (req,res) => {
   });
   res.json(response);
 });
+
+
 
 app.get("/Followee", async (req, res) => {
   let response = await axios.get("https://api.mockaroo.com/api/87521f10?count=10&key=5296eab0").catch();
