@@ -38,10 +38,9 @@ const PostComments = (props) => {
 
         <div className="PostComments">
             {comments.map((commentJson, i) => (
-                <CommentView key={i} data={commentJson}/>
+                <CommentView key={i} data={commentJson} passUser={(userID) => props.passUser(userID)}/>
             ))}
             <CommentBuilder postID={postID} updateComments={() => {
-                console.log("HEY IM DOING SOMETHING");
                 setReload(reloadCount + 1);
             }}/>
             <div className="buffer"></div>

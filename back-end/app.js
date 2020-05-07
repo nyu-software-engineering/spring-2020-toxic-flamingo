@@ -572,6 +572,7 @@ app.get('/loadComments/:postId', async (req, res) => {
       await userModel.findById(comment.userID)
       .then(doc => {
         formattedComments.push({
+          userID: comment.userID,
           username: doc.Username,
           text: comment.text,
           timestamp: comment.createdAt

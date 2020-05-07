@@ -35,7 +35,7 @@ const MainFeed = (props) => {
     return(
         <div className="MainFeed">
             {data.map((jsonObj, i) => (
-                <Post key={jsonObj._id} data={jsonObj} loadComments={((postID) => handleCommentClick(postID))}/>
+                <Post key={jsonObj._id} data={jsonObj} loadComments={((postID) => handleCommentClick(postID))} passUser={(userID) => props.passUser(userID)}/>
             ))}
         </div>
     );
