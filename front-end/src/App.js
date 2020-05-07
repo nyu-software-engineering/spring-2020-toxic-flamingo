@@ -46,7 +46,7 @@ const App = (props) => {
               <Switch>
                     <Route path="/Search">
                     <SharmonyHeader myPic={myPic}/>
-                    <Search userID={userID}/>
+                    <Search userID={userID} passUser={(userID) => passUser(userID)}/>
                     <PrimaryNav />
                   </Route>
                   <Route path="/Make_Post">
