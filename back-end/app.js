@@ -224,20 +224,20 @@ app.get("/status", async (req, res, next) => {
 
   if (token != null) {
     let decodedToken = jwtDecode(token);
-    console.log("good token" + decodedToken);
+    console.log("good token");
 
-    //let userID = decodedToken.sub;
-    // let profPic;
-    // await userModel.findById(userID)
-    //   .then(doc => {
-    //     profPic = doc.Profile_Pic;
+    let userID = decodedToken.sub;
+    let profPic;
+    await userModel.findById(userID)
+      .then(doc => {
+        profPic = doc.Profile_Pic;
 
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
-    res.json(decodedToken);
+    res.json({decodedToken,profPic});
   }
   else {
     console.log("token = " + token);
