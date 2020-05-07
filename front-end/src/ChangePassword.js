@@ -1,27 +1,52 @@
-import React from 'react';
-// import logo from './logo.svg';
-//import './About.css';
+import React, {useState, useEffect, Component} from 'react';
+import { NavLink } from "react-router-dom";
+import axios from 'axios';
+import "./ChangePassword.css";
 
 const ChangePassword = (props) => {
+  const [oldPass, setOldPass] = useState("");
+  const [newPass, setNewPass] = useState("");
+
+  let dataArray = {
+    oldPassword: oldPass,
+    newPassword: newPass,
+    userID: "5eab5536cfcc1f47a02d55cf"
+  }
+
+  function submitPassword(e) {
+    console.log(dataArray)
+    e.preventDefault();
+    axios.post("/changePassword/", dataArray)
+        .then ((res) => {
+            console.log('request is ok');
+        })
+        .catch( err => {
+            console.error(err);
+        })
+}
+function handleOldData(e) {
+  setOldPass(e.target.value)
+}
+
+function handleNewData(e) {
+  setNewPass(e.target.value)
+}
 
   return (
-<div className="About">
+<div className="ChangePassword">
     <h1>Change Password</h1>
-    <section className="EmailForm">
-
-              <form>
-              <p>Current Password</p>
-              <input type='password' name='currentpasswrd'/>
-              <p>New Password: </p>
-              <input type='password' name='pass' />
+    <section className="main-content">
+        <img alt="about us" className="icon" src="https://www.amazeelabs.com/sites/default/files/styles/leading_image/public/images/current-affairs/Maintenance-Password-Policies-Blog_0.jpg?h=f89ac811&itok=7NkzikSw" />
+        <form action="/change-password" method="POST">
+              <p>Enter your current password: </p>
+              <input type='text' name='currentPassword' onChange={handleOldData} />
               <br/>
-              <p>Confirm New Password: </p>
-              <input type='text' name='cemail'  />
+              <p>Enter your new password:</p>
+              <input type='text' name='newPassword' onChange={handleNewData}/>
               <br/>
-              <br />
-              <button>Confirm</button>
+              <button onClick={submitPassword}>Submit</button>
               </form>
-          </section>
+    </section>
 </div>
   );
 }

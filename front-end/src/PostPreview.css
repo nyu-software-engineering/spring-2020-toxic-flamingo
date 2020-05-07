@@ -1,0 +1,22 @@
+.PostPreview {
+    height: 50px;
+    width: 50px;
+    display: flex;
+}
+
+
+.coverArt {
+    border-style: solid;
+    padding: 5px;
+}
+
+.flex-container-post{
+    position: relative;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0px;
+}

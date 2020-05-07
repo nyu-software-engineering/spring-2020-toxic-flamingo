@@ -1,12 +1,13 @@
 import React from 'react';
-import { slide as Menu } from 'react-burger-menu'
+import { bubble as Menu } from 'react-burger-menu';
+import './BurgerMenu.css';
 
 const BurgerMenu = () => {
  
 
    //NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
     return (
-      <Menu>
+      <Menu >
         <a id="ChangeEmail" className="menu-item" href="/ChangeEmail">Change Email</a>
         <a id="ChangePassword" className="menu-item" href="/ChangePassword">Change Password</a>
         <a id="NotificationSettings" className="menu-item" href="/NotificationSettings">Notification Settings</a>

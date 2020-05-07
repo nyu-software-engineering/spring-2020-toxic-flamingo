@@ -1,0 +1,42 @@
+.header {
+    z-index: 3;
+    background-color: #6f567d;
+    position: relative;
+    top: 0;
+    width: 100%; 
+    display: flex;
+    justify-content:center;
+    align-items:flex-end;
+    border: solid;
+    
+}
+
+.profilePic {
+    z-index: 4;
+    float:right;
+    clear: right;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+
+.headerImage {
+    width: 50%;
+    height: auto;
+}
+
+.profileImage {
+    position: relative;
+    width: 20%;
+    float: right;
+    height: auto;
+}
+
+
+.headerParent {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}

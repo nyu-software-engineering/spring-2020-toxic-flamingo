@@ -1,18 +1,21 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 
-import './MainFeed.css';
+import "./PostPreview.css";
 import Post from './Post';
 
 const PostPreview = (props) => {
 
     const [data, setData] = useState([]);
-
+    const userID = props.userID;
+    console.log(userID);
+    
     // load in posts or whatever
     useEffect( () => {
         //fetch data
 
-        axios.get("https://api.mockaroo.com/api/f9224880?count=10&key=83e46730")
+
+        axios.get("/profileposts/" + userID)
         .then ((response) => {
             setData(response.data);
         })
@@ -23,7 +26,7 @@ const PostPreview = (props) => {
             //fake backup data
             const backupData = [
                 {
-                    cover_art:"/components/SharmonyLogo.PNG"
+                    coverart: "https://www.udiscovermusic.com/wp-content/uploads/2018/08/Kanye-West-Graduation-album-cover-web-optimised-820.jpg"
                 }
             ];
             setData(backupData);
@@ -31,15 +34,17 @@ const PostPreview = (props) => {
         
     }, []);
 
-    
 
     return(
-        <div class="PreviewPost">
-            {data.map((jsonObj, i) => (
-                <div class='picture'>
-                <img src={jsonObj.cover_art}/>
-                </div>
-            ))}
+        <div className="PreviewPost">
+            <div className="flex-container-post">
+                {data.map((jsonObj, i) => (
+                    <div className="coverArt" key={i}>
+                        <img src={jsonObj.picture} height="300" width="300" />
+                    </div>
+                ))}
+            </div>
+
         </div>
     );
 

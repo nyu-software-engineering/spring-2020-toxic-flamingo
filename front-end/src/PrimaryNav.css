@@ -1,0 +1,23 @@
+
+.nav_bar{
+  background-color: #6f567d;
+  position: fixed;
+  bottom: 0;
+  width: 100%; 
+  display: flex;
+  justify-content:center;
+  align-items:flex-end;
+  border: solid;
+  z-index: 500;
+}
+
+li a:hover {
+  background-color: #555;
+  color: white;
+}
+
+li a {
+  display: block;
+  padding: 8px 16px;
+  text-decoration: none;
+}

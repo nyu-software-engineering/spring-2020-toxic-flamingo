@@ -1,0 +1,7 @@
+.flex-container {
+    flex-direction: row;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    margin: 0px;
+}

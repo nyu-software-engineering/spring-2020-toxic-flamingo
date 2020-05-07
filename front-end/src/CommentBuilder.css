@@ -1,0 +1,10 @@
+.CommentBuilder {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.commentText {
+    height: 60px;
+    width: 40%;
+}

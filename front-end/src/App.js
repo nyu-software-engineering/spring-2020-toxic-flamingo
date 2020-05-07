@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrimaryNav from './PrimaryNav';
 import SettingsNav from './SettingsNav';
 import Home from './Home';
+import Search from './Search';
 import Make_Post from './Make_Post';
 import PersonalProfile from './PersonalProfile';
 import LogIn from './components/logIn';
@@ -12,30 +14,49 @@ import ChangeEmail from './ChangeEmail';
 import ChangePassword from './ChangePassword';
 import NotificationSettings from './NotificationSettings';
 import Trophies from './Trophies';
+import Make_Post2 from './Make_Post2';
 import logo from './logo.svg';
 import './App.css';
 import MainFeed from './MainFeed';
-//import logInScreen from './logIn';
+import HashtagFeed from './HashtagFeed';
+import Follower from './Follower';
+import Followee from './Followee';
+import Harmonies from './Harmonies';
+import PostComments from './PostComments';
+import Notifications from './Notifications';
+import SharmonyHeader from './SharmonyHeader';
+import FeedWrapper from './FeedWrapper.js';
+import MakePostWrapper from './MakePostWrapper';
 
 
 const App = (props) => {
+  const [userID, setUserID] = useState("");
+  const [myPic, setMyPic] = useState("");
+
     return (
       <div className="container">
           <Router>
               <Switch>
-
+                    <Route path="/Search">
+                    <SharmonyHeader myPic={myPic}/>
+                    <Search userID={userID}/>
+                    <PrimaryNav />
+                  </Route>
                   <Route path="/Make_Post">
-                    <Make_Post />
+                    <SharmonyHeader />
+                    <MakePostWrapper showScreenOne={true}/>
                     <PrimaryNav />
                   </Route>
   
   
                   <Route path="/PersonalProfile">
+                      <SharmonyHeader />
                       <PrimaryNav />
                       <PersonalProfile />
                   </Route>
 
                   <Route path="/Home">
+                      <SharmonyHeader />
                       <PrimaryNav />
                       <Home/>
                   </Route>
@@ -64,9 +85,43 @@ const App = (props) => {
                       <SettingsNav />
                   </Route>
                   <Route path="/MainFeed">
-                        <MainFeed />
+                  <SharmonyHeader />
+                        <FeedWrapper isMainFeed={true} />
                         <PrimaryNav />
                   </Route>
+                  <Route path="/Make_Post2">
+                  <MakePostWrapper showScreenOne={false}/>
+                    <PrimaryNav />
+                  </Route>
+                  <Route path="/Follower">
+                  <SharmonyHeader />
+                    <Follower />
+                    <PrimaryNav />
+                  </Route>
+                  <Route path="/Followee">
+                  <SharmonyHeader />
+                    <Followee />
+                    <PrimaryNav />
+                  </Route>
+                  <Route path="/Harmonies">
+                    <Harmonies />
+                    <PrimaryNav />
+                  </Route>
+                  <Route path="/Notifications">
+                    <SharmonyHeader />
+                    <Notifications />
+                    <PrimaryNav />
+                  </Route> 
+                  <Route path="/HashtagFeed">
+                   <SharmonyHeader />
+                   <FeedWrapper isMainFeed={false} />
+                    <PrimaryNav />
+                  </Route>        
+                  <Route path="/PostComments/:postId">
+                   <SharmonyHeader />
+                    <PostComments />
+                    <PrimaryNav />
+                  </Route>                                  
                   <Route path="/">
                       <LogIn />
                 </Route>
