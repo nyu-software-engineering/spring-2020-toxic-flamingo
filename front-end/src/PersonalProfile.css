@@ -34,7 +34,8 @@ html,body {
 }
 
 .contain{
+    margin-top: 100px;
     position: relative; 
-    left: 14%;
+    left: 10%;
 }
 

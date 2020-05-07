@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './PrimaryNav.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import {Redirect} from 'react-router';
 
 const PrimaryNav = (props) => {
+    const [isRedirect, setIsRedirect] = useState(false);
+
+
+    function LogOut() {
+        axios.get('/signOut/') 
+        .then((response) => {
+            if (response.status === 200) {
+                setIsRedirect(true);
+            }
+        })
+    }
+
+    if(isRedirect) {
+        return <Redirect push to='/'/> 
+    }
+
     return (
         // <div class="nav">
         // <nav>
@@ -38,7 +56,7 @@ const PrimaryNav = (props) => {
                     <li><a href="/Make_Post">New Post</a></li>
                     <li><a href="/Notifications">Notifications</a></li>
                    
-                    <li><a href="/">Log Out</a></li>
+                    <li><a onClick={LogOut}>Log Out</a></li>
                     <li><a href="/HashtagFeed">Hashtags</a></li>
                     </ul>
                 </nav>
