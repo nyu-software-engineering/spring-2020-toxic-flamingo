@@ -21,7 +21,7 @@ const UserSearchTile = (props) => {
             props.passUser(jsonObj._id);
             setRedirect(true);
         }}>
-            <img src={"#"} alt="no img" ></img>
+            <img src={jsonObj.Profile_Pic} alt="no img" width="50" height="50"></img>
             <p >{jsonObj.Username}</p>
             <br/>
             <div className="line"></div>
