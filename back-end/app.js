@@ -333,11 +333,11 @@ const users = [
 app.get("/user/:isPersonal/:userID", async (req, res) => {
     let userID;
     let isPersonal = req.params.isPersonal;
-    if(isPersonal != "true") {
+    if(isPersonal == "false") {
       userID = req.params.userID;
       console.log("Not a personal profile");
     }
-    else {
+    else if (isPersonal == "true"){
       userID = cookieToID(req);
       console.log("this is my profile b");
     }

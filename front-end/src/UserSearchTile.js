@@ -12,7 +12,7 @@ const UserSearchTile = (props) => {
 
     if (shouldRedirect) {
         return (
-            <Redirect push to = '/UserProfile/'/>
+            <Redirect push to = '/UserProfile/' />
         )
     }
 

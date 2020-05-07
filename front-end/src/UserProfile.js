@@ -16,17 +16,40 @@ const handleFollowersClick = (id) => {
 
 const UserProfile = (props) => {
 
-  const [data, setData] = useState([]);
-  const userID = 1;
-
+  
   console.log("AHHHHHHHHH " + props.userID);
 
+  const [data, setData] = useState({});
+  //const [showScreenOne, setScreenOne] = useState(false);
+  const [followingNum, setFollowingNum] = useState();
+  const [followerNum, setFollowerNum] = useState();
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  let userID = props.userID;
+  console.log("imma prop" + userID);
   // load in posts or whatever
   useEffect( () => {
     //fetch data
-    axios.get("/userID/"+userID)
+    axios.get("/user/" + "false/" + userID )
     .then ((response) => {
+      console.log("data: " + response.data.username);
       setData(response.data);
+      try {
+        setFollowingNum(response.data.following.length);
+      } catch {
+        setFollowingNum(0);  
+      }
+      try {
+        setFollowerNum(response.data.follower.length);
+      } catch {
+        setFollowerNum(0);
+      }
+     
+      for(let i =0; i < followerNum; i++){
+        if (data.id == response.datafollower[i]){
+          setIsFollowing(true);
+        }
+      }
     })
     .catch( err => {
         console.log("ERROR!");
@@ -49,44 +72,65 @@ const UserProfile = (props) => {
 
 
     })
+
     
 }, []);
 
-  
+function followClicked () {
 
+}
+  
+console.log(data.id);
+if (!data.id) {
+  return (
+    <h1>Loading...</h1>
+  )
+} else {
     return (
-      <div>
-        <div>
-      {data.map((jsonObj, i) => (
-          
-     
-          <div class='Profile' key={i}>
-           
-            <div class="ProfileHeader">
-            
-                <div class="flex-container">
-                      <div class="profilePic">
-                      <img alt="Profile Pic" src={jsonObj.pic} width="100" height="100"/>
-                      </div>
-                    <h1>{jsonObj.name}</h1>
+          <div className='Profile'>
+            <BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
+            <div className="ProfileHeader">
+                
+                <div className="flex-container">
+                    <img src={data.pic} alt="profile pic" width="100" height="100"/>
+              <h1>{data.username}</h1>
                  </div>
-                      <div class="bio">
-                      <p>{jsonObj.bio}</p>
+                      <div className="bio">
+                      <p>{data.bio}</p>
                       </div>
                     </div>
-                      <div class='buttons'>
-                            <button id="following">Following {jsonObj.following}</button>
-                            <button id="followers" onClick={handleFollowersClick(jsonObj.id)}>Followers {jsonObj.followers}</button>
+                      <div className='buttons'>
+                          <div className='button1'>
+                            <form action="/Followee">
+                            <button id="following">Following {followingNum}</button>
+                            </form>
+                          </div>
+                          <div className='button2'>
+                            <form action="/Follower">
+                            <button id="followers">Followers {followerNum}</button>
+                            </form>
+                          </div>
+                          <div className='button3'>
+                            <form action="/Harmonies">
                             <button id="harmonies" >Harmonies</button>
+                            </form>
+                          </div>
+                          <div className='button4'>
+                            <form action="/Follow">
+                            <button id="follow" onClick={followClicked}>Follow</button>
+                            </form>
+                          </div>
+                            
                       </div>
-              
-            </div>
-         
-      ))}
-      <PostPreview />
-      </div> </div>
+                      
+            
+        <div className="contain">
+      <PostPreview userID = {data.id}/>
+        </div>
+      </div> 
     );
- }
-  
+ 
+  }
+}
 
 export default UserProfile;

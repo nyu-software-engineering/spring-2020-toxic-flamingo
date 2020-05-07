@@ -73,6 +73,7 @@ if (!data.id) {
             <BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
             <div className="ProfileHeader">
                 <div className="flex-container">
+                  <img src={data.pic} alt="profile pic" width="100" height="100"/>
                     <h1>{data.username}</h1>
                  </div>
                       <div className="bio">
