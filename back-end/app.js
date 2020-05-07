@@ -368,6 +368,7 @@ app.get("/profileposts/:userID", async (req,res) => {
   const userID = req.params.userID;
   let response;
   await postModel.find({'userID': userID})
+  .sort({createdAt: -1})
   .then(postArray => {
     response = postArray;
     console.log(postArray);
