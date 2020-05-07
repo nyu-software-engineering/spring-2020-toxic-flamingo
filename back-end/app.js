@@ -24,6 +24,7 @@ const JWT = require('jsonwebtoken');
 const {JWT_SECRET} = require('./src/configuration'); 
 const passport = require('passport');
 const JwtCookieComboStrategy = require('passport-jwt-cookiecombo');
+const jwtDecode = require('jwt-decode');
 const corsOptions = {
   origin: "http://localhost:3000",    // reqexp will match all prefixes
   methods: "GET,HEAD,POST,PATCH,DELETE,OPTIONS",
@@ -207,27 +208,35 @@ failureFlash: true }), async (req, res, next) => {
 
 });
 
-const jwtDecode = require('jwt-decode');
+
 app.get("/status", async (req, res, next) => {
   console.log("gang in this b");
   let token = cookieExtractor(req);
   console.log(token);
-  let decodedToken = jwtDecode(token);
-  console.log(decodedToken);
 
-  let userID = decodedToken.sub;
-  let profPic;
-  await userModel.findById(userID)
-    .then(doc => {
-      profPic = doc.Profile_Pic;
+  if (token != null) {
+    let decodedToken = jwtDecode(token);
+    console.log("good token" + decodedToken);
 
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    //let userID = decodedToken.sub;
+    // let profPic;
+    // await userModel.findById(userID)
+    //   .then(doc => {
+    //     profPic = doc.Profile_Pic;
 
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
 
-  res.json({decodedToken, profPic});
+    res.json(decodedToken);
+  }
+  else {
+    console.log("token = " + token);
+    res.json(token);
+  }
+
+  
 });
 
 app.get("/signOut", async (req, res, next) => {
@@ -756,5 +765,20 @@ app.post("/createPost/", async (req,res) => {
     console.log(err);
   });  
 })
+
+app.get("/getUsername/:userID", async (req, res, next) => {
+  console.log(req.params.userID);
+  const userID = req.params.userID;
+  let username;
+  await userModel.findById(userID)
+    .then(doc => {
+      username = doc.Username;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    console.log(username);
+  res.json(username);
+});
 
 module.exports = app;
