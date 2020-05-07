@@ -95,16 +95,15 @@ const Search = (props) => {
   </div>
 
   <div class="flex-container">
-  <div className="Users"><button className="company" onClick={() => {
+  <div className="Users"><button className={searchUsers ? "selected": "notSelected"} onClick={() => {
     setData([]);
-    setQuery("");
     setSearchUsers(true);
   }}>Users</button></div>
-  <div className="Tags"><button className="company" onClick={() => {
+  <div className="Tags"><button className={searchUsers ? "notSelected": "selected"} onClick={() => {
     setData([]);
-    setQuery("");
     setSearchUsers(false);
   }}>Tags</button></div>
+
 
   </div>
  
