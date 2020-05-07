@@ -8,7 +8,7 @@ import FeedWrapper from './FeedWrapper';
 //import './About.css';
 
 const Search = (props) => {
-
+  console.log(props.userID);
   const [data, setData] = useState([]);
 
   const [searchUsers, setSearchUsers] = useState(true);

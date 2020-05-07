@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrimaryNav from './PrimaryNav';
 import SettingsNav from './SettingsNav';
@@ -29,13 +29,19 @@ import MakePostWrapper from './MakePostWrapper';
 
 
 const App = (props) => {
+  const [userID, setUserID] = useState([]);
+
+  function handleUserID(e) {
+    setUserID(e);
+  }
+
     return (
       <div className="container">
           <Router>
               <Switch>
                     <Route path="/Search">
-                    <SharmonyHeader />
-                    <Search />
+                    <SharmonyHeader userID={userID} handleUserID={(userID)=>handleUserID(userID)} />
+                    <Search userID={userID}/>
                     <PrimaryNav />
                   </Route>
                   <Route path="/Make_Post">

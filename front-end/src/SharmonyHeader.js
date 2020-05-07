@@ -4,7 +4,9 @@ import SharmonyLogoCropped from "./SharmonyLogoCropped.PNG";
 import './SharmonyHeader.css';
 
 const SharmonyHeader = (props) => {
-    const [userID, setUserID] = useState([]);
+    let {userID} = props;
+    //console.log(userID);
+    //const [userID, setUserID] = useState([]);
     const [myPic, setMyPic] = useState([]);
     //setMyPic("https://www.dictionary.com/e/wp-content/uploads/2018/04/kawaii.jpg");
     // load in posts
@@ -16,7 +18,9 @@ const SharmonyHeader = (props) => {
             console.log(response.data.profPic);
             console.log(response.data.decodedToken.sub);
 
-            setUserID(response.data.decodedToken.sub);
+            userID = response.data.decodedToken.sub;
+            console.log(userID);
+            //userID.handleUserID(response.data.decodedToken.sub);
             setMyPic(response.data.profPic);
         })
         .catch( err => {
