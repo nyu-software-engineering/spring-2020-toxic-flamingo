@@ -32,7 +32,6 @@ const HashtagFeed = (props) => {
 
     if (noPosts) return (
         <div className="HashtagFeed">
-            <h1>Appbar</h1>
             <h3>No posts with #{hashtag}</h3>
         </div>
     );

@@ -32,11 +32,8 @@ const MainFeed = (props) => {
         props.loadComments(postID);
     }
 
-    console.log("HEeafjksbdfahsbdf");
-
     return(
         <div className="MainFeed">
-            <h1>MainFeed</h1>
             {data.map((jsonObj, i) => (
                 <Post key={jsonObj._id} data={jsonObj} loadComments={((postID) => handleCommentClick(postID))}/>
             ))}
