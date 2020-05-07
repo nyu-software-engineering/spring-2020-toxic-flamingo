@@ -595,8 +595,10 @@ app.get('/mainFeed/', async (req, res) => {
 
   await userModel.findById(userID)
     .then(doc => {
-      following = doc.following;
-      following.push(userID)
+      if (!doc.following) {
+        following = doc.following;
+      }
+      following.push(userID);
     })
     .catch(err => {
       console.log(err);
