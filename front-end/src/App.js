@@ -27,11 +27,18 @@ import Notifications from './Notifications';
 import SharmonyHeader from './SharmonyHeader';
 import FeedWrapper from './FeedWrapper.js';
 import MakePostWrapper from './MakePostWrapper';
+import UserProfile from './UserProfile';
 
 
 const App = (props) => {
   const [userID, setUserID] = useState("");
   const [myPic, setMyPic] = useState("");
+
+  function passUser(userID) {
+    console.log("PASSING USER ID " + userID);
+    setUserID(userID);
+
+  }
 
     return (
       <div className="container">
@@ -53,6 +60,12 @@ const App = (props) => {
                       <SharmonyHeader />
                       <PrimaryNav />
                       <PersonalProfile />
+                  </Route>
+
+                  <Route path="/UserProfile">
+                      <SharmonyHeader />
+                      <PrimaryNav />
+                      <UserProfile userID={userID}/>
                   </Route>
 
                   <Route path="/Home">
@@ -86,7 +99,7 @@ const App = (props) => {
                   </Route>
                   <Route path="/MainFeed">
                   <SharmonyHeader />
-                        <FeedWrapper isMainFeed={true} />
+                        <FeedWrapper isMainFeed={true} passUser={(userID) => passUser(userID)}/>
                         <PrimaryNav />
                   </Route>
                   <Route path="/Make_Post2">
@@ -114,7 +127,7 @@ const App = (props) => {
                   </Route> 
                   <Route path="/HashtagFeed">
                    <SharmonyHeader />
-                   <FeedWrapper isMainFeed={false} />
+                   <FeedWrapper isMainFeed={false} passUser={(userID) => passUser(userID)}/>
                     <PrimaryNav />
                   </Route>        
                   <Route path="/PostComments/:postId">

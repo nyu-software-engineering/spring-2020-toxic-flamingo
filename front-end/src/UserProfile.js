@@ -19,6 +19,8 @@ const UserProfile = (props) => {
   const [data, setData] = useState([]);
   const userID = 1;
 
+  console.log("AHHHHHHHHH " + props.userID);
+
   // load in posts or whatever
   useEffect( () => {
     //fetch data
@@ -58,7 +60,7 @@ const UserProfile = (props) => {
       {data.map((jsonObj, i) => (
           
      
-          <div class='Profile'>
+          <div class='Profile' key={i}>
            
             <div class="ProfileHeader">
             
