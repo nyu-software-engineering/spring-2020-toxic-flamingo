@@ -535,8 +535,8 @@ app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
     });
 
     let newNotification = new notificationModel({
-      userID: 'testtestest',//data.userID,
-      text: `user made a new comment!` //`${data.userID has a new post!}`
+      userID: userID,
+      text: `${userID} has a new post!`
     })
     newNotification.save({runValidators:true}).then(doc => {
       console.log(data);
@@ -710,6 +710,7 @@ app.post("/changePassword/", async (req, res) => {
 });
 
 app.post("/createPost/", async (req,res) => {
+  const userID = cookieToID(req);
   let data = req.body
   console.log(req.body)
   //data = JSON.parse(data)
@@ -791,8 +792,8 @@ app.post("/createPost/", async (req,res) => {
   }
 
   let newNotification = new notificationModel({
-    userID: 'testtestest',//data.userID,
-    text: `user has a new post!` //`${data.userID has a new post!}`
+    userID: userID,
+    text: `${userID} has a new post!`
   })
   newNotification.save({runValidators:true}).then(doc => {
     console.log(data);
