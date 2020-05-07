@@ -117,7 +117,7 @@ const Search = (props) => {
         }
       
         if (searchUsers) {
-          return <UserSearchTile key={i.toString()} jsonObj={jsonObj} />
+          return <UserSearchTile key={i.toString()} jsonObj={jsonObj} passUser={(userID) => props.passUser(userID)}/>
         }
         else {
           return <TagSearchTile key={i.toString()} jsonObj={jsonObj} onSelect={(tag) => selectTag(tag)}/>

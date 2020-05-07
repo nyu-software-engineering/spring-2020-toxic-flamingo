@@ -45,8 +45,8 @@ const App = (props) => {
           <Router>
               <Switch>
                     <Route path="/Search">
-                    <SharmonyHeader />
-                    <Search />
+                    <SharmonyHeader/>
+                    <Search passUser={(userID) => passUser(userID)}/>
                     <PrimaryNav />
                   </Route>
                   <Route path="/Make_Post">
