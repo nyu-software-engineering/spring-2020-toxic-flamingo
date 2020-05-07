@@ -605,6 +605,7 @@ app.get('/mainFeed/', async (req, res) => {
       return mongoose.Types.ObjectId(id);
     })},
   })
+  .sort({createdAt: -1})
   .then(result => {
     console.log(result);
     res.json(result);
@@ -651,6 +652,7 @@ app.get('/hashtagFeed/:hashtag', async (req, res) => {
   postModel.find({
     'hashID': "#"+hashtag,
   })
+  .sort({createdAt: -1})
   .then(result => {
     console.log(result);
     res.json(result);
