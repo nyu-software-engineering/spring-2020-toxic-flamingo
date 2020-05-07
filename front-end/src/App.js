@@ -103,6 +103,7 @@ const App = (props) => {
                         <PrimaryNav />
                   </Route>
                   <Route path="/Make_Post2">
+                  <SharmonyHeader />
                   <MakePostWrapper showScreenOne={false}/>
                     <PrimaryNav />
                   </Route>
