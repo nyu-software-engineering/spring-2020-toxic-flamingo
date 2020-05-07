@@ -55,7 +55,13 @@ const App = (props) => {
                     <PrimaryNav />
                   </Route>
   
-  
+
+                  <Route path="/user">
+                      <SharmonyHeader />
+                      <PrimaryNav />
+                      <UserProfile />
+                  </Route>
+
                   <Route path="/PersonalProfile">
                       <SharmonyHeader />
                       <PrimaryNav />

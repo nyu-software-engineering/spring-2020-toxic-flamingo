@@ -361,6 +361,7 @@ app.get("/user/:isPersonal/:userID", async (req, res) => {
       pic: pic,
       followers: followers,
       following: following,
+      personalID: cookieToID(req)
     })
   })
 
@@ -377,6 +378,8 @@ app.get("/profileposts/:userID", async (req,res) => {
   });
   res.json(response);
 });
+
+
 
 app.get("/Followee", async (req, res) => {
   ;
