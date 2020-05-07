@@ -3,11 +3,16 @@ import './Make_Post2.css';
 import axios from 'axios';
 import {NavLink} from 'react-router-dom';
 import {hashHistory} from 'react';
+import {Redirect} from 'react-router';
 
 const Make_Post2 = (props) => {
     const data = props.songData;
     console.log(data);
     console.log("got data " + props.songData + " in make post 2");
+    const [shouldRedirect, setshouldRedirect] = useState(false);
+
+   
+
 
     for(let i = 0; i < data.artists.length; i++){
         console.log(data.artists[i].name);
@@ -58,8 +63,10 @@ const Make_Post2 = (props) => {
         // if second request is ok, receive a notification 
         .then((res) => {
             console.log('request is ok');
-            hashHistory.push('/MainFeed')
-            //return <Redirect to ="/MainFeed"/>
+            //hashHistory.push('/MainFeed')
+            if (res.status == 200){
+                setshouldRedirect(true);
+            }
         })
         // if there is an error, receive a notification
         .catch((err) => {
@@ -67,6 +74,11 @@ const Make_Post2 = (props) => {
         })
         
     }
+
+    if(shouldRedirect) {
+        return <Redirect push to='./MainFeed/'/>  
+    }
+    
 
     return(
         <div className="Header">

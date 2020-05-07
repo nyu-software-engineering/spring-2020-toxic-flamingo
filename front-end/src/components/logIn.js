@@ -3,12 +3,14 @@ import {NavLink} from 'react-router-dom';
 import SharmonyLogo from './SharmonyLogo.PNG';
 import './logIn.css';
 
+import {Redirect} from 'react-router';
 import axios from 'axios';
 
 
 const LogIn = (props) => {
   const [pass, setPass] = useState("");
   const [userName, setUsername] = useState("");
+  const [shouldRedirect, setshouldRedirect] = useState(false);
 
   let dataArray = {
     password: pass,
@@ -26,6 +28,7 @@ const LogIn = (props) => {
           //console.log(response);
           if (response.status === 200) {
             console.log("log in success");
+            setshouldRedirect(true);
             //console.log(response);
           } else {
             const error = new Error(response.error);
@@ -50,7 +53,9 @@ const LogIn = (props) => {
     setUsername(e.target.value)
   }
     
-
+  if(shouldRedirect) {
+    return <Redirect push to='../MainFeed/'/>  
+  }
 
     return (
       <div className="LogIn">
