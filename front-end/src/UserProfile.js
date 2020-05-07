@@ -7,24 +7,34 @@ import PostPreview from './PostPreview';
 // import logo from './logo.svg';
 //import './About.css';
 
-const handleFollowersClick = (id) => {
-  axios.post('/user.:userID/followers', id)
-  .then(()=>console.log('going to followers'))
-  .catch(err => {console.log('followers error');
-  });
-}
 
 const UserProfile = (props) => {
 
-  const [data, setData] = useState([]);
-  const userID = 1;
+  const [data, setData] = useState({});
+  const [followStatus, setStatus] = useState(false);
+  //const [showScreenOne, setScreenOne] = useState(false);
+  const [followingNum, setFollowingNum] = useState();
+  const [followerNum, setFollowerNum] = useState();
 
+  //let userID = 1;
+  console.log(props);
   // load in posts or whatever
   useEffect( () => {
     //fetch data
-    axios.get("/userID/"+userID)
+    axios.get("/user/" + "false/" + props.userID )
     .then ((response) => {
+      console.log("data: " + response.data.username);
       setData(response.data);
+      try {
+        setFollowingNum(response.data.following.length);
+      } catch {
+        setFollowingNum(0);  
+      }
+      try {
+        setFollowerNum(response.data.follower.length);
+      } catch {
+        setFollowerNum(0);
+      }
     })
     .catch( err => {
         console.log("ERROR!");
@@ -50,41 +60,57 @@ const UserProfile = (props) => {
     
 }, []);
 
-  
 
+
+console.log(data.id);
+if (!data.id) {
+  return (
+    <h1>Loading...</h1>
+  )
+} else {
     return (
-      <div>
-        <div>
-      {data.map((jsonObj, i) => (
-          
-     
-          <div class='Profile'>
+          <div className='Profile'>
            
-            <div class="ProfileHeader">
-            
-                <div class="flex-container">
-                      <div class="profilePic">
-                      <img alt="Profile Pic" src={jsonObj.pic} width="100" height="100"/>
-                      </div>
-                    <h1>{jsonObj.name}</h1>
+            <div className="ProfileHeader">
+
+                <div className="flex-container">
+                   <img alt="Profile Picture Here" src={data.pic}  width="100" height="100"/>
+                    <h1>{data.username}</h1>
                  </div>
-                      <div class="bio">
-                      <p>{jsonObj.bio}</p>
+                      <div className="bio">
+                      <p>{data.bio}</p>
                       </div>
                     </div>
-                      <div class='buttons'>
-                            <button id="following">Following {jsonObj.following}</button>
-                            <button id="followers" onClick={handleFollowersClick(jsonObj.id)}>Followers {jsonObj.followers}</button>
+                      <div className='buttons'>
+                          <div className='button1'>
+                            <form action="/Followee">
+                            <button id="following">Following {followingNum}</button>
+                            </form>
+                          </div>
+                          <div className='button2'>
+                            <form action="/Follower">
+                            <button id="followers">Followers {followerNum}</button>
+                            </form>
+                          </div>
+                          <div className='button3'>
+                            <form action="/Harmonies">
                             <button id="harmonies" >Harmonies</button>
+                            </form>
+                          </div>
+                          <div className='button4'>
+                            <form >
+                            <button id="Follow" >Follow +</button>
+                            </form>
+                          </div>
                       </div>
-              
-            </div>
-         
-      ))}
-      <PostPreview />
-      </div> </div>
+                      
+            
+        <div className="contain">
+      <PostPreview userID = {data.id}/>
+        </div>
+      </div> 
     );
- }
-  
+  }
+}
 
 export default UserProfile;

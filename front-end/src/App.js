@@ -27,6 +27,7 @@ import Notifications from './Notifications';
 import SharmonyHeader from './SharmonyHeader';
 import FeedWrapper from './FeedWrapper.js';
 import MakePostWrapper from './MakePostWrapper';
+import UserProfile from './UserProfile';
 
 
 const App = (props) => {
@@ -48,7 +49,13 @@ const App = (props) => {
                     <PrimaryNav />
                   </Route>
   
-  
+
+                  <Route path="/user">
+                      <SharmonyHeader />
+                      <PrimaryNav />
+                      <UserProfile />
+                  </Route>
+
                   <Route path="/PersonalProfile">
                       <SharmonyHeader />
                       <PrimaryNav />
