@@ -212,22 +212,30 @@ app.get("/status", async (req, res, next) => {
   console.log("gang in this b");
   let token = cookieExtractor(req);
   console.log(token);
-  let decodedToken = jwtDecode(token);
-  console.log(decodedToken);
 
-  let userID = decodedToken.sub;
-  let profPic;
-  await userModel.findById(userID)
-    .then(doc => {
-      profPic = doc.Profile_Pic;
+  if (token != null) {
+    let decodedToken = jwtDecode(token);
+    console.log("good token" + decodedToken);
 
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    //let userID = decodedToken.sub;
+    // let profPic;
+    // await userModel.findById(userID)
+    //   .then(doc => {
+    //     profPic = doc.Profile_Pic;
 
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
 
-  res.json({decodedToken, profPic});
+    res.json(decodedToken);
+  }
+  else {
+    console.log("token = " + token);
+    res.json(token);
+  }
+
+  
 });
 
 app.get("/signOut", async (req, res, next) => {
