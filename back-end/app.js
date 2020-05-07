@@ -667,6 +667,39 @@ app.get('/hashtagFeed/:hashtag', async (req, res) => {
 
 });
 
+app.post("/changeProfilePic/", (req, res) => {
+  console.log("gothere");
+  const profPic = req.body.profPic;
+  console.log(profPic);
+  const uID = cookieToID(req);
+  console.log(uID);
+  userModel.findByIdAndUpdate(uID,{Profile_Pic: profPic}, 
+  {
+    new : true,
+    runValidators: true
+  }).then(doc => {
+    console.log(doc);
+  }).catch(err => {
+    console.log(err);
+  })
+  });
+
+  app.post("/changeBio/", (req, res) => {
+    console.log("gothere");
+    const bio = req.body.userBio;
+    console.log(bio);
+    const uID = cookieToID(req);
+    console.log(uID);
+    userModel.findByIdAndUpdate(uID,{Bio: bio}, 
+    {
+      new : true,
+      runValidators: true
+    }).then(doc => {
+      console.log(doc);
+    }).catch(err => {
+      console.log(err);
+    })
+    });
 
 app.post("/changeEmail/", (req, res) => {
   let data = req.body;
