@@ -7,7 +7,7 @@ import './Search.css';
 //import './About.css';
 
 const Search = (props) => {
-
+  console.log(props.userID);
   const [data, setData] = useState([]);
 
   const [searchUsers, setSearchUsers] = useState(true);
