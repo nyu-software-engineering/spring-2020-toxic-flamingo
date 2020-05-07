@@ -686,8 +686,11 @@ app.post("/createPost/", async (req,res) => {
       }).catch(err => {
       console.log(err);
       });
+
+  res.status(200).json({ success: true });    
   //search for harmony here if there is previous post with same song - songname and artist
   //get post data and send it to monodb atlas here 
+
 
   let tags = data.hashID;
 
