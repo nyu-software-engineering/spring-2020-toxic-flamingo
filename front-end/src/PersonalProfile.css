@@ -2,6 +2,7 @@
 .ProfileHeader {
     align-items: center;
     justify-content: center;
+}
 
 html,body {
     background: #efefef;
