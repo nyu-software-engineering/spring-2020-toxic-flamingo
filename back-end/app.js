@@ -24,6 +24,7 @@ const JWT = require('jsonwebtoken');
 const {JWT_SECRET} = require('./src/configuration'); 
 const passport = require('passport');
 const JwtCookieComboStrategy = require('passport-jwt-cookiecombo');
+const jwtDecode = require('jwt-decode');
 const corsOptions = {
   origin: "http://localhost:3000",    // reqexp will match all prefixes
   methods: "GET,HEAD,POST,PATCH,DELETE,OPTIONS",
@@ -207,7 +208,7 @@ failureFlash: true }), async (req, res, next) => {
 
 });
 
-const jwtDecode = require('jwt-decode');
+
 app.get("/status", async (req, res, next) => {
   console.log("gang in this b");
   let token = cookieExtractor(req);
@@ -694,8 +695,11 @@ app.post("/createPost/", async (req,res) => {
       }).catch(err => {
       console.log(err);
       });
+
+  res.status(200).json({ success: true });    
   //search for harmony here if there is previous post with same song - songname and artist
   //get post data and send it to monodb atlas here 
+
 
   let tags = data.hashID;
 
@@ -748,5 +752,20 @@ app.post("/createPost/", async (req,res) => {
     console.log(err);
   });  
 })
+
+app.get("/getUsername/:userID", async (req, res, next) => {
+  console.log(req.params.userID);
+  const userID = req.params.userID;
+  let username;
+  await userModel.findById(userID)
+    .then(doc => {
+      username = doc.Username;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    console.log(username);
+  res.json(username);
+});
 
 module.exports = app;

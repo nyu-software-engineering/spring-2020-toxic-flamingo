@@ -11,7 +11,11 @@ const Post = (props) => {
     const [audioPlayer] = useState(new Audio());
     let val = "Play";
     const [playPause, setData] = useState(val);
+    const [username, setUsername] = useState("");
+    
     const data = props.data;
+    const userID = data.userID;
+    
 
     const commentsData = data.comments;
     let initialComment = "No comments here";
@@ -40,6 +44,22 @@ const Post = (props) => {
         }
     }
 
+    useEffect(() => {
+        async function fetchUsername() {
+            await axios.get("/getUsername/" + userID)
+            .then ((response) => {
+                setUsername(response.data);
+                console.log(username);
+                console.log(response.data);
+            })
+            .catch( err => {
+                console.log("ERROR!");
+                console.error(err);
+            })
+        }
+        fetchUsername();
+    });
+    
 
     // make sure you dont see "see more comments if there are none"
     let button;
@@ -62,7 +82,7 @@ const Post = (props) => {
     return (
         <div className="FeedPost">
             <div className='postHeader'>
-                <h4>Test_User</h4>
+                <h4>{username}</h4>
             </div>
             <div className='postContent'>
                 <div className='songInfo'>
