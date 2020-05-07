@@ -7,13 +7,6 @@ import PostPreview from './PostPreview';
 // import logo from './logo.svg';
 //import './About.css';
 
-const handleFollowersClick = (id) => {
-  // axios.post('/user.:userID/followers', id)
-  // .then(()=>console.log('going to followers'))
-  // .catch(err => {console.log('followers error');
-  // });
-}
-
 const PersonalProfile = (props) => {
 
   const [data, setData] = useState({});
