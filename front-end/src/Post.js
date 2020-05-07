@@ -57,12 +57,12 @@ const Post = (props) => {
         )
     }
 
-
+    
 
     return (
         <div className="FeedPost">
             <div className='postHeader'>
-                <h4>Test_User</h4>
+                <h4>{data.username}</h4>
             </div>
             <div className='postContent'>
                 <div className='songInfo'>

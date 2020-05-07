@@ -17,13 +17,14 @@ const handleFollowersClick = (id) => {
 const PersonalProfile = (props) => {
 
   const [data, setData] = useState([]);
-  const userID = 1;
-
+  let userID = 1;
+  console.log(props);
   // load in posts or whatever
   useEffect( () => {
     //fetch data
     axios.get("/user/"+userID)
     .then ((response) => {
+      console.log(response.data);
       setData(response.data);
     })
     .catch( err => {

@@ -313,10 +313,23 @@ const users = [
 ];
 
 
-// app.get("/user/:userID", (req, res) => {
-//   const userID = req.params.userID;
-//   res.send(user[userID]);
-// })
+  app.get("/user/:userID", async (req, res) => {
+     const userID = req.params.userID;
+     await userModel.findById(userID)
+    .then(doc => {
+      res.json({
+        id: userID,
+        username: doc.Username,
+        bio: doc.Bio,
+        pic: doc.Profile_Pic,
+        followers: doc.follower,
+        following: doc.following,
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    });
+   })
 
 app.get("/profileposts/:userID", async (req,res) => {
   const userID = req.params.userID;
