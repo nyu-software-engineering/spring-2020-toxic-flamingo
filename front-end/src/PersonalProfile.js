@@ -2,12 +2,15 @@ import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import BurgerMenu from './BurgerMenu';
 import './PersonalProfile.css';
+
 import './PostPreview';
 import PostPreview from './PostPreview';
+
 // import logo from './logo.svg';
 //import './About.css';
 
 const PersonalProfile = (props) => {
+
 
   const [data, setData] = useState({});
   //const [showScreenOne, setScreenOne] = useState(false);
@@ -55,6 +58,7 @@ const PersonalProfile = (props) => {
 
 
     })
+
     
 }, []);
   

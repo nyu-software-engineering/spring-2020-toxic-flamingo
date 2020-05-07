@@ -14,6 +14,7 @@ const PostPreview = (props) => {
     useEffect( () => {
         //fetch data
 
+
         axios.get("/profileposts/" + userID)
         .then ((response) => {
             setData(response.data);
@@ -43,6 +44,7 @@ const PostPreview = (props) => {
                     </div>
                 ))}
             </div>
+
         </div>
     );
 
