@@ -62,6 +62,15 @@ var opts = {}
 opts.jwtFromRequest = cookieExtractor;
 opts.secretOrKey = 'sharmonyauthentification';
 
+const cookieToID = req => {
+  let token = cookieExtractor(req);
+  console.log(token);
+
+  let decodedToken = jwtDecode(token);
+  let userID = decodedToken.sub;
+
+  return userID;
+}
 
 //JSON WEB TOKEN STRATEGY
 passport.use(new JwtStrategy(opts, async(payload, done) => {
@@ -210,7 +219,6 @@ failureFlash: true }), async (req, res, next) => {
 
 
 app.get("/status", async (req, res, next) => {
-  console.log("gang in this b");
   let token = cookieExtractor(req);
   console.log(token);
 
@@ -242,7 +250,7 @@ app.get("/status", async (req, res, next) => {
 app.get("/signOut", async (req, res, next) => {
   res.clearCookie('access_token');
   console.log('I managed to get here!');
-  res.json({ success: true });
+  res.status(200).json({ success: true });
 });
 
 
@@ -322,29 +330,52 @@ const users = [
 ];
 
 
-  app.get("/user/:userID", async (req, res) => {
-     const userID = req.params.userID;
-     await userModel.findById(userID)
+app.get("/user/:isPersonal/:userID", async (req, res) => {
+    let userID;
+    let isPersonal = req.params.isPersonal;
+    if(isPersonal != "true") {
+      userID = req.params.userID;
+      console.log("Not a personal profile");
+    }
+    else {
+      userID = cookieToID(req);
+      console.log("this is my profile b");
+    }
+    let username, bio, pic, followers, following;
+    await userModel.findById(userID)
     .then(doc => {
-      res.json({
-        id: userID,
-        username: doc.Username,
-        bio: doc.Bio,
-        pic: doc.Profile_Pic,
-        followers: doc.follower,
-        following: doc.following,
-      })
+      username = doc.Username;
+      console.log(username);
+      bio = doc.Bio;
+      pic = doc.Profile_Pic;
+      followers = doc.follower;
+      following = doc.following;
     })
     .catch(err => {
       console.log(err);
     });
-   })
+    res.json({
+      id: userID,
+      username: username,
+      bio: bio,
+      pic: pic,
+      followers: followers,
+      following: following,
+    })
+  })
 
 app.get("/profileposts/:userID", async (req,res) => {
   const userID = req.params.userID;
-  let response = await axios.get("https://api.mockaroo.com/api/cdf982f0?count=100&key=83e46730").catch();
-  res.json(response.data);
-})
+  let response;
+  await postModel.find({'userID': userID})
+  .then(postArray => {
+    response = postArray;
+    console.log(postArray);
+  }).catch(err => {
+    console.log(err);
+  });
+  res.json(response);
+});
 
 app.get("/Followee", async (req, res) => {
   let response = await axios.get("https://api.mockaroo.com/api/87521f10?count=10&key=5296eab0").catch();
@@ -483,7 +514,7 @@ request.post(authOptions, function(error, response, body) {
 app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
 
     const comment = req.params.comment;
-    const userID = req.params.userID;
+    const userID = cookieToID(req);
     const postID = req.params.postID;
 
     let commentToSubmit = new commentModel({
@@ -554,9 +585,9 @@ app.get('/loadComments/:postId', async (req, res) => {
 });
 
 // load a main feed of only followed users' posts
-app.get('/mainFeed/:userId', async (req, res) => {
+app.get('/mainFeed/', async (req, res) => {
 
-  const userID = req.params.userId;
+  const userID = cookieToID(req);
 
   let following = [];
 
@@ -635,7 +666,7 @@ app.post("/changeEmail/", (req, res) => {
   let data = req.body;
   const email = data.email;
   console.log(email);
-  const uID = data.userID;
+  const uID = cookieToID(req);
   console.log(uID);
   userModel.findByIdAndUpdate(uID,{Email: email}, 
   {
@@ -653,7 +684,7 @@ app.post("/changePassword/", async (req, res) => {
   console.log(data);
   const oldPass = data.oldPassword;
   const newPass = data.newPassword;
-  const uID = data.userID;
+  const uID = cookieToID(req);
   console.log(oldPass);
   console.log(newPass);
   console.log(uID);
@@ -688,7 +719,7 @@ app.post("/createPost/", async (req,res) => {
   }
 
   let newPost = new postModel({
-    userID: data.userID,
+    userID: cookieToID(req),
     hashID: data.hashID,
     harmony: true, //figure that out after search
     songName: data.songName,
