@@ -55,7 +55,13 @@ const App = (props) => {
                     <PrimaryNav />
                   </Route>
   
-  
+
+                  <Route path="/user">
+                      <SharmonyHeader />
+                      <PrimaryNav />
+                      <UserProfile />
+                  </Route>
+
                   <Route path="/PersonalProfile">
                       <SharmonyHeader />
                       <PrimaryNav />
@@ -103,6 +109,7 @@ const App = (props) => {
                         <PrimaryNav />
                   </Route>
                   <Route path="/Make_Post2">
+                  <SharmonyHeader />
                   <MakePostWrapper showScreenOne={false}/>
                     <PrimaryNav />
                   </Route>

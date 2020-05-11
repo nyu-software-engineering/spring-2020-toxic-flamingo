@@ -333,11 +333,11 @@ const users = [
 app.get("/user/:isPersonal/:userID", async (req, res) => {
     let userID;
     let isPersonal = req.params.isPersonal;
-    if(isPersonal != "true") {
+    if(isPersonal == "false") {
       userID = req.params.userID;
       console.log("Not a personal profile");
     }
-    else {
+    else if (isPersonal == "true"){
       userID = cookieToID(req);
       console.log("this is my profile b");
     }
@@ -361,6 +361,7 @@ app.get("/user/:isPersonal/:userID", async (req, res) => {
       pic: pic,
       followers: followers,
       following: following,
+      personalID: cookieToID(req)
     })
   })
 
@@ -377,6 +378,8 @@ app.get("/profileposts/:userID", async (req,res) => {
   });
   res.json(response);
 });
+
+
 
 app.get("/Followee", async (req, res) => {
   ;
@@ -667,6 +670,39 @@ app.get('/hashtagFeed/:hashtag', async (req, res) => {
 
 });
 
+app.post("/changeProfilePic/", (req, res) => {
+  console.log("gothere");
+  const profPic = req.body.profPic;
+  console.log(profPic);
+  const uID = cookieToID(req);
+  console.log(uID);
+  userModel.findByIdAndUpdate(uID,{Profile_Pic: profPic}, 
+  {
+    new : true,
+    runValidators: true
+  }).then(doc => {
+    console.log(doc);
+  }).catch(err => {
+    console.log(err);
+  })
+  });
+
+  app.post("/changeBio/", (req, res) => {
+    console.log("gothere");
+    const bio = req.body.userBio;
+    console.log(bio);
+    const uID = cookieToID(req);
+    console.log(uID);
+    userModel.findByIdAndUpdate(uID,{Bio: bio}, 
+    {
+      new : true,
+      runValidators: true
+    }).then(doc => {
+      console.log(doc);
+    }).catch(err => {
+      console.log(err);
+    })
+    });
 
 app.post("/changeEmail/", (req, res) => {
   let data = req.body;
