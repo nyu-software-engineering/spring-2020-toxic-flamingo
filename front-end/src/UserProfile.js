@@ -87,7 +87,7 @@ function followClicked () {
 
 
 
-}
+
   
 
 console.log(data.id);
@@ -145,6 +145,7 @@ if (!data.id) {
     );
 
   }
+}
 
 
 export default UserProfile;
