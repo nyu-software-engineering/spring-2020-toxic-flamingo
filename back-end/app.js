@@ -713,6 +713,14 @@ app.post("/changePassword/", async (req, res) => {
 
 app.post("/createPost/", async (req,res) => {
   const userID = cookieToID(req);
+  let username;
+  await userModel.findById(userID)
+    .then(doc => {
+      username = doc.Username;
+    })
+    .catch(err => {
+      console.log(err);
+    });
   let data = req.body
   console.log(req.body)
   //data = JSON.parse(data)
@@ -794,8 +802,8 @@ app.post("/createPost/", async (req,res) => {
   }
 
   let newNotification = new notificationModel({
-    userID: userID,
-    text: `${userID} has a new post!`
+    userID: userId,
+    text: `${username} has a new post!`
   })
   newNotification.save({runValidators:true}).then(doc => {
     console.log(data);

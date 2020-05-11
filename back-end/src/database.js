@@ -13,6 +13,7 @@ _connect() {
        })
        .catch(err => {
          console.error('Database connection error')
+         console.log(err);
        })
   }
 }
