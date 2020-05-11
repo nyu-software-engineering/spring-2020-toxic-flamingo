@@ -145,6 +145,6 @@ if (!data.id) {
     );
 
   }
-}
+
 
 export default UserProfile;
