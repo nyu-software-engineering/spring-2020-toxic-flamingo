@@ -80,7 +80,7 @@ function followClicked () {
   axios.post("/followThisGuy" + props.userID )
   .then ((response) => {
     console.log("we got here");
-    setStatus(true);
+    //setStatus(true);
   })
 }
 
