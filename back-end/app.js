@@ -361,6 +361,7 @@ app.get("/user/:isPersonal/:userID", async (req, res) => {
       pic: pic,
       followers: followers,
       following: following,
+      personalID: cookieToID(req)
     })
   })
 
@@ -377,6 +378,8 @@ app.get("/profileposts/:userID", async (req,res) => {
   });
   res.json(response);
 });
+
+
 
 app.get("/Followee", async (req, res) => {
   ;
@@ -452,6 +455,37 @@ app.get("/Follower", async (req, res) => {
   //const user  = req.params.userid;
   let response = await axios.get("https://api.mockaroo.com/api/87521f10?count=10&key=5296eab0").catch();
   res.json(response.data);
+})
+
+//idk if this works
+app.get("/followThisGuy/:userID", async (req,res) => {
+  let tryingToFollow = req.params.userID;
+  let myID = cookieToID(req);
+
+  if (tryingToFollow === myID){
+    return res.status(400).json({ alreadyfollow : "You cannot follow yourself"});
+  }
+  await userModel.findById(tryingToFollow)
+    .then(user => {
+      //insert me into found user's followers
+      if(user.follower.filter(follower => 
+        follower.user.toString() === req.user.id ).length > 0){
+        return res.status(400).json({ alreadyfollow : "You already followed the user"})
+      }
+
+      user.follower.unshift({tryingToFollow});
+      user.save();
+      //insert found user in my following list
+      User.findByID(myID)
+                .then(user => {
+                    user.following.unshift(tryingToFollow);
+                    user.save().then(user => res.json(user))
+                })
+                .catch(err => res.status(404).json({alreadyfollow:"you already followed the user"}))
+    })
+    .catch(err => {
+      console.log(err);
+    });
 })
 
 
@@ -746,6 +780,14 @@ app.post("/changePassword/", async (req, res) => {
 
 app.post("/createPost/", async (req,res) => {
   const userID = cookieToID(req);
+  let username;
+  await userModel.findById(userID)
+    .then(doc => {
+      username = doc.Username;
+    })
+    .catch(err => {
+      console.log(err);
+    });
   let data = req.body
   console.log(req.body)
   //data = JSON.parse(data)
@@ -827,8 +869,8 @@ app.post("/createPost/", async (req,res) => {
   }
 
   let newNotification = new notificationModel({
-    userID: userID,
-    text: `${userID} has a new post!`
+    userID: userId,
+    text: `${username} has a new post!`
   })
   newNotification.save({runValidators:true}).then(doc => {
     console.log(data);

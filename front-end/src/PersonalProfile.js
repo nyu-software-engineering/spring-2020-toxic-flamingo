@@ -91,7 +91,9 @@ if (!data.id) {
           <div className='Profile'>
             <BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
             <div className="ProfileHeader">
+
                 <div className="flex-container">
+
                 <img className="PictureInProfile" alt="Profile Picture Here" src={data.pic}  width="100" height="100"/>
                   <button className="profileButton" onClick={ProfPicPopOpen}>Edit Profile Picture</button>
                 {profSeen ? <ProfPicPopUp toggle={ProfPicPopClose} /> : null}
@@ -113,6 +115,7 @@ if (!data.id) {
                   </form>
               </div>     
             </div>
+
                       
             
         <div className="contain">

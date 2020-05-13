@@ -7,14 +7,9 @@ import PostPreview from './PostPreview';
 // import logo from './logo.svg';
 //import './About.css';
 
-const handleFollowersClick = (id) => {
-  axios.post('/user.:userID/followers', id)
-  .then(()=>console.log('going to followers'))
-  .catch(err => {console.log('followers error');
-  });
-}
 
 const UserProfile = (props) => {
+
 
   
   console.log("AHHHHHHHHH " + props.userID);
@@ -31,6 +26,7 @@ const UserProfile = (props) => {
   useEffect( () => {
     //fetch data
     axios.get("/user/" + "false/" + userID )
+
     .then ((response) => {
       console.log("data: " + response.data.username);
       setData(response.data);
@@ -44,12 +40,14 @@ const UserProfile = (props) => {
       } catch {
         setFollowerNum(0);
       }
+
      
       for(let i =0; i < followerNum; i++){
         if (data.id == response.datafollower[i]){
           setIsFollowing(true);
         }
       }
+
     })
     .catch( err => {
         console.log("ERROR!");
@@ -77,19 +75,28 @@ const UserProfile = (props) => {
 }, []);
 
 function followClicked () {
-  if (isFollowing){
-    axios.get('/unfollow/'+ data.id)
-      .then((response) => {
-        
-      })
-  }
-}
   
+
+  console.log("you tryna follow them");
+  axios.post("/followThisGuy/" + props.userID )
+  .then ((response) => {
+    console.log("we got here");
+    
+  })
+}
+
+
+
+
+
+  
+
 console.log(data.id);
 if (!data.id) {
   return (
     <h1>Loading...</h1>
   )
+
 } else {
     return (
           <div className='Profile'>
@@ -99,6 +106,7 @@ if (!data.id) {
                 <div className="flex-container">
                     <img src={data.pic} alt="profile pic" width="100" height="100"/>
               <h1>{data.username}</h1>
+
                  </div>
                       <div className="bio">
                       <p>{data.bio}</p>
@@ -121,11 +129,13 @@ if (!data.id) {
                             </form>
                           </div>
                           <div className='button4'>
+
                             <form action="/Follow">
                             <button id="follow" onClick={followClicked}>Follow</button>
                             </form>
                           </div>
                             
+
                       </div>
                       
             
@@ -134,8 +144,9 @@ if (!data.id) {
         </div>
       </div> 
     );
- 
+
   }
 }
+
 
 export default UserProfile;
