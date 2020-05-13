@@ -77,7 +77,12 @@ const UserProfile = (props) => {
 }, []);
 
 function followClicked () {
-
+  if (isFollowing){
+    axios.get('/unfollow/'+ data.id)
+      .then((response) => {
+        
+      })
+  }
 }
   
 console.log(data.id);
