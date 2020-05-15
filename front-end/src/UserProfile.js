@@ -18,9 +18,11 @@ const UserProfile = (props) => {
   //const [showScreenOne, setScreenOne] = useState(false);
   const [followingNum, setFollowingNum] = useState();
   const [followerNum, setFollowerNum] = useState();
-  const [isFollowing, setIsFollowing] = useState(false);
+  const [isFollowing, setIsFollowing] = useState();
 
   let userID = props.userID;
+  const [followunfollow, setFollowUnfollow] = useState();
+ 
   console.log("imma prop" + userID);
   // load in posts or whatever
   useEffect( () => {
@@ -30,9 +32,12 @@ const UserProfile = (props) => {
     .then ((response) => {
       console.log("data: " + response.data.username);
       setData(response.data);
+      console.log('prinring'+ response.data);
       try {
+        console.log(response.data.following.length);
         setFollowingNum(response.data.following.length);
       } catch {
+        console.log("catching an error in counting");
         setFollowingNum(0);  
       }
       try {
@@ -41,12 +46,24 @@ const UserProfile = (props) => {
         setFollowerNum(0);
       }
 
-     
-      for(let i =0; i < followerNum; i++){
-        if (data.id == response.datafollower[i]){
+     console.log('about to loop');
+     try {
+      for(let i = 0; i < followerNum; i++){
+        console.log('im in the loop');
+        if (data.personalID == response.data.follower[i]){
+          console.log('printing cuz idk whats going on:' + data);
           setIsFollowing(true);
         }
       }
+      } catch{
+        console.log('oh no!');
+      }
+      if (isFollowing){
+        setFollowUnfollow("Unfollow");
+      } else {
+        setFollowUnfollow("Follow");
+      }
+    
 
     })
     .catch( err => {
@@ -74,24 +91,32 @@ const UserProfile = (props) => {
     
 }, []);
 
-function followClicked () {
-  
-
-  console.log("you tryna follow them");
-  axios.post("/followThisGuy/" + props.userID )
-  .then ((response) => {
-    console.log("we got here");
-    
-  })
+function followClicked (e) {
+  e.preventDefault();
+  if (isFollowing){
+    console.log('you tryna unfollow?');
+    axios.get("/unfollowThisGuy/"+props.userID)
+    .then ((response) => {
+      console.log(response);
+      console.log("we unfollowed them");
+      
+    })
+  } else {
+    console.log("you tryna follow them");
+    axios.get("/followThisGuy/"+props.userID)
+    .then ((response) => {
+      if (response.status == 200){
+      console.log(response);
+      console.log("we got here");
+      } else {
+        console.log('oh no i think you follow them already');
+      }
+    })
+  }
 }
 
 
-
-
-
-  
-
-console.log(data.id);
+//console.log(data.id);
 if (!data.id) {
   return (
     <h1>Loading...</h1>
@@ -131,8 +156,9 @@ if (!data.id) {
                           <div className='button4'>
 
                             <form action="/Follow">
-                            <button id="follow" onClick={followClicked}>Follow</button>
+                            <button id="follow" onClick={followClicked}>{followunfollow}</button>
                             </form>
+                           
                           </div>
                             
 

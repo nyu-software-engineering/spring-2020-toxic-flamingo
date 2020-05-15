@@ -382,8 +382,18 @@ app.get("/profileposts/:userID", async (req,res) => {
 
 
 app.get("/Followee", async (req, res) => {
-  ;
+  
+  let userID = cookieToID(req);
+  await userModel.findById(tryingToFollow)
+    .then(user => {
+      //get following array of UserIDs i follow
+      
+    })
+    .catch(err => {
+      console.log(err);
+    });
   res.json(response.data);
+
 })
 
 app.get("/Search/:searchUsers/:searchQuery", async (req, res) => {
@@ -457,36 +467,63 @@ app.get("/Follower", async (req, res) => {
   res.json(response.data);
 })
 
-//idk if this works
+
 app.get("/followThisGuy/:userID", async (req,res) => {
+  console.log("hello i clicked follow button");
+
   let tryingToFollow = req.params.userID;
   let myID = cookieToID(req);
 
   if (tryingToFollow === myID){
     return res.status(400).json({ alreadyfollow : "You cannot follow yourself"});
   }
+  
   await userModel.findById(tryingToFollow)
     .then(user => {
-      //insert me into found user's followers
-      if(user.follower.filter(follower => 
-        follower.user.toString() === req.user.id ).length > 0){
-        return res.status(400).json({ alreadyfollow : "You already followed the user"})
+      console.log(user.follower);
+      console.log(myID);
+      if (user.follower.filter(follower => 
+        follower.toString() === myID ).length == 0){
+      userModel.findByIdAndUpdate(tryingToFollow,{$push: {follower: myID}},
+        {
+          new : true,
+          runValidators: true
+        })
+        .then(doc => {
+          console.log('did this go thru?????????!!!!!!');
+          console.log(doc);
+          let yes = updateFollowing(myID,tryingToFollow);
+          return res.status(200).json({success: {yes}});
+        }).catch(err => {
+          console.log(err);
+        })
+      } else {
+        console.log('you follow them already');
+        return res.status(400).json({ success: false });
       }
-
-      user.follower.unshift({tryingToFollow});
-      user.save();
-      //insert found user in my following list
-      User.findByID(myID)
-                .then(user => {
-                    user.following.unshift(tryingToFollow);
-                    user.save().then(user => res.json(user))
-                })
-                .catch(err => res.status(404).json({alreadyfollow:"you already followed the user"}))
-    })
+   
+    })  
     .catch(err => {
+      console.log('theres an error trying to add me to follower list');
       console.log(err);
     });
+   
+    
 })
+const updateFollowing = async (myID, tryingToFollow) =>{
+  await userModel.findByIdAndUpdate(myID,{$push: {following: tryingToFollow}},
+    {
+      new : true,
+      runValidators: true
+    })
+    .then(doc => {
+      console.log('did this go thru?????????!!!!!!');
+      console.log(doc);
+      return true;
+    }).catch(err => {
+      console.log(err);
+    })
+}
 
 
 
