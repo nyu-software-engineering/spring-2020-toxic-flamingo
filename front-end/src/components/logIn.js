@@ -102,8 +102,10 @@ const LogIn = (props) => {
               <div className='buttons'>
                 <input type="submit" value="Submit"/>
                 <br/>
-                <NavLink to="/SignUp">SignUp</NavLink>
               </div>
+              <div className="signup">
+                <p>Don't have an account? <NavLink to="/SignUp">Sign Up</NavLink></p>
+                </div>
               </form>
           </section>
       </div>

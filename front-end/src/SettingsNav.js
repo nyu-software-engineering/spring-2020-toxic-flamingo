@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 const PrimaryNav = (props) => {
     return (
-        <NavLink to="/Settings">Go Back</NavLink>
+        <NavLink to="/PersonalProfile">Go Back</NavLink>
     )
 }
 
