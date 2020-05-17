@@ -17,10 +17,12 @@ const PostComments = (props) => {
     const [loading, setLoading] = useState(true);
     const [reloadCount, setReload] = useState(0);
 
+    const [postData, setPostData] = useState({});
+
     const [shouldRedirect, setRedirect] = useState(false);
 
-    useEffect(() => {
-        axios.get('/loadComments/' + postID)
+    useEffect(async () => {
+        await axios.get('/loadComments/' + postID)
         .then((response) => {
             setComments(response.data);
             setLoading(false);
@@ -28,7 +30,16 @@ const PostComments = (props) => {
         .catch(err => {
             console.log("ERRor in postComments.js");
             console.log(err);
+        });
+
+        await axios.get('/loadPost/' + postID)
+        .then((response) => {
+            setPostData(response.data);
         })
+        .catch(err => {
+            console.log("ERRor in postComments.js");
+            console.log(err);
+        });
     }, [reloadCount]);
 
     if (shouldRedirect) {
@@ -53,6 +64,7 @@ const PostComments = (props) => {
                 console.log("isMainFeed: " + isMainFeed);
                 setRedirect(true);
             }}></img>
+            
             {comments.map((commentJson, i) => (
                 <CommentView key={i} data={commentJson} passUser={(userID) => props.passUser(userID)}/>
             ))}

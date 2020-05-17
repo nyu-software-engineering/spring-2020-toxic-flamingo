@@ -632,6 +632,7 @@ app.get('/loadComments/:postId', async (req, res) => {
       .then(doc => {
         
         comments = doc.comments;
+        console.log(doc.comments);
       })
       .catch(err => {
         console.log(err);
@@ -655,6 +656,26 @@ app.get('/loadComments/:postId', async (req, res) => {
     }
 
     res.json(formattedComments);
+});
+
+app.get('/loadPost/:postID', async (req, res) => {
+
+  const postID = req.params.postID;
+
+  let post;
+
+  console.log(postID);
+
+  await postModel.findById(postID)
+  .then(doc => {
+    post = doc;
+  })
+  .catch(err => {
+    console.log(err);
+  });
+
+  res.json(post);
+
 });
 
 // load a main feed of only followed users' posts

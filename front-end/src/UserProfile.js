@@ -34,15 +34,17 @@ const UserProfile = (props) => {
       setData(response.data);
       console.log('prinring'+ response.data);
       try {
-        console.log(response.data.following.length);
+        console.log("following: " + response.data.following.length);
         setFollowingNum(response.data.following.length);
       } catch {
         console.log("catching an error in counting");
         setFollowingNum(0);  
       }
       try {
+        console.log(response.data.follower.length);
         setFollowerNum(response.data.follower.length);
       } catch {
+        console.log("bad follower error");
         setFollowerNum(0);
       }
 
