@@ -18,7 +18,7 @@ const UserProfile = (props) => {
   //const [showScreenOne, setScreenOne] = useState(false);
   const [followingNum, setFollowingNum] = useState();
   const [followerNum, setFollowerNum] = useState();
-  const [isFollowing, setIsFollowing] = useState();
+  //const [isFollowing, setIsFollowing] = useState();
 
   let userID = props.userID;
   const [followunfollow, setFollowUnfollow] = useState();
@@ -32,7 +32,7 @@ const UserProfile = (props) => {
     .then ((response) => {
       console.log("data: " + response.data.username);
       setData(response.data);
-      console.log('prinring'+ response.data);
+      console.log('printing'+ response.data);
       try {
         console.log(response.data.following.length);
         setFollowingNum(response.data.following.length);
@@ -40,27 +40,20 @@ const UserProfile = (props) => {
         console.log("catching an error in counting");
         setFollowingNum(0);  
       }
+      console.log(response.data.follower.length);
       try {
+        
         setFollowerNum(response.data.follower.length);
+        
       } catch {
         setFollowerNum(0);
       }
 
-     console.log('about to loop');
-     try {
-      for(let i = 0; i < followerNum; i++){
-        console.log('im in the loop');
-        if (data.personalID == response.data.follower[i]){
-          console.log('printing cuz idk whats going on:' + data);
-          setIsFollowing(true);
-        }
-      }
-      } catch{
-        console.log('oh no!');
-      }
-      if (isFollowing){
+      if (response.data.isFollowing){
+        console.log("please work");
         setFollowUnfollow("Unfollow");
       } else {
+        console.log(response.data.isFollowing);
         setFollowUnfollow("Follow");
       }
     
@@ -93,10 +86,12 @@ const UserProfile = (props) => {
 
 function followClicked (e) {
   e.preventDefault();
-  if (isFollowing){
+  if (followunfollow == "Unfollow"){
     console.log('you tryna unfollow?');
     axios.get("/unfollowThisGuy/"+props.userID)
     .then ((response) => {
+      setFollowUnfollow("Follow");
+      setFollowerNum(followerNum - 1);
       console.log(response);
       console.log("we unfollowed them");
       
@@ -105,6 +100,8 @@ function followClicked (e) {
     console.log("you tryna follow them");
     axios.get("/followThisGuy/"+props.userID)
     .then ((response) => {
+      setFollowUnfollow("Unfollow");
+      setFollowerNum(followerNum + 1);
       if (response.status == 200){
       console.log(response);
       console.log("we got here");
