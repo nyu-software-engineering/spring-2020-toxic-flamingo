@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import SharmonyLogo from './SharmonyLogo.PNG';
 import axios from 'axios';
 import {Redirect} from 'react-router';
+import './SignUp.css';
 
 const SignUp = (props) => {
   const [myEmail, setEmail] = useState("");
@@ -65,16 +66,17 @@ const SignUp = (props) => {
   else{
   return (
     <div className="SignUp">
-
+        <div className="logo">
           <img alt="Sharmony Logo" src={SharmonyLogo} width="200" height="150"/>
-          <form onSubmit={onSubmit}>
-            Email:
+        </div>
+          <form className="form" onSubmit={onSubmit}>
+            <p>Email:</p>
             <input type="email"  onChange={handleEmail}/> 
             <br/>
-            Username:
+            <p>Username:</p>
             <input type="text" onChange={handleUsername}/> 
             <br/>
-            Password:
+            <p>Password:</p>
             <input type="password" onChange={handlePass}/>
             <br/>
             <br/>
