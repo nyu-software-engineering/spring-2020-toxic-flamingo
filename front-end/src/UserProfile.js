@@ -122,18 +122,14 @@ if (!data.id) {
 } else {
     return (
           <div className='Profile'>
-            <BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
             <div className="ProfileHeader">
-                
-                <div className="flex-container">
-                    <img src={data.pic} alt="profile pic" width="100" height="100"/>
-              <h1>{data.username}</h1>
 
-                 </div>
-                      <div className="bio">
-                      <p>{data.bio}</p>
-                      </div>
-                    </div>
+                <div className="flex-container">
+
+                <img className="PictureInProfile" alt="Profile Picture Here" src={data.pic}  width="100" height="100"/>
+                  <div className="UserNameAndBio"> <h1>{data.username}</h1> <div className="bio"><p>{data.bio}</p> </div></div>
+                </div>
+            </div>
                       <div className='buttons'>
                           <div className='button1'>
                             <form action="/Followee">
