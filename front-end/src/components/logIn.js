@@ -10,6 +10,7 @@ const LogIn = (props) => {
 
   const [userID, setUserID] = useState("");
   const [shouldRedirect, setRedirect] = useState(false);
+  const [incorrectPassword, setIncorrectPassword] = useState("");
 
   useEffect( () => {
     //fetch data
@@ -64,6 +65,7 @@ const LogIn = (props) => {
         })
         .catch( err => {
             console.log("ERROR!");
+            setIncorrectPassword("Incorrect username or password");
             console.error(err);
         })
   }
@@ -96,6 +98,9 @@ const LogIn = (props) => {
               <input type='text' name='username' onChange={handleUsername} />
               <br/>
               <p>Password: </p>
+              <div className="error">
+              <p>{incorrectPassword}</p>
+              </div>
               <input type='password' name='password' onChange={handlePass}/>
               <br/>
               <br/>

@@ -5,6 +5,11 @@
     justify-content: center;
 }
 
+.error {
+    font-size: 10px;
+    color: red;
+}
+
 .buttons {
     display: block;
 }

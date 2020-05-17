@@ -3,5 +3,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: fixed; /* or absolute */
+    top: 20%;
+    left: 40%;
 }
 
+.form{
+    align-items: center;
+}
