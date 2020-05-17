@@ -34,7 +34,7 @@ const UserProfile = (props) => {
       setData(response.data);
       console.log('printing'+ response.data);
       try {
-        console.log(response.data.following.length);
+        console.log("following: " + response.data.following.length);
         setFollowingNum(response.data.following.length);
       } catch {
         console.log("catching an error in counting");
@@ -42,10 +42,10 @@ const UserProfile = (props) => {
       }
       console.log(response.data.follower.length);
       try {
-        
         setFollowerNum(response.data.follower.length);
         
       } catch {
+        console.log("bad follower error");
         setFollowerNum(0);
       }
 
