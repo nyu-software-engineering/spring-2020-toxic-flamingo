@@ -1,8 +1,4 @@
 
-.ProfileHeader {
-    align-items: center;
-    justify-content: center;
-}
 
 html,body {
     background: #efefef;
@@ -31,6 +27,7 @@ html,body {
 }
 
 .PictureInProfile {
+    border-radius: 50%;
     position: relative;
     right: 30%;
 }
@@ -74,7 +71,7 @@ html,body {
 .UserNameAndBio:hover + .bioButton, .bioButton:hover {
     display: inline-block;
     position: absolute;
-    left: -5%;
-    bottom: -2%;
+    left: -20%;
+    bottom: 5%;
     font-size: 10px;
 }
