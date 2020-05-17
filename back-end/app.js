@@ -667,10 +667,10 @@ app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
 
     let newNotification = new notificationModel({
       userID: userID,
-      text: `${userID} has a new post!`
+      text: `${username} made a new comment!`
     })
     newNotification.save({runValidators:true}).then(doc => {
-      console.log(data);
+      console.log('created comment notification');
       }).catch(err => {
       console.log(err);
      });     
@@ -931,7 +931,7 @@ app.post("/createPost/", async (req,res) => {
 
 
   let tags = data.hashID;
-
+    
   for (let i=0; i < tags.length; i++) {
     let tag = tags[i].replace("#", "");
     
@@ -970,13 +970,13 @@ app.post("/createPost/", async (req,res) => {
       console.log("ERROR: " + err);
     })
   }
-
+  console.log('are we here???????????????');
   let newNotification = new notificationModel({
-    userID: userId,
+    userID: userID,
     text: `${username} has a new post!`
   })
   newNotification.save({runValidators:true}).then(doc => {
-    console.log(data);
+    console.log('created post notification');
   }).catch(err => {
     console.log(err);
   });  
