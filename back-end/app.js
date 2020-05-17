@@ -166,9 +166,9 @@ app.post("/signUp", cors(corsOptions), async (req, res, next) => {
           Username: username,
           Bio: "I'm new here",
           Profile_Pic: "https://www.dictionary.com/e/wp-content/uploads/2018/04/kawaii.jpg",
-          Trophies: [false],
-          follower: ["fds"],
-          following: ["dsf"]
+          Trophies: [],
+          follower: [],
+          following: []
       })
       let ID;
       await newUser.save()
@@ -341,15 +341,20 @@ app.get("/user/:isPersonal/:userID", async (req, res) => {
       userID = cookieToID(req);
       console.log("this is my profile b");
     }
-    let username, bio, pic, followers, following;
+    let username, bio, pic, follower, following;
+    let isFollowing = true;
     await userModel.findById(userID)
     .then(doc => {
       username = doc.Username;
       console.log(username);
       bio = doc.Bio;
       pic = doc.Profile_Pic;
-      followers = doc.follower;
+      follower = doc.follower;
       following = doc.following;
+      if (follower.filter(follower => 
+        follower.toString() === cookieToID(req) ).length == 0){
+          isFollowing = false;
+        } 
     })
     .catch(err => {
       console.log(err);
@@ -359,9 +364,9 @@ app.get("/user/:isPersonal/:userID", async (req, res) => {
       username: username,
       bio: bio,
       pic: pic,
-      followers: followers,
+      follower: follower,
       following: following,
-      personalID: cookieToID(req)
+      isFollowing: isFollowing,
     })
   })
 
@@ -507,11 +512,66 @@ app.get("/followThisGuy/:userID", async (req,res) => {
       console.log('theres an error trying to add me to follower list');
       console.log(err);
     });
-   
-    
 })
+
 const updateFollowing = async (myID, tryingToFollow) =>{
   await userModel.findByIdAndUpdate(myID,{$push: {following: tryingToFollow}},
+    {
+      new : true,
+      runValidators: true
+    })
+    .then(doc => {
+      console.log('did this go thru?????????!!!!!!');
+      console.log(doc);
+      return true;
+    }).catch(err => {
+      console.log(err);
+    })
+}
+
+app.get("/unfollowThisGuy/:userID", async (req,res) => {
+  console.log("hello i clicked UNFollow button");
+
+  let tryingToUnfollow = req.params.userID;
+  let myID = cookieToID(req);
+
+  if (tryingToUnfollow === myID){
+    return res.status(400).json({ alreadyunfollow : "You cannot unfollow yourself"});
+  }
+  
+  await userModel.findById(tryingToUnfollow)
+    .then(user => {
+      console.log(user.follower);
+      console.log(myID);
+      if (user.follower.filter(follower => 
+        follower.toString() === myID ).length > 0){
+      userModel.findByIdAndUpdate(tryingToUnfollow,{$pull: {follower: myID}},
+        {
+          new : true,
+          runValidators: true
+        })
+        .then(doc => {
+          console.log('did this go thru?????????!!!!!!');
+          console.log(doc);
+          let yes = updateUnfollowing(myID,tryingToUnfollow);
+          return res.status(200).json({success: {yes}});
+        }).catch(err => {
+          console.log(err);
+        })
+      } else {
+        console.log('youve unfollowed them already');
+        return res.status(400).json({ success: false });
+      }
+   
+    })  
+    .catch(err => {
+      console.log('theres an error trying to add me to follower list');
+      console.log(err);
+    }); 
+})
+
+const updateUnfollowing = async (myID, tryingToUnfollow) =>{
+  await userModel.findByIdAndUpdate(myID,{$pull: {following: tryingToUnfollow}},
     {
       new : true,
       runValidators: true
@@ -822,17 +882,23 @@ app.post("/changePassword/", async (req, res) => {
   const user = await userModel.findById(uID);
   const isMatch = await user.isValidPassword(oldPass);
   if (isMatch) {
-    userModel.findByIdAndUpdate(uID,{Password: newPass}, 
-      {
-        new : true,
-        runValidators: true
-      }).then(doc => {
-        console.log(doc);
-      }).catch(err => {
-        console.log(err);
+    bcrypt.genSalt(10, function(err, salt) {
+      bcrypt.hash(newPass, salt, async function(err, hash) {
+        userModel.findByIdAndUpdate(uID,{Password: hash},
+        {
+          new : true,
+          runValidators: true
+        }).then(doc => {
+          console.log(doc);
+          res.status(200).json("Success!");
+        }).catch(err => {
+          console.log(err);
+        })
       })
+    })
   } else {
     console.log("incorrect current password");
+    res.status(401).json("Incorrect Current Password");
   }
 });
 
