@@ -56,6 +56,7 @@ const PrimaryNav = (props) => {
                     <li><a href="/Make_Post">New Post</a></li>
                     <li><a href="/Notifications">Notifications</a></li>
                    
+
                     </ul>
                 </nav>
             </div>

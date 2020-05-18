@@ -73,6 +73,7 @@
     text-decoration: underline;
 }
 
+
 .description {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     text-indent: 5px;
@@ -102,4 +103,13 @@
 
 .postContent{
     text-indent: 10px;
+
+.hashtags {
+    transition-duration: .04s; 
+}
+
+.hashtags:hover{
+    color: purple;
+    text-decoration: underline;
+
 }

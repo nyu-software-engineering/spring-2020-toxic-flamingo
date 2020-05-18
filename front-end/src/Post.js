@@ -3,8 +3,8 @@ import axios from 'axios';
 import './Post.css';
 import MusicPlayer from './MusicPlayer';
 import { Redirect } from 'react-router-dom';
-import playbutton from './components/playbutton.png';
-import pausebutton from './components/pausebutton.png';
+
+import ReactHashtag from 'react-hashtag';
 
 //onst cors = require('cors');
 
@@ -14,6 +14,8 @@ const Post = (props) => {
     const [playPause, setData] = useState(val);
     const [username, setUsername] = useState("");
     const [shouldRedirect, setRedirect] = useState(false);
+    const [shouldHashtagRedirect, setHashtagRedirect] = useState(false);
+    const [hashtag, setHashtag] = useState("");
     const [isPersonal, setIsPersonal] = useState(false);
     const [img, setImg] = useState("https://cdn4.iconfinder.com/data/icons/game-interface-outline/100/objects-17-512.png");
     const [profilePic, setProfilePic] = useState("");
@@ -102,6 +104,10 @@ const Post = (props) => {
         }
     }
 
+    if (shouldHashtagRedirect) {
+        return <Redirect push to={'/HashtagFeed/' + hashtag.replace('#','')}/>
+    }
+
     return (
         <div className="FeedPost">
             <div className='postHeader'>
@@ -127,7 +133,19 @@ const Post = (props) => {
                 </div>
             </div>
             <div className='description'>
-                <p>{data.description}</p>
+                <p>
+                <ReactHashtag renderHashtag={(hashtagValue) => (
+                    <span className='hashtags' onClick={ ()=> {
+                        setHashtagRedirect(true);
+                        setHashtag(hashtagValue);
+                        console.log(hashtagValue);
+                    }}>
+                        {hashtagValue}
+                    </span>
+                )}>
+                    {data.description}
+                </ReactHashtag>
+                </p>
             </div>
             <div className='postComments'>
                 {button}

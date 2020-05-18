@@ -5,39 +5,44 @@ import './Trophies.css';
 import BurgerMenu from './BurgerMenu';
 
 const Trophies = (props) => {
-
+        const trophyData = [
+            {
+                id: 1,
+                trophy: "Harmonize",
+                trophy_description: "Get your first Harmony!",
+                trophy_icon: "https://i.pinimg.com/originals/5f/77/4b/5f774b20b2f212b7f9b888437a097579.jpg",
+                hidden: true
+            },
+            
+        ];
         const [data, setData] = useState([]);
-    
-        const userID = "12345" //hardcoded for now
-
+        let list;
         // load in posts or whatever
         useEffect( () => {
-            //fetch data
-            axios.get("/trophies")
-            .then ((response) => {
-                setData(response.data);
+            
+            axios.get('/trophies/')
+            .then(doc => {
+                console.log(doc.data);
+                list = doc.data;
+                if(list[0] === true){
+                    console.log('hereherer');
+                    trophyData[0].hidden = false;
+                }
+                setData(trophyData);
             })
-            .catch( err => {
-                console.log("ERROR!");
-                console.error(err);
-    
-                //fake backup data
-                const backupData = [
-                    {
-                        id: 1,
-                        trophy: "Harmonize",
-                        trophy_description: "Get your first Harmony!",
-                        trophy_icon: "https://i.pinimg.com/originals/5f/77/4b/5f774b20b2f212b7f9b888437a097579.jpg",
-                        hidden: false
-                    }
-                ];
-                setData(backupData);
-            })
+            .catch(err=>{console.log(err)});
+            
+        
             
         }, []);
 
-    
-    
+        if(!data){
+            
+            return (<h1>Loading...</h1>)
+        }
+        else{
+        
+
   return (
       <div>
           <BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
@@ -50,12 +55,13 @@ const Trophies = (props) => {
                
 
                 {data.map((jsonObj, i) => (
-                    <Trophy key={jsonObj.id} data={jsonObj}/>
+                    <Trophy key={jsonObj.id} data={jsonObj} hidden={jsonObj.hidden}/>
                 ))}
             </div>
         </div>
 </div></div>
   );
+}
 }
 
 export default Trophies;

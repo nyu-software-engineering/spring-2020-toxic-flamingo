@@ -15,6 +15,8 @@ const PostView = (props) => {
     const [playPause, setData] = useState(val);
     const [img, setImg] = useState("https://cdn4.iconfinder.com/data/icons/game-interface-outline/100/objects-17-512.png");
 
+    const [shouldRedirect, setRedirect] = useState(false);
+
     useEffect(() => {
         async function fetchUsername() {
             await axios.get("/getUsername/" + userID)
@@ -49,13 +51,20 @@ const PostView = (props) => {
         }
     }
 
+    if (shouldRedirect) {
+        return (
+            <Redirect push to={"/UserProfile/"+username}/>
+        );
+    }
+
     return (
         <div className="FeedPost">
             <div className='postHeader'>
-            
+
                 <div className='username'>
-                    <img className='profilepic' src={profilePic} />  
-                <h4>{username}</h4></div>
+                    <img className='profilepic' src={profilePic} /> 
+                <h4 onClick={() => setRedirect(true)}>{username}</h4>
+
             </div>
             <div className='postContent'>
                 
