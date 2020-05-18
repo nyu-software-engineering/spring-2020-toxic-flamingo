@@ -120,24 +120,24 @@ if (!data.id) {
             </div>
             <div className='buttons'>
               <div className="flex-container">
-     </form>
+    
 
-                <div className='button1'>      
-                  <button id="following" onClick={() => {
+                  
+                  <button className='button1' id="following" onClick={() => {
                     props.passUser(data.id)
                     setFollowingRedirect(true)
                   }}>Following {followingNum}</button>
-                </div>
-                  <div className='button2'>
-                    <button id="followers" onClick={() => {
+                
+                    <button className='button1' id="followers" onClick={() => {
                     props.passUser(data.id)
                     setFollowerRedirect(true);
                   }}>Followers {followerNum}</button>
-                </div>
+                
 
                   <form action="/Harmonies">
                   <button className='button1' id="harmonies" >Harmonies</button>
                   </form>
+              
               </div>     
             </div>
 
