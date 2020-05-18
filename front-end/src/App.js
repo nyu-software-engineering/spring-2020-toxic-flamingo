@@ -63,13 +63,13 @@ const App = (props) => {
                   <Route path="/PersonalProfile">
                       <SharmonyHeader />
                       <PrimaryNav />
-                      <PersonalProfile />
+                      <PersonalProfile passUser={(userID) => passUser(userID)}/>
                   </Route>
 
                   <Route path="/UserProfile/:username">
                       <SharmonyHeader />
                       <PrimaryNav />
-                      <UserProfile userID={userID}/>
+                      <UserProfile passUser={(userID) => passUser(userID)}/>
                   </Route>
 
                   <Route path="/Home">
@@ -113,12 +113,12 @@ const App = (props) => {
                   </Route>
                   <Route path="/Follower">
                   <SharmonyHeader />
-                    <Follower />
+                    <Follower userID={userID}/>
                     <PrimaryNav />
                   </Route>
                   <Route path="/Followee">
                   <SharmonyHeader />
-                    <Followee />
+                    <Followee userID={userID}/>
                     <PrimaryNav />
                   </Route>
                   <Route path="/Harmonies">

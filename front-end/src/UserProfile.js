@@ -23,7 +23,9 @@ const UserProfile = (props) => {
 
   let userID;
   const [followunfollow, setFollowUnfollow] = useState();
-  const [shouldRedirect, setRedirect] = useState(false);
+  const [shouldPersonalRedirect, setPersonalRedirect] = useState(false);
+  const [shouldFollowerRedirect, setFollowerRedirect] = useState(false);
+  const [shouldFollowingRedirect, setFollowingRedirect] = useState(false);
   // load in posts or whatever
   useEffect( () => {
     axios.get("/getUserID/" + username).then ((res) => {
@@ -31,7 +33,7 @@ const UserProfile = (props) => {
       console.log(userID);
       axios.get("/isPersonal/" + userID).then((res) => {
       if(res.data) {
-        setRedirect(true);
+        setPersonalRedirect(true);
       } else {
       
       axios.get("/user/" + "false/" + userID )
@@ -94,8 +96,16 @@ const UserProfile = (props) => {
     })
 }, []);
 
-if (shouldRedirect) {
+if (shouldPersonalRedirect) {
   return <Redirect push to='/PersonalProfile/'/>
+}
+
+if (shouldFollowerRedirect) {
+  return <Redirect push to='/Follower/'/>
+}
+
+if (shouldFollowingRedirect) {
+  return <Redirect push to='/Followee/'/>
 }
 
 function followClicked (e) {
@@ -127,6 +137,7 @@ function followClicked (e) {
 }
 
 
+
 //console.log(data.id);
 if (!data.id) {
   return (
@@ -146,14 +157,17 @@ if (!data.id) {
             </div>
                       <div className='buttons'>
                           <div className='button1'>
-                            <form action="/Followee">
-                            <button id="following">Following {followingNum}</button>
-                            </form>
+                            
+                            <button id="following" onClick={() => {
+                              props.passUser(data.id)
+                              setFollowingRedirect(true)
+                              }}>Following {followingNum}</button>
                           </div>
                           <div className='button2'>
-                            <form action="/Follower">
-                            <button id="followers">Followers {followerNum}</button>
-                            </form>
+                            <button id="followers" onClick={() => {
+                              props.passUser(data.id)
+                              setFollowerRedirect(true);
+                              }}>Followers {followerNum}</button>
                           </div>
                           <div className='button3'>
                             <form action="/Harmonies">
