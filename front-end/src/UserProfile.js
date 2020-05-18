@@ -1,6 +1,7 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import BurgerMenu from './BurgerMenu';
+import {Redirect, withRouter} from 'react-router-dom';
 import './PersonalProfile.css';
 import './PostPreview';
 import PostPreview from './PostPreview';
@@ -10,7 +11,7 @@ import PostPreview from './PostPreview';
 
 const UserProfile = (props) => {
 
-
+  let username = props.match.params.username;
   
   console.log("AHHHHHHHHH " + props.userID);
 
@@ -20,14 +21,20 @@ const UserProfile = (props) => {
   const [followerNum, setFollowerNum] = useState();
   //const [isFollowing, setIsFollowing] = useState();
 
-  let userID = props.userID;
+  let userID;
   const [followunfollow, setFollowUnfollow] = useState();
- 
-  console.log("imma prop" + userID);
+  const [shouldRedirect, setRedirect] = useState(false);
   // load in posts or whatever
   useEffect( () => {
-    //fetch data
-    axios.get("/user/" + "false/" + userID )
+    axios.get("/getUserID/" + username).then ((res) => {
+      userID = res.data;
+      console.log(userID);
+      axios.get("/isPersonal/" + userID).then((res) => {
+      if(res.data) {
+        setRedirect(true);
+      } else {
+      
+      axios.get("/user/" + "false/" + userID )
 
     .then ((response) => {
       console.log("data: " + response.data.username);
@@ -76,13 +83,20 @@ const UserProfile = (props) => {
             }
         ];
         setData(backupData);
-
-
-
     })
-
-    
+    }}).catch( err => {
+      console.log("ERROR!");
+      console.error(err);
+    })
+    }).catch( err => {
+      console.log("ERROR!");
+      console.error(err);
+    })
 }, []);
+
+if (shouldRedirect) {
+  return <Redirect push to='/PersonalProfile/'/>
+}
 
 function followClicked (e) {
   e.preventDefault();
@@ -168,4 +182,4 @@ if (!data.id) {
 }
 
 
-export default UserProfile;
+export default withRouter(UserProfile);

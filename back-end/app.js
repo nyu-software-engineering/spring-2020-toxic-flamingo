@@ -253,7 +253,19 @@ app.get("/signOut", async (req, res, next) => {
   res.status(200).json({ success: true });
 });
 
-
+app.get("/isPersonal/:theirID", async (req, res, next) => {
+  console.log('got here!');
+  const theirID = req.params.theirID;
+  const yourID = cookieToID(req);
+  if (theirID == yourID){
+    console.log("match");
+    res.json(true);
+  } else {
+    console.log(theirID);
+    console.log(yourID);
+    res.json(false);
+  }
+})
 
 
 // let user123 = new userModel({
@@ -726,7 +738,7 @@ app.get('/mainFeed/', async (req, res) => {
 
   await userModel.findById(userID)
     .then(doc => {
-      if (!doc.following) {
+      if (doc.following) {
         following = doc.following;
       }
       following.push(userID);
@@ -995,6 +1007,22 @@ app.get("/getUsername/:userID", async (req, res, next) => {
     });
     console.log(username);
   res.json(username);
+});
+
+app.get("/getUserID/:username", async (req, res, next) => {
+  console.log(req.params.username);
+  const username = req.params.username;
+  let userID;
+  await userModel.findOne({Username: username})
+    .then(doc => {
+      userID = doc._id;
+      console.log(userID);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    console.log(userID);
+  res.json(userID);
 });
 
 module.exports = app;

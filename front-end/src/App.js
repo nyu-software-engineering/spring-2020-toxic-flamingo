@@ -44,7 +44,7 @@ const App = (props) => {
       <div className="container">
           <Router>
               <Switch>
-                    <Route path="/Search">
+                    <Route path="/Search/">
                     <SharmonyHeader/>
                     <Search passUser={(userID) => passUser(userID)}/>
                     <PrimaryNav />
@@ -54,8 +54,6 @@ const App = (props) => {
                     <MakePostWrapper showScreenOne={true}/>
                     <PrimaryNav />
                   </Route>
-  
-
                   <Route path="/user">
                       <SharmonyHeader />
                       <PrimaryNav />
@@ -68,7 +66,7 @@ const App = (props) => {
                       <PersonalProfile />
                   </Route>
 
-                  <Route path="/UserProfile">
+                  <Route path="/UserProfile/:username">
                       <SharmonyHeader />
                       <PrimaryNav />
                       <UserProfile userID={userID}/>
