@@ -43,7 +43,7 @@ const App = (props) => {
       <div className="container">
           <Router>
               <Switch>
-                    <Route path="/Search">
+                    <Route path="/Search/">
                     <SharmonyHeader/>
                     <Search passUser={(userID) => passUser(userID)}/>
                     <PrimaryNav />
@@ -77,13 +77,13 @@ const App = (props) => {
                   <Route path="/PersonalProfile">
                       <SharmonyHeader />
                       <PrimaryNav />
-                      <PersonalProfile />
+                      <PersonalProfile passUser={(userID) => passUser(userID)}/>
                   </Route>
 
-                  <Route path="/UserProfile">
+                  <Route path="/UserProfile/:username">
                       <SharmonyHeader />
                       <PrimaryNav />
-                      <UserProfile userID={userID}/>
+                      <UserProfile passUser={(userID) => passUser(userID)}/>
                   </Route>
 
                   <Route path="/Home">
@@ -100,18 +100,22 @@ const App = (props) => {
                       <PrimaryNav />
                   </Route>
                   <Route path ="/ChangeEmail">
+                      <SharmonyHeader />
                       <ChangeEmail />
                       <SettingsNav />
                   </Route>
                   <Route path ="/ChangePassword">
+                  <SharmonyHeader />
                       <ChangePassword />
                       <SettingsNav />
                   </Route>
                   <Route path ="/NotificationSettings">
+                  <SharmonyHeader />
                       <NotificationSettings/>
                       <SettingsNav />
                   </Route>
                   <Route path ="/Trophies">
+                  <SharmonyHeader />
                       <Trophies />
                       <SettingsNav />
                   </Route>
@@ -123,12 +127,12 @@ const App = (props) => {
                   </Route>
                   <Route path="/Follower">
                   <SharmonyHeader />
-                    <Follower />
+                    <Follower userID={userID}/>
                     <PrimaryNav />
                   </Route>
                   <Route path="/Followee">
                   <SharmonyHeader />
-                    <Followee />
+                    <Followee userID={userID}/>
                     <PrimaryNav />
                   </Route>
                   <Route path="/Harmonies">

@@ -130,7 +130,18 @@ signToken = (user_id) => {
         exp: new Date().setDate(new Date().getDate + 1) // current time + 1 day
     }, JWT_SECRET)
 }
-
+////////////////////////////////////
+populateTrophies = () => {
+  let trophies = [];
+  const x = {
+    title: 'Harmonize',
+    description: 'Get your first Harmony!',
+    icon: '',
+    hidden: true
+    
+};
+}
+//////////////////////////////////////
 app.post("/signUp", cors(corsOptions), async (req, res, next) => {
   //console.log(req.header("cookie"));      
   console.log('UsersController.signUp() called!');
@@ -253,57 +264,23 @@ app.get("/signOut", async (req, res, next) => {
   res.status(200).json({ success: true });
 });
 
-
-
-
-// let user123 = new userModel({
-//   userID: "testtesttest",
-//   Username: "gary333",
-//   Password: "gary123",
-//   Email: "gary@d.com",
-//   Bio: "dfsdf",
-//   Profile_Pic: "String",
-//   Trophies: [],
-//   follower: [],
-//   following: [],
-// })
-
-// post123.save({runValidators:true}).then(doc => {
-//   console.log(doc);
-// }).catch(err => {
-//   console.log(err);
-// });
-
-
-// let post123 = new postModel({
-//   userID: "testID",
-//   postID: "78910",
-//   hashID: "nyc",
-//   harmony: true,
-//   songName: "Imagine",
-//   artistName: "Waiyu",
-//   albumName: "Imagine",
-//   picture: "pictureURL",
-//   spotify: "spotifyURL",
-//   descripton: "i love this song!"
-//   comments: []
-// });
-
-// post123.save({runValidators:true}).then(doc => {
-//   console.log(doc);
-// }).catch(err => {
-//   console.log(err);
-// });
-
+app.get("/isPersonal/:theirID", async (req, res, next) => {
+  console.log('got here!');
+  const theirID = req.params.theirID;
+  const yourID = cookieToID(req);
+  if (theirID == yourID){
+    console.log("match");
+    res.json(true);
+  } else {
+    console.log(theirID);
+    console.log(yourID);
+    res.json(false);
+  }
+})
 
 app.get("/", (req, res) => {
     res.send("Hello!");
   });
-
-
-
-// export the express app we created to make it available to other modules
-
 
 //mock users data
 const users = [
@@ -386,19 +363,30 @@ app.get("/profileposts/:userID", async (req,res) => {
 
 
 
-app.get("/Followee", async (req, res) => {
-  
-  let userID = cookieToID(req);
-  await userModel.findById(tryingToFollow)
-    .then(user => {
-      //get following array of UserIDs i follow
-      
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  res.json(response.data);
+app.get("/Followee/:userID", async (req, res) => {
+  let userID = req.params.userID;
+  let following;
+  await userModel.findById(userID)
+  .then(doc => {
+    following = doc.following;
+  })
+  .catch(err => {
+    console.log(err);
+  });
+  res.json(following)
+})
 
+app.get("/Follower/:userID", async (req, res) => {
+  let userID = req.params.userID;
+  let follower;
+  await userModel.findById(userID)
+  .then(doc => {
+    follower = doc.follower;
+  })
+  .catch(err => {
+    console.log(err);
+  });
+  res.json(follower)
 })
 
 app.get("/Search/:searchUsers/:searchQuery", async (req, res) => {
@@ -447,7 +435,10 @@ app.get("/Search/:searchUsers/:searchQuery", async (req, res) => {
 
 
 app.get("/Notifications", async (req, res) => {
-  notificationModel.find()
+  let myid = cookieToID(req);
+  console.log('where is THIS???????????????????????????????????/');
+  console.log(myid);
+  notificationModel.find({ userID : myid})
   .sort({'createdAt': 'desc'})
   .limit(10)
   .then(result => {
@@ -460,18 +451,11 @@ app.get("/Notifications", async (req, res) => {
   //const user  = req.params.userid;
 })
 
-app.get("/Harmonies", async (req, res) => {
+app.get("/Harmonies/:userID", async (req, res) => {
   //const user  = req.params.userid;
   let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=5&key=ffab93f0").catch();
   res.json(response.data);
 })
-
-app.get("/Follower", async (req, res) => {
-  //const user  = req.params.userid;
-  let response = await axios.get("https://api.mockaroo.com/api/87521f10?count=10&key=5296eab0").catch();
-  res.json(response.data);
-})
-
 
 app.get("/followThisGuy/:userID", async (req,res) => {
   console.log("hello i clicked follow button");
@@ -485,8 +469,27 @@ app.get("/followThisGuy/:userID", async (req,res) => {
   
   await userModel.findById(tryingToFollow)
     .then(user => {
+      let name;
       console.log(user.follower);
       console.log(myID);
+      userModel.findById(myID)
+      .then( doc => {
+      name = doc.Username;
+      //notification update
+      let newNotification = new notificationModel({
+        userID: tryingToFollow,
+        text: `${name} started following me!`
+      })
+      newNotification.save({runValidators:true}).then(doc => {
+        console.log('created follower notification');
+        }).catch(err => {
+        console.log(err);
+       }); 
+      })
+      .catch(err => {console.log(err);})
+      
+
+
       if (user.follower.filter(follower => 
         follower.toString() === myID ).length == 0){
       userModel.findByIdAndUpdate(tryingToFollow,{$push: {follower: myID}},
@@ -585,26 +588,24 @@ const updateUnfollowing = async (myID, tryingToUnfollow) =>{
     })
 }
 
-
-
 app.get('/refresh_token', function(req, res) {
-    let refresh_token = req.query.refresh_token;
-    let authOptions = {
-        url: 'https://accounts.spotify.com/api/token',
-        headers:{ 'Authorization': 'Basic ' + (new Buffer('691936c2acfc4bad82db2fe642f023ec' + ':' + '2907a5de299c4052a6f9b3f738030a7a').toString('base64')) },
-        form:{
-            grant_type: 'refresh_token',
-            refresh_token: refresh_token
-        },
-        json: true
-    };
-  })
+  let refresh_token = req.query.refresh_token;
+  let authOptions = {
+      url: 'https://accounts.spotify.com/api/token',
+      headers:{ 'Authorization': 'Basic ' + (new Buffer('691936c2acfc4bad82db2fe642f023ec' + ':' + '2907a5de299c4052a6f9b3f738030a7a').toString('base64')) },
+      form:{
+          grant_type: 'refresh_token',
+          refresh_token: refresh_token
+      },
+      json: true
+  };
+})
 app.get('/Make_Post/:search', function(req, res, next){
-var client_id = '691936c2acfc4bad82db2fe642f023ec'; // Your client id
-var client_secret = '2907a5de299c4052a6f9b3f738030a7a'; // Your secret
-let search = req.params.search;
-// your application requests authorization
-var authOptions = {
+  const client_id = '691936c2acfc4bad82db2fe642f023ec'; // Your client id
+  const client_secret = '2907a5de299c4052a6f9b3f738030a7a'; // Your secret
+  let search = req.params.search;
+  // your application requests authorization
+  let authOptions = {
   url: 'https://accounts.spotify.com/api/token',
   headers: {
     'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
@@ -648,6 +649,31 @@ app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
     const comment = req.params.comment;
     const userID = cookieToID(req);
     const postID = req.params.postID;
+    let writer;
+    let id;
+    // notification 
+   await userModel.findById(userID)
+    .then( doc => {
+    writer = doc.Username;
+    })
+    .catch(err => {console.log(err);})
+    await postModel.findById(postID)
+    .then(doc => {
+      id = doc.userID
+      let newNotification = new notificationModel({
+        userID: id,
+        text: `${writer} posted a comment on your post!`
+      })
+      newNotification.save({runValidators:true}).then(doc => {
+        console.log('created comment notification');
+        }).catch(err => {
+        console.log(err);
+    })
+    .catch(err => {console.log(err);})
+    })
+
+
+
 
     let commentToSubmit = new commentModel({
       userID: userID,
@@ -674,16 +700,7 @@ app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
     .catch(err => {
       console.log(err);
     });
-
-    let newNotification = new notificationModel({
-      userID: userID,
-      text: `${username} made a new comment!`
-    })
-    newNotification.save({runValidators:true}).then(doc => {
-      console.log('created comment notification');
-      }).catch(err => {
-      console.log(err);
-     });     
+    
 
     res.send("hey!");
 });
@@ -757,7 +774,10 @@ app.get('/mainFeed/', async (req, res) => {
 
   await userModel.findById(userID)
     .then(doc => {
-      if (!doc.following) {
+      if (doc.following) {
+
+        console.log(doc.following);
+
         following = doc.following;
       }
       following.push(userID);
@@ -933,11 +953,24 @@ app.post("/createPost/", async (req,res) => {
     console.log("NO LINK");
     data.spotify = "#";
   }
+  //checks if the song exists or not then makes a harmony
+  let isHarmony = true;
+  await postModel.find({ songName: data.songName , artistName: data.artistName}, function(err, result) {
+    if (err) {
+      console.log('there was an error');
+    } else {
+      console.log('the result is' + result);
+      if (result.length > 0){
+        isHarmony = false;
+      }
+    }
+  });
+  console.log('i just searched for this song');
 
   let newPost = new postModel({
     userID: cookieToID(req),
     hashID: data.hashID,
-    harmony: true, //figure that out after search
+    harmony: isHarmony, 
     songName: data.songName,
     artistName: data.artistName,
     albumName: data.albumName,
@@ -1001,16 +1034,7 @@ app.post("/createPost/", async (req,res) => {
       console.log("ERROR: " + err);
     })
   }
-  console.log('are we here???????????????');
-  let newNotification = new notificationModel({
-    userID: userID,
-    text: `${username} has a new post!`
-  })
-  newNotification.save({runValidators:true}).then(doc => {
-    console.log('created post notification');
-  }).catch(err => {
-    console.log(err);
-  });  
+ 
 })
 
 app.get("/getUsername/:userID", async (req, res, next) => {
@@ -1026,6 +1050,22 @@ app.get("/getUsername/:userID", async (req, res, next) => {
     });
     console.log(username);
   res.json(username);
+});
+
+app.get("/getUserID/:username", async (req, res, next) => {
+  console.log(req.params.username);
+  const username = req.params.username;
+  let userID;
+  await userModel.findOne({Username: username})
+    .then(doc => {
+      userID = doc._id;
+      console.log(userID);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    console.log(userID);
+  res.json(userID);
 });
 
 module.exports = app;

@@ -1,9 +1,12 @@
 import React, {useState, useEffect, Component} from 'react';
 import './Trophy.css';
 
+
+
 const Trophy = (props) => {
     const data = props.data;
     return (
+        
         <div class="flex-container">
             <div className="trophyBox">
             <div className='postHeader'>

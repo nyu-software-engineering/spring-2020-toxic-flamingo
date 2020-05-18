@@ -41,7 +41,7 @@ const CommentBuilder = (props) => {
                 <p>Enter a comment</p>
                 <input className="commentText" type='text' name='comment' value={commentText} onChange={handleComment}/>
                 <br/>
-                <button onClick={submitComment}>Submit</button>
+                <button className='button' onClick={submitComment}>Submit</button>
             </form>
         </div>
     )

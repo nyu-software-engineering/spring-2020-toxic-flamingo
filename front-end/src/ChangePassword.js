@@ -4,6 +4,8 @@ import axios from 'axios';
 import {Redirect} from 'react-router';
 import "./ChangePassword.css";
 
+import BurgerMenu from './BurgerMenu';
+
 const ChangePassword = (props) => {
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
@@ -42,7 +44,10 @@ function handleNewData(e) {
 }
 
 return (
+<div classname="burger">
+<BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
   <div className="ChangePassword">
+    
       <h1>Change Password</h1>
       <section className="main-content">
           <img alt="about us" className="icon" src="https://www.amazeelabs.com/sites/default/files/styles/leading_image/public/images/current-affairs/Maintenance-Password-Policies-Blog_0.jpg?h=f89ac811&itok=7NkzikSw" />
@@ -63,7 +68,7 @@ return (
                 </div>
                 </form>
       </section>
-  </div>
+  </div></div>
   );
 }
 

@@ -1,10 +1,15 @@
 import React from 'react';
 import { FormControl, FormControlLabel, FormGroup, Switch} from '@material-ui/core';
 import "./NotificationSettings.css";
+import BurgerMenu from './BurgerMenu';
 
 
 const NotificationSettings = (props) => {
   return (
+      <div>
+<BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
+    
+     
 <div className="NotificationSettings">
     <h1>Notification Settings</h1>
     <section className="main-content">
@@ -36,7 +41,7 @@ const NotificationSettings = (props) => {
         />
         </FormGroup>
     </section>
-</div>
+</div> </div>
   );
 }
 
