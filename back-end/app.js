@@ -1078,21 +1078,23 @@ app.get("/getUsername/:userID", async (req, res, next) => {
   console.log(req.params.userID);
   const userID = req.params.userID;
   let username;
+  let profilepic;
   await userModel.findById(userID)
     .then(doc => {
       username = doc.Username;
+      profilepic = doc.Profile_Pic;
     })
     .catch(err => {
       console.log(err);
     });
     console.log(username);
-  res.json(username);
+  res.json({username: username, profilepic: profilepic});
 });
 
 app.get("/getUserID/:username", async (req, res, next) => {
   console.log(req.params.username);
   const username = req.params.username;
-  let userID;
+  let userID, pic;
   await userModel.findOne({Username: username})
     .then(doc => {
       userID = doc._id;

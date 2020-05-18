@@ -7,6 +7,7 @@
 }
 
 
+
 .initialComment, .posterInfo {
     flex-direction: row;
 }
@@ -27,36 +28,81 @@
 }
 
 .albumImage {
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
     align-items: center;
     justify-content: center;
 }
 
 .FeedPost {
-    width: 300px;
-    border-style: solid;
+    padding-top: 10px;;
+    width: 400px;
+    border-bottom-style: solid;
+    padding-bottom: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    box-shadow: 2px 2px 4px #000000;
+   
 }
 
 .postHeader {
     position: relative;
+    display: flex;
 }
 
-.musicPlayer {
+.posterInfo{
+    position: relative;
+}
+.playButton {
     position: absolute;
-    color: white;
-    font-size: 16px;
-    border: none;
-    z-index: 1;
+    height: 100px;
+    width: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
 }
 
 .username {
     transition-duration: .04s;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    display: flex;
 }
 .username:hover{
     color: purple;
     text-decoration: underline;
 }
+
+
+.description {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-indent: 5px;
+}
+
+.songInfo {
+    font-style: oblique;
+}
+
+.postComments{
+    background-color: white;
+  color: black;
+  border: 2px solid #6f567d; 
+  transition-duration: 0.4s;
+}
+
+.postComments:hover{
+    background-color: #6f567d;
+    color:white;
+}
+
+.profilepic{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.postContent{
+    text-indent: 10px;
 
 .hashtags {
     transition-duration: .04s; 
@@ -65,4 +111,5 @@
 .hashtags:hover{
     color: purple;
     text-decoration: underline;
+
 }

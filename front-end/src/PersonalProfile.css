@@ -17,6 +17,7 @@ html,body {
     position: relative; 
     left: 20%;
     
+    
 }
 
 .button1{
@@ -64,13 +65,19 @@ html,body {
     flex-basis: 0;
     position: relative; 
     left: 40%;   
+    
+    
 }
 
 .contain{
     margin-top: 100px;
     position: relative; 
     left: 10%;
-
+    border-top-style: solid;
+    border-top-width: 5px;
+    border-top-color: #6f567d;
+    margin-right: 30%;
+    padding-top: 5px;
 }
 
 .profileButton {

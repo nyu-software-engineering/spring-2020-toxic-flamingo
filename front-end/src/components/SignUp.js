@@ -80,7 +80,7 @@ const SignUp = (props) => {
             <input type="password" onChange={handlePass}/>
             <br/>
             <br/>
-            <input type="submit" value="Submit" />
+            <input className='button1' type="submit" value="Submit" />
           </form>
           
     </div>

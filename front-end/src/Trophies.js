@@ -35,12 +35,14 @@ const Trophies = (props) => {
         
             
         }, []);
+
         if(!data){
             
             return (<h1>Loading...</h1>)
         }
         else{
         
+
   return (
       <div>
           <BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
@@ -49,6 +51,9 @@ const Trophies = (props) => {
     <h1><u>Trophies</u></h1>
         <div class="flex-container">
             <div class="flex-container > div">
+
+               
+
                 {data.map((jsonObj, i) => (
                     <Trophy key={jsonObj.id} data={jsonObj} hidden={jsonObj.hidden}/>
                 ))}

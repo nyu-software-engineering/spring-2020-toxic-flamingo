@@ -120,12 +120,8 @@ if (!data.id) {
                   <button className="bioButton" onClick={BioPopOpen}>Edit Bio</button>
                 {bioSeen ? <BioPopUp toggle={BioPopClose} /> : null}
                 </div>
-            </div>
-            <div className='buttons'>
-              <div className="flex-container">
-    
-
-                  
+           </div>
+            <div className='buttons'>    
                   <button className='button1' id="following" onClick={() => {
                     props.passUser(data.id)
                     setFollowingRedirect(true)
@@ -142,9 +138,9 @@ if (!data.id) {
                              setHarmoniesRedirect(true);
                             }}>Harmonies</button>
               
-              </div>     
+                 
             </div>
-
+      
                       
             
         <div className="contain">
