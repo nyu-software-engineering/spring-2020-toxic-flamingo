@@ -1,17 +1,17 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
-
+import FollowerTile from './FollowerTile';
 import './follower.css';
 
 
 const Follower = (props) => {
 
     const [data, setData] = useState([]);
+    let userID = props.userID;
 
     useEffect( () => {
-      axios.get("/Follower")
+      axios.get("/Follower/" + userID)
       .then ((response) => {
-        console.log('where is it');
         console.log(response.data);
         setData(response.data);
       })
@@ -35,15 +35,14 @@ const Follower = (props) => {
             </div>
 
             <div className="content"> 
-                {data.map((jsonObj,i) => (
-                <div class ="post">
-                <img src={jsonObj.icon} ></img>
-                <p>{jsonObj.user}</p>
-                <br/>
-                <div class="line"></div>
-                </div>
-                
-                ))}
+                {data.map((jsonObj,i) => {
+                    console.log(jsonObj);
+                    if (data.length == 0) {
+                    return (<h2>No Followers</h2>)
+                    } else {
+                    return <FollowerTile key={i.toString()} userID={jsonObj}/>
+                    }
+                })}
             </div>
 
             <div className="nav_bar"> 

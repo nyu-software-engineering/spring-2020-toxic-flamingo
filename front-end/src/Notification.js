@@ -6,20 +6,24 @@ import './Notification.css';
 const Notification = (props) => {
 
     const data = props.data;
+    console.log(data);
 
     let notificationString = '';
-    const userName = data.username;
-
-    if (data.isFollower) {
-        notificationString = '@' + userName + ' just followed you!';
+    //const userName = data.userID;
+    notificationString = data.text;
+    /*if (data.isFollower) {
+        //notificationString = '@' + userName + ' just followed you!';
+        notificationString = data.text;
     }
     else {
-        notificationString = '@' + userName + ' just commented on your post: ' + data.comment;
+        //notificationString = '@' + userName + ' just commented on your post: ' + data.comment;
+        notificationString = data.text;
     }
+    */
 
     return (
         <div className="Notification">
-            <img className='profileImage' alt='avatar' src={data.profile_picture} />
+            
             <p>{notificationString}</p>
         </div>
     );

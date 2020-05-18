@@ -1,0 +1,50 @@
+.FeedPost, .postContent, .songInfo, .playInfo, .postComments, .initialComment, .posterInfo{
+    display: flex;
+}
+
+.FeedPost, .songInfo, .playInfo, .postComments, .postHeader {
+    flex-direction: column;
+}
+
+.initialComment, .posterInfo {
+    flex-direction: row;
+}
+
+.user, .comment {
+    margin: 10px;
+    font-size: 15px;
+}
+
+.commentsTitle {
+    align-items: center;
+    justify-content: center;
+}
+
+.seeMore {
+    font-size: 10px;
+    margin-left: 20px;
+}
+
+.albumImage {
+    width: 300px;
+    height: 300px;
+    align-items: center;
+    justify-content: center;
+}
+
+.FeedPost {
+    width: 300px;
+    border-style: solid;
+}
+
+.postHeader {
+    position: relative;
+}
+
+.musicPlayer {
+    position: absolute;
+    color: white;
+    font-size: 16px;
+    border: none;
+    z-index: 1;
+}
