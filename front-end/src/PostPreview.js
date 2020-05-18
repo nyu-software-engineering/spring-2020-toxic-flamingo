@@ -2,9 +2,12 @@ import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 
 import "./PostPreview.css";
-import Post from './Post';
+import { Redirect } from 'react-router-dom';
 
 const PostPreview = (props) => {
+
+    const [shouldRedirect, setRedirect] = useState(false);
+    const [postID, setPostID] = useState("");
 
     const [data, setData] = useState([]);
     const userID = props.userID;
@@ -34,12 +37,21 @@ const PostPreview = (props) => {
         
     }, []);
 
+    function handlePostClick(id) {
+
+        setPostID(id);
+        setRedirect(true);
+    }
+
+    if (shouldRedirect) {
+        return <Redirect push to={"/PostComments/"+postID}/>
+    }
 
     return(
         <div className="PreviewPost">
             <div className="flex-container-post">
                 {data.map((jsonObj, i) => (
-                    <div className="coverArt" key={i}>
+                    <div className="coverArt" key={i} onClick={() => handlePostClick(jsonObj._id)}>
                         <img src={jsonObj.picture} height="300" width="300" />
                     </div>
                 ))}

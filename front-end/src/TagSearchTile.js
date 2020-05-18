@@ -2,7 +2,6 @@ import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 
 import './UserSearchTile.css';
-import FeedWrapper from './FeedWrapper';
 
 const TagSearchTile = (props) => {
 

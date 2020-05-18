@@ -486,9 +486,6 @@ app.get("/followThisGuy/:userID", async (req,res) => {
       userModel.findById(myID)
       .then( doc => {
       name = doc.Username;
-      console.log('CHECK THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSS');
-      console.log(name);
-      console.log('ENDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
       //notification update
       let newNotification = new notificationModel({
         userID: tryingToFollow,
@@ -663,6 +660,31 @@ app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
     const comment = req.params.comment;
     const userID = cookieToID(req);
     const postID = req.params.postID;
+    let writer;
+    let id;
+    // notification 
+   await userModel.findById(userID)
+    .then( doc => {
+    writer = doc.Username;
+    })
+    .catch(err => {console.log(err);})
+    await postModel.findById(postID)
+    .then(doc => {
+      id = doc.userID
+      let newNotification = new notificationModel({
+        userID: id,
+        text: `${writer} posted a comment on your post!`
+      })
+      newNotification.save({runValidators:true}).then(doc => {
+        console.log('created comment notification');
+        }).catch(err => {
+        console.log(err);
+    })
+    .catch(err => {console.log(err);})
+    })
+
+
+
 
     let commentToSubmit = new commentModel({
       userID: userID,
@@ -689,16 +711,7 @@ app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
     .catch(err => {
       console.log(err);
     });
-
-    let newNotification = new notificationModel({
-      userID: userID,
-      text: `${username} made a new comment!`
-    })
-    newNotification.save({runValidators:true}).then(doc => {
-      console.log('created comment notification');
-      }).catch(err => {
-      console.log(err);
-     });     
+    
 
     res.send("hey!");
 });
@@ -967,7 +980,18 @@ app.post("/createPost/", async (req,res) => {
     }
   });
   console.log('i just searched for this song');
-
+  
+  if(isHarmony === true){
+    let newNotification = new notificationModel({
+      userID: userID,
+      text: `Harmony Achieved!`
+    })
+    newNotification.save({runValidators:true}).then(doc => {
+      console.log('created harmony notification');
+      }).catch(err => {
+      console.log(err);
+     }); 
+  }
   let newPost = new postModel({
     userID: cookieToID(req),
     hashID: data.hashID,
@@ -1035,16 +1059,7 @@ app.post("/createPost/", async (req,res) => {
       console.log("ERROR: " + err);
     })
   }
-  console.log('are we here???????????????');
-  let newNotification = new notificationModel({
-    userID: userID,
-    text: `${username} has a new post!`
-  })
-  newNotification.save({runValidators:true}).then(doc => {
-    console.log('created post notification');
-  }).catch(err => {
-    console.log(err);
-  });  
+ 
 })
 
 app.get("/getUsername/:userID", async (req, res, next) => {

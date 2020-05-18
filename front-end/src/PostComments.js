@@ -1,19 +1,15 @@
 import React, {useState, useEffect, Component} from 'react';
-
+import {withRouter} from 'react-router-dom';
 import './PostComments.css';
 import CommentView from './CommentView';
 import axios from 'axios';
 import CommentBuilder from './CommentBuilder';
-import FeedWrapper from './FeedWrapper';
 import PostView from './PostView';
 
 const PostComments = (props) => {
     
-    let postID = props.postID;
-
-    let isMainFeed = props.isMainFeed;
-    let hashtag = props.hashtag;
-
+    let postID = props.match.params.postID;
+    
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [reloadCount, setReload] = useState(0);
@@ -43,11 +39,6 @@ const PostComments = (props) => {
         });
     }, [reloadCount]);
 
-    if (shouldRedirect) {
-        return (
-            <FeedWrapper isMainFeed={isMainFeed} hashtag={hashtag}/>
-        )
-    }
 
     if (loading == true) {
         return (
@@ -60,15 +51,10 @@ const PostComments = (props) => {
     return (
 
         <div className="PostComments">
-            <img src="/back-button.jpg" alt="where my button at" height="10" width="10" onClick={() => {
-                console.log("hashtag: " + hashtag);
-                console.log("isMainFeed: " + isMainFeed);
-                setRedirect(true);
-            }}></img>
-            <PostView data={postData} passUser={(userID) => props.passUser(userID)}/>
+            <PostView data={postData} />
             <h5>Comments</h5>
             {comments.map((commentJson, i) => (
-                <CommentView key={i} data={commentJson} passUser={(userID) => props.passUser(userID)}/>
+                <CommentView key={i} data={commentJson}/>
             ))}
             <CommentBuilder postID={postID} updateComments={() => {
                 setReload(reloadCount + 1);
@@ -79,4 +65,4 @@ const PostComments = (props) => {
 
 }
 
-export default PostComments;
+export default withRouter(PostComments);
