@@ -20,7 +20,7 @@ const HashtagFeed = (props) => {
         //fetch data
         axios.get("/hashtagFeed/" + hashtag)
         .then ((response) => {
-
+            console.log("testing")
             //filtering now takes place on the backend
 
             setData(response.data);

@@ -6,9 +6,6 @@
     flex-direction: column;
 }
 
-.FeedPost {
-    
-}
 
 .initialComment, .posterInfo {
     flex-direction: row;
@@ -57,6 +54,15 @@
     transition-duration: .04s;
 }
 .username:hover{
+    color: purple;
+    text-decoration: underline;
+}
+
+.hashtags {
+    transition-duration: .04s; 
+}
+
+.hashtags:hover{
     color: purple;
     text-decoration: underline;
 }

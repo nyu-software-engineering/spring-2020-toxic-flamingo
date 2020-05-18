@@ -5,6 +5,7 @@ import axios from 'axios';
 import './Post.css';
 import MusicPlayer from './MusicPlayer';
 import { Redirect } from 'react-router-dom';
+import ReactHashtag from 'react-hashtag';
 //onst cors = require('cors');
 
 const Post = (props) => {
@@ -13,6 +14,8 @@ const Post = (props) => {
     const [playPause, setData] = useState(val);
     const [username, setUsername] = useState("");
     const [shouldRedirect, setRedirect] = useState(false);
+    const [shouldHashtagRedirect, setHashtagRedirect] = useState(false);
+    const [hashtag, setHashtag] = useState("");
     const [isPersonal, setIsPersonal] = useState(false);
     
     const data = props.data;
@@ -97,13 +100,15 @@ const Post = (props) => {
         }
     }
 
+    if (shouldHashtagRedirect) {
+        return <Redirect push to={'/HashtagFeed/' + hashtag.replace('#','')}/>
+    }
+
     return (
         <div className="FeedPost">
             <div className='postHeader'>
               <div className='username'>
                 <h4 onClick={() => {
-                    // ****** AHHAHAHFADHDFHADFHDFAH ******** DO  ODODODO THIS *******
-                    // props.passUser(userID);
                     setRedirect(true);
                 }}>{username}</h4>
                 </div>
@@ -118,7 +123,19 @@ const Post = (props) => {
                     <img className='albumImage' alt='avatar' src={data.picture} />
                 </div>
             <div className='description'>
-                <p>{data.description}</p>
+                <p>
+                <ReactHashtag renderHashtag={(hashtagValue) => (
+                    <span className='hashtags' onClick={ ()=> {
+                        setHashtagRedirect(true);
+                        setHashtag(hashtagValue);
+                        console.log(hashtagValue);
+                    }}>
+                        {hashtagValue}
+                    </span>
+                )}>
+                    {data.description}
+                </ReactHashtag>
+                </p>
             </div>
             <div className='postComments'>
                 {button}

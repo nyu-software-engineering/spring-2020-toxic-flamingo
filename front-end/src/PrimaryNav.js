@@ -57,7 +57,6 @@ const PrimaryNav = (props) => {
                     <li><a href="/Notifications">Notifications</a></li>
                    
                     <li><a onClick={LogOut}>Log Out</a></li>
-                    <li><a href="/HashtagFeed">Hashtags</a></li>
                     </ul>
                 </nav>
             </div>

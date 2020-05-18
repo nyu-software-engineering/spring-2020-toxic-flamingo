@@ -12,13 +12,12 @@ const CommentView = (props) => {
     const commenter = props.data.username;
 
     if (shouldRedirect) {
-        return <Redirect push to='/UserProfile/'/>
+        return <Redirect push to={'/UserProfile/' + commenter}/>
     }
 
     return (
         <div className="CommentView">
             <p className='user' onClick={() => {
-                props.passUser(props.data.userID);
                 setRedirect(true);
             }}><b>{commenter}</b></p>
             <p> <b>commented:</b> {comment}</p>
