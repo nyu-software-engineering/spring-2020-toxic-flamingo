@@ -2,6 +2,9 @@ import React, {useState, useEffect, Component} from 'react';
 import { NavLink } from "react-router-dom";
 import axios from 'axios';
 import "./ChangeEmail.css";
+import BurgerMenu from './BurgerMenu';
+
+
 const ChangeEmail = (props) => {
   const [data, setData] = useState("");
   let dataArray = {
@@ -25,6 +28,9 @@ function handleData(e) {
 }
   
   return (
+    <div>
+      <BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
+    
 <div className="ChangeEmail">
     <h1>Change Email</h1>
     <section className="main-content">
@@ -37,7 +43,7 @@ function handleData(e) {
               </form>
 
     </section>
-</div>
+</div></div>
   );
 }
 

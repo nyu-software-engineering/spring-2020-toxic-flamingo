@@ -130,7 +130,18 @@ signToken = (user_id) => {
         exp: new Date().setDate(new Date().getDate + 1) // current time + 1 day
     }, JWT_SECRET)
 }
-
+////////////////////////////////////
+populateTrophies = () => {
+  let trophies = [];
+  const x = {
+    title: 'Harmonize',
+    description: 'Get your first Harmony!',
+    icon: '',
+    hidden: true
+    
+};
+}
+//////////////////////////////////////
 app.post("/signUp", cors(corsOptions), async (req, res, next) => {
   //console.log(req.header("cookie"));      
   console.log('UsersController.signUp() called!');
@@ -460,7 +471,7 @@ app.get("/Notifications", async (req, res) => {
   //const user  = req.params.userid;
 })
 
-app.get("/Harmonies", async (req, res) => {
+app.get("/Harmonies/:userID", async (req, res) => {
   //const user  = req.params.userid;
   let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=5&key=ffab93f0").catch();
   res.json(response.data);
@@ -726,7 +737,8 @@ app.get('/mainFeed/', async (req, res) => {
 
   await userModel.findById(userID)
     .then(doc => {
-      if (!doc.following) {
+      if (doc.following) {
+        console.log(doc.following);
         following = doc.following;
       }
       following.push(userID);
@@ -902,11 +914,24 @@ app.post("/createPost/", async (req,res) => {
     console.log("NO LINK");
     data.spotify = "#";
   }
+  //checks if the song exists or not then makes a harmony
+  let isHarmony = true;
+  await postModel.find({ songName: data.songName , artistName: data.artistName}, function(err, result) {
+    if (err) {
+      console.log('there was an error');
+    } else {
+      console.log('the result is' + result);
+      if (result.length > 0){
+        isHarmony = false;
+      }
+    }
+  });
+  console.log('i just searched for this song');
 
   let newPost = new postModel({
     userID: cookieToID(req),
     hashID: data.hashID,
-    harmony: true, //figure that out after search
+    harmony: isHarmony, 
     songName: data.songName,
     artistName: data.artistName,
     albumName: data.albumName,

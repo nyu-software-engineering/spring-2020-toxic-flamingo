@@ -131,29 +131,24 @@ if (!data.id) {
                 </div>
             </div>
                       <div className='buttons'>
-                          <div className='button1'>
+                          
                             <form action="/Followee">
                             <button id="following">Following {followingNum}</button>
                             </form>
-                          </div>
-                          <div className='button2'>
+                         
                             <form action="/Follower">
                             <button id="followers">Followers {followerNum}</button>
                             </form>
-                          </div>
-                          <div className='button3'>
+                         
                             <form action="/Harmonies">
                             <button id="harmonies" >Harmonies</button>
                             </form>
-                          </div>
-                          <div className='button4'>
+                     
 
                             <form action="/Follow">
                             <button id="follow" onClick={followClicked}>{followunfollow}</button>
                             </form>
                            
-                          </div>
-                            
 
                       </div>
                       

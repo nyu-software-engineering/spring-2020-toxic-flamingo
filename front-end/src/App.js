@@ -88,18 +88,22 @@ const App = (props) => {
                       <PrimaryNav />
                   </Route>
                   <Route path ="/ChangeEmail">
+                      <SharmonyHeader />
                       <ChangeEmail />
                       <SettingsNav />
                   </Route>
                   <Route path ="/ChangePassword">
+                  <SharmonyHeader />
                       <ChangePassword />
                       <SettingsNav />
                   </Route>
                   <Route path ="/NotificationSettings">
+                  <SharmonyHeader />
                       <NotificationSettings/>
                       <SettingsNav />
                   </Route>
                   <Route path ="/Trophies">
+                  <SharmonyHeader />
                       <Trophies />
                       <SettingsNav />
                   </Route>

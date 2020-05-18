@@ -85,12 +85,12 @@ const Post = (props) => {
     return (
         <div className="FeedPost">
             <div className='postHeader'>
-
+                <div className='username'>
                 <h4 onClick={() => {
                     props.passUser(userID);
                     setRedirect(true);
                 }}>{username}</h4>
-
+                </div>
             </div>
             <div className='postContent'>
                 <div className='songInfo'>
