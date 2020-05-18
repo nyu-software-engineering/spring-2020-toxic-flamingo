@@ -1,10 +1,11 @@
 import React, {useState, useEffect, Component} from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-
 import './Post.css';
 import MusicPlayer from './MusicPlayer';
 import { Redirect } from 'react-router-dom';
+import playbutton from './components/playbutton.png';
+import pausebutton from './components/pausebutton.png';
+
 //onst cors = require('cors');
 
 const Post = (props) => {
@@ -14,7 +15,8 @@ const Post = (props) => {
     const [username, setUsername] = useState("");
     const [shouldRedirect, setRedirect] = useState(false);
     const [isPersonal, setIsPersonal] = useState(false);
-    
+    const [img, setImg] = useState("https://cdn4.iconfinder.com/data/icons/game-interface-outline/100/objects-17-512.png");
+    const [profilePic, setProfilePic] = useState("");
     const data = props.data;
     const userID = data.userID;
     
@@ -37,10 +39,12 @@ const Post = (props) => {
         if (playPause == 'Pause') {
             audioPlayer.pause();
             setData('Play');
+            setImg("https://cdn4.iconfinder.com/data/icons/game-interface-outline/100/objects-17-512.png");
         }
-        else {val = 'Pause';
+        else {
+            val = 'Pause';
         setData(val);
-        
+        setImg("https://cdn1.iconfinder.com/data/icons/media-volume-1/48/017-512.png");
         audioPlayer.src=spotifyLink
         audioPlayer.play();
         }
@@ -49,9 +53,10 @@ const Post = (props) => {
     useEffect(() => {
         axios.get("/getUsername/" + userID)
         .then ((response) => {
-            setUsername(response.data);
+            setUsername(response.data.username);
             console.log(username);
-            console.log(response.data);
+            setProfilePic(response.data.profilepic);
+            console.log(profilePic);
         })
         .catch( err => {
             console.log("ERROR!");
@@ -101,21 +106,26 @@ const Post = (props) => {
         <div className="FeedPost">
             <div className='postHeader'>
               <div className='username'>
+                  <img className='profilepic' src={profilePic} />  
+              
                 <h4 onClick={() => {
                     setUsername(username)
                     setRedirect(true);
                 }}>{username}</h4>
                 </div>
             </div>
+           
+            <div className='posterInfo'>
+                   
+                        <img className='playButton' src={img} onClick={musicPlayer} />
+                    
+                    <img className='albumImage' alt='avatar' src={data.picture} />
+            </div>
             <div className='postContent'>
                 <div className='songInfo'>
                     <p>{data.artistName} -- {data.songName}</p>
                 </div>
             </div>
-            <div className='posterInfo'>
-                    <div className='musicPlayer'><button onClick={musicPlayer}>{playPause}</button></div>
-                    <img className='albumImage' alt='avatar' src={data.picture} />
-                </div>
             <div className='description'>
                 <p>{data.description}</p>
             </div>
