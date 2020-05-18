@@ -2,6 +2,8 @@
     border: 5px solid #555;
     width: 300px;
     text-align: center;
+    justify-content: center;
+    margin: auto;
   }
   
   .flex-container {

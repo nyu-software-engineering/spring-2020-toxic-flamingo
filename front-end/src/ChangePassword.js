@@ -62,7 +62,7 @@ return (
                 <p>Enter your new password:</p>
                 <input type='text' name='newPassword' onChange={handleNewData}/>
                 <br/>
-                <button onClick={submitPassword}>Submit</button>
+                <button className='button1' onClick={submitPassword}>Submit</button>
                 <div className='correctPassword'> 
                 <p>{correctPassword}</p>
                 </div>
