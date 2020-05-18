@@ -23,7 +23,7 @@ const Notification = (props) => {
 
     return (
         <div className="Notification">
-            <img className='profileImage' alt='avatar' src={data.profile_picture} />
+            
             <p>{notificationString}</p>
         </div>
     );
