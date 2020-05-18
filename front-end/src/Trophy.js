@@ -5,6 +5,12 @@ import './Trophy.css';
 
 const Trophy = (props) => {
     const data = props.data;
+    const hidden = props.hidden;
+    console.log(props.hidden);
+    if(hidden){
+        return('');
+    }
+    else{
     return (
         
         <div class="flex-container">
@@ -18,7 +24,7 @@ const Trophy = (props) => {
             </div>
             </div>
         </div>
-    );
+    );}
 }
 
 export default Trophy;
