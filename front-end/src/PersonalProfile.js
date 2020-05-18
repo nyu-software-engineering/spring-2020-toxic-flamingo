@@ -23,7 +23,8 @@ const PersonalProfile = (props) => {
   const [followerNum, setFollowerNum] = useState();
   const [shouldFollowerRedirect, setFollowerRedirect] = useState(false);
   const [shouldFollowingRedirect, setFollowingRedirect] = useState(false);
-
+  const [shouldHarmoniesRedirect, setHarmoniesRedirect] = useState(false);
+  
   let userID = 1;
   console.log(props);
   // load in posts or whatever
@@ -92,7 +93,9 @@ if (shouldFollowerRedirect) {
 if (shouldFollowingRedirect) {
   return <Redirect push to='/Followee/'/>
 }
-  
+if (shouldHarmoniesRedirect) {
+  return <Redirect push to='/Harmonies/'/>
+}
 
 
 console.log(data.id);
@@ -134,9 +137,10 @@ if (!data.id) {
                   }}>Followers {followerNum}</button>
                 
 
-                  <form action="/Harmonies">
-                  <button className='button1' id="harmonies" >Harmonies</button>
-                  </form>
+                <button className='button1' id="harmonies" onClick={() => {
+                             props.passUser(data.id)
+                             setHarmoniesRedirect(true);
+                            }}>Harmonies</button>
               
               </div>     
             </div>

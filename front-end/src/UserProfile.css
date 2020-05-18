@@ -28,6 +28,15 @@
     margin-bottom: 150px;
 }
 
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    position: relative; 
+    left: 20%;
+    
+}
+
 .ProfileHeader {
     font-size: 14px;
     line-height: 18px;
