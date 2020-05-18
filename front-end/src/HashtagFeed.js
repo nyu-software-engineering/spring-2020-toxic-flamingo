@@ -1,16 +1,19 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
-
+import {withRouter} from 'react-router-dom';
 import './HashtagFeed.css';
 import Post from './Post';
+import { Redirect } from 'react-router-dom';
 
 const HashtagFeed = (props) => {
 
     const [data, setData] = useState([]);
     const [noPosts, setPosts] = useState(false);
+    const [postID, setPostID] = useState("");
+    const [shouldRedirect, setRedirect] = useState(false);
 
     // this will be passed in from hashtag search page, for now it is hardcoded
-    const hashtag = props.hashtag; 
+    const hashtag = props.match.params.hashtag;
 
     // load in posts
     useEffect( () => {
@@ -37,9 +40,14 @@ const HashtagFeed = (props) => {
     );
 
     function handleCommentClick(postID) {
-        console.log("woah! " + postID);
+        setPostID(postID);
+        setRedirect(true);
+    }
 
-        props.loadComments(postID);
+    if (shouldRedirect) {
+        return (
+            <Redirect push to={'/PostComments/' + postID}/>
+        );
     }
 
     return(
@@ -53,4 +61,4 @@ const HashtagFeed = (props) => {
 
 }
 
-export default HashtagFeed;
+export default withRouter(HashtagFeed);

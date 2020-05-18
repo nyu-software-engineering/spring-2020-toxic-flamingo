@@ -3,7 +3,8 @@ import axios from 'axios';
 import UserSearchTile from './UserSearchTile';
 import TagSearchTile from './TagSearchTile';
 import './Search.css';
-import FeedWrapper from './FeedWrapper';
+import HashtagFeed from './HashtagFeed';
+import { Redirect } from 'react-router-dom';
 // import logo from './logo.svg';
 //import './About.css';
 
@@ -71,7 +72,7 @@ const Search = (props) => {
 
   if (clicked) {
     return (
-        <FeedWrapper isMainFeed={false} hashtag={tag}/>
+        <Redirect push to={"HashtagFeed/" + tag}/>
     )
 }
 

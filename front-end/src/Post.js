@@ -87,7 +87,8 @@ const Post = (props) => {
             <div className='postHeader'>
 
                 <h4 onClick={() => {
-                    props.passUser(userID);
+                    // ****** AHHAHAHFADHDFHADFHDFAH ******** DO  ODODODO THIS *******
+                    // props.passUser(userID);
                     setRedirect(true);
                 }}>{username}</h4>
 
