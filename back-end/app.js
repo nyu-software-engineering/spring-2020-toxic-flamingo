@@ -966,7 +966,18 @@ app.post("/createPost/", async (req,res) => {
     }
   });
   console.log('i just searched for this song');
-
+  
+  if(isHarmony === true){
+    let newNotification = new notificationModel({
+      userID: userID,
+      text: `Harmony Achieved!`
+    })
+    newNotification.save({runValidators:true}).then(doc => {
+      console.log('created harmony notification');
+      }).catch(err => {
+      console.log(err);
+     }); 
+  }
   let newPost = new postModel({
     userID: cookieToID(req),
     hashID: data.hashID,
