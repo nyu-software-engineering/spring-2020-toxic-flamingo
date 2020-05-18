@@ -69,7 +69,7 @@ const Post = (props) => {
         // <nav>
         //     <Link to={"/PostComments/" + data._id}>See {remainingComments} more comments</Link>
         // </nav>
-        <button onClick={handleClick}>See {remainingComments} more comment(s)</button>
+        <button onClick={handleClick}>See {remainingComments} comment(s)</button>
     );
     }
     else {
@@ -104,11 +104,7 @@ const Post = (props) => {
             <div className='description'>
                 <p>{data.description}</p>
             </div>
-            <div className="commentsTitle"><h5>Comments</h5></div>
             <div className='postComments'>
-                <div className='initialComment'>
-                    <p className='comment'>{initialComment.text}</p>
-                </div>
                 {button}
             </div>
         </div>
