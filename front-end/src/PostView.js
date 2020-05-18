@@ -14,6 +14,8 @@ const PostView = (props) => {
     const [username, setUsername] = useState("");
     const [playPause, setData] = useState(val);
 
+    const [shouldRedirect, setRedirect] = useState(false);
+
     useEffect(() => {
         async function fetchUsername() {
             await axios.get("/getUsername/" + userID)
@@ -45,11 +47,17 @@ const PostView = (props) => {
         }
     }
 
+    if (shouldRedirect) {
+        return (
+            <Redirect push to={"/UserProfile/"+username}/>
+        );
+    }
+
     return (
         <div className="FeedPost">
             <div className='postHeader'>
 
-                <h4>{username}</h4>
+                <h4 onClick={() => setRedirect(true)}>{username}</h4>
             </div>
             <div className='postContent'>
                 <div className='songInfo'>
