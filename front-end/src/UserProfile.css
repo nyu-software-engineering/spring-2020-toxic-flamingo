@@ -13,6 +13,14 @@
     right: 30%;
 }
 
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    position: relative; 
+    left: 20%;
+}
+
 .Profile {
     padding: 30px 20px 0;
     display: flex;
@@ -27,4 +35,23 @@
     flex-basis: 0;
     position: relative; 
     left: 40%;   
+}
+
+.button1{
+    background-color: #6f567d; /* Green */
+    border: 2px solid whitesmoke; /* Green */
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  
+}
+
+.button1:hover{
+    background-color: white; /* Green */
+  color: gray;
+  border: 2px solid gray; /* Green */
 }

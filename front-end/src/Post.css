@@ -6,6 +6,10 @@
     flex-direction: column;
 }
 
+.FeedPost {
+    
+}
+
 .initialComment, .posterInfo {
     flex-direction: row;
 }
@@ -47,4 +51,12 @@
     font-size: 16px;
     border: none;
     z-index: 1;
+}
+
+.username {
+    transition-duration: .04s;
+}
+.username:hover{
+    color: purple;
+    text-decoration: underline;
 }

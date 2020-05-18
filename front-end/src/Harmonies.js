@@ -3,13 +3,14 @@ import axios from 'axios';
 import Post from './Post';
 
 const Harmonies = (props) => {
+    const userID = props.userID;
 
         const [data, setData] = useState([]);
     
         // load in posts or whatever
         useEffect( () => {
             //fetch data
-            axios.get("/Harmonies")
+            axios.get("/Harmonies/"+userID)
             .then ((response) => {
                 setData(response.data);
             })

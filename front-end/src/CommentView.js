@@ -17,7 +17,7 @@ const CommentView = (props) => {
 
     return (
         <div className="CommentView">
-            <p onClick={() => {
+            <p className='user' onClick={() => {
                 props.passUser(props.data.userID);
                 setRedirect(true);
             }}><b>{commenter}</b></p>

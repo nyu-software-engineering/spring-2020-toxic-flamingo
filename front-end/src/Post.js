@@ -101,12 +101,16 @@ const Post = (props) => {
         <div className="FeedPost">
             <div className='postHeader'>
 
+                <div className='username'>
+               
+
                 <h4 onClick={async () => {
                     await isProfile();
+
                     props.passUser(userID);
                     setRedirect(true);
                 }}>{username}</h4>
-
+                </div>
             </div>
             <div className='postContent'>
                 <div className='songInfo'>

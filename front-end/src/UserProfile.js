@@ -158,32 +158,29 @@ if (!data.id) {
                 </div>
             </div>
                       <div className='buttons'>
-                          <div className='button1'>
+
+                          
                             
-                            <button id="following" onClick={() => {
+                            <button className='button1' id="following" onClick={() => {
                               props.passUser(data.id)
                               setFollowingRedirect(true)
                               }}>Following {followingNum}</button>
-                          </div>
-                          <div className='button2'>
-                            <button id="followers" onClick={() => {
+                          
+                            <button className='button1' id="followers" onClick={() => {
                               props.passUser(data.id)
                               setFollowerRedirect(true);
                               }}>Followers {followerNum}</button>
-                          </div>
-                          <div className='button3'>
+                          
+
                             <form action="/Harmonies">
-                            <button id="harmonies" >Harmonies</button>
+                            <button className='button1' id="harmonies" >Harmonies</button>
                             </form>
-                          </div>
-                          <div className='button4'>
+                     
 
                             <form action="/Follow">
                             <button id="follow" onClick={followClicked}>{followunfollow}</button>
                             </form>
                            
-                          </div>
-                            
 
                       </div>
                       
