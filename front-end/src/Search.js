@@ -84,9 +84,6 @@ const Search = (props) => {
     <div class="back_button">
       <img onClick={() => props.history.goBack()} src="/back-button.jpg" alt="where my button at"></img>
     </div>
-    <div>
-    <img src="/temp-logo.jpg" alt="logo plz" width="200" height="50"></img>
-    </div>
   </div>
 
   <div className="SearchBar">
