@@ -136,6 +136,7 @@ const App = (props) => {
                     <PrimaryNav />
                   </Route>
                   <Route path="/Harmonies">
+                  <SharmonyHeader />
                     <Harmonies userID={userID}/>
                     <PrimaryNav />
                   </Route>
