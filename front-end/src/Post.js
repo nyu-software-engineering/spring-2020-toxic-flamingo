@@ -100,14 +100,10 @@ const Post = (props) => {
     return (
         <div className="FeedPost">
             <div className='postHeader'>
-
-                <div className='username'>
-               
-
-                <h4 onClick={async () => {
-                    await isProfile();
-
-                    props.passUser(userID);
+              <div className='username'>
+                <h4 onClick={() => {
+                    // ****** AHHAHAHFADHDFHADFHDFAH ******** DO  ODODODO THIS *******
+                    // props.passUser(userID);
                     setRedirect(true);
                 }}>{username}</h4>
                 </div>

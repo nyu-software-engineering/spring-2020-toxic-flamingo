@@ -25,7 +25,6 @@ import Harmonies from './Harmonies';
 import PostComments from './PostComments';
 import Notifications from './Notifications';
 import SharmonyHeader from './SharmonyHeader';
-import FeedWrapper from './FeedWrapper.js';
 import MakePostWrapper from './MakePostWrapper';
 import UserProfile from './UserProfile';
 
@@ -52,6 +51,21 @@ const App = (props) => {
                   <Route path="/Make_Post">
                     <SharmonyHeader />
                     <MakePostWrapper showScreenOne={true}/>
+                    <PrimaryNav />
+                  </Route>
+                  <Route path="/MainFeed">
+                    <SharmonyHeader />
+                    <MainFeed/>
+                    <PrimaryNav />
+                  </Route>
+                  <Route path="/HashtagFeed/:hashtag">
+                    <SharmonyHeader/>
+                    <HashtagFeed/>
+                    <PrimaryNav />
+                  </Route>
+                  <Route path="/PostComments/:postID">
+                    <SharmonyHeader/>
+                    <PostComments />
                     <PrimaryNav />
                   </Route>
                   <Route path="/user">
@@ -105,11 +119,7 @@ const App = (props) => {
                       <Trophies />
                       <SettingsNav />
                   </Route>
-                  <Route path="/MainFeed">
-                  <SharmonyHeader />
-                        <FeedWrapper isMainFeed={true} passUser={(userID) => passUser(userID)}/>
-                        <PrimaryNav />
-                  </Route>
+                  
                   <Route path="/Make_Post2">
                   <SharmonyHeader />
                   <MakePostWrapper showScreenOne={false}/>
@@ -133,12 +143,7 @@ const App = (props) => {
                     <SharmonyHeader />
                     <Notifications />
                     <PrimaryNav />
-                  </Route> 
-                  <Route path="/HashtagFeed">
-                   <SharmonyHeader />
-                   <FeedWrapper isMainFeed={false} passUser={(userID) => passUser(userID)}/>
-                    <PrimaryNav />
-                  </Route>        
+                  </Route>      
                   <Route path="/PostComments/:postId">
                    <SharmonyHeader />
                     <PostComments />
