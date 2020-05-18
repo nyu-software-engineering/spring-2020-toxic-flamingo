@@ -5,6 +5,7 @@ import './Trophy.css';
 
 const Trophy = (props) => {
     const data = props.data;
+    
     return (
         
         <div class="flex-container">
@@ -19,6 +20,7 @@ const Trophy = (props) => {
             </div>
         </div>
     );
+    
 }
 
 export default Trophy;

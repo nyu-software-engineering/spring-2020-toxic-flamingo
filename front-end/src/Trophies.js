@@ -35,6 +35,8 @@ const Trophies = (props) => {
             })
             
         }, []);
+
+    
     
   return (
       <div>
@@ -44,6 +46,9 @@ const Trophies = (props) => {
     <h1><u>Trophies</u></h1>
         <div class="flex-container">
             <div class="flex-container > div">
+
+               
+
                 {data.map((jsonObj, i) => (
                     <Trophy key={jsonObj.id} data={jsonObj}/>
                 ))}
