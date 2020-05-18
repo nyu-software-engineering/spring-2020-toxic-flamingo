@@ -447,7 +447,10 @@ app.get("/Search/:searchUsers/:searchQuery", async (req, res) => {
 
 
 app.get("/Notifications", async (req, res) => {
-  notificationModel.find()
+  let myid = cookieToID(req);
+  console.log('where is THIS???????????????????????????????????/');
+  console.log(myid);
+  notificationModel.find({ userID : myid})
   .sort({'createdAt': 'desc'})
   .limit(10)
   .then(result => {
@@ -485,8 +488,30 @@ app.get("/followThisGuy/:userID", async (req,res) => {
   
   await userModel.findById(tryingToFollow)
     .then(user => {
+      let name;
       console.log(user.follower);
       console.log(myID);
+      userModel.findById(myID)
+      .then( doc => {
+      name = doc.Username;
+      console.log('CHECK THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSS');
+      console.log(name);
+      console.log('ENDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+      //notification update
+      let newNotification = new notificationModel({
+        userID: tryingToFollow,
+        text: `${name} started following me!`
+      })
+      newNotification.save({runValidators:true}).then(doc => {
+        console.log('created follower notification');
+        }).catch(err => {
+        console.log(err);
+       }); 
+      })
+      .catch(err => {console.log(err);})
+      
+
+
       if (user.follower.filter(follower => 
         follower.toString() === myID ).length == 0){
       userModel.findByIdAndUpdate(tryingToFollow,{$push: {follower: myID}},
