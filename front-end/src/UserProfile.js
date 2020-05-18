@@ -16,6 +16,7 @@ const UserProfile = (props) => {
   console.log("AHHHHHHHHH " + props.userID);
 
   const [data, setData] = useState({});
+  const [followUserID, setFollowUserID] = useState(false);
   //const [showScreenOne, setScreenOne] = useState(false);
   const [followingNum, setFollowingNum] = useState();
   const [followerNum, setFollowerNum] = useState();
@@ -31,6 +32,7 @@ const UserProfile = (props) => {
     axios.get("/getUserID/" + username).then ((res) => {
       userID = res.data;
       console.log(userID);
+      setFollowUserID(userID);
       axios.get("/isPersonal/" + userID).then((res) => {
       if(res.data) {
         setPersonalRedirect(true);
@@ -112,7 +114,7 @@ function followClicked (e) {
   e.preventDefault();
   if (followunfollow == "Unfollow"){
     console.log('you tryna unfollow?');
-    axios.get("/unfollowThisGuy/"+props.userID)
+    axios.get("/unfollowThisGuy/"+followUserID)
     .then ((response) => {
       setFollowUnfollow("Follow");
       setFollowerNum(followerNum - 1);
@@ -122,7 +124,7 @@ function followClicked (e) {
     })
   } else {
     console.log("you tryna follow them");
-    axios.get("/followThisGuy/"+props.userID)
+    axios.get("/followThisGuy/"+followUserID)
     .then ((response) => {
       setFollowUnfollow("Unfollow");
       setFollowerNum(followerNum + 1);
