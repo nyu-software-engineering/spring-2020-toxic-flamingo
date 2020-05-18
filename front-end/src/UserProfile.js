@@ -1,6 +1,7 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import BurgerMenu from './BurgerMenu';
+import {Redirect, withRouter} from 'react-router-dom';
 import './PersonalProfile.css';
 import './PostPreview';
 import PostPreview from './PostPreview';
@@ -10,7 +11,7 @@ import PostPreview from './PostPreview';
 
 const UserProfile = (props) => {
 
-
+  let username = props.match.params.username;
   
   console.log("AHHHHHHHHH " + props.userID);
 
@@ -20,14 +21,22 @@ const UserProfile = (props) => {
   const [followerNum, setFollowerNum] = useState();
   //const [isFollowing, setIsFollowing] = useState();
 
-  let userID = props.userID;
+  let userID;
   const [followunfollow, setFollowUnfollow] = useState();
- 
-  console.log("imma prop" + userID);
+  const [shouldPersonalRedirect, setPersonalRedirect] = useState(false);
+  const [shouldFollowerRedirect, setFollowerRedirect] = useState(false);
+  const [shouldFollowingRedirect, setFollowingRedirect] = useState(false);
   // load in posts or whatever
   useEffect( () => {
-    //fetch data
-    axios.get("/user/" + "false/" + userID )
+    axios.get("/getUserID/" + username).then ((res) => {
+      userID = res.data;
+      console.log(userID);
+      axios.get("/isPersonal/" + userID).then((res) => {
+      if(res.data) {
+        setPersonalRedirect(true);
+      } else {
+      
+      axios.get("/user/" + "false/" + userID )
 
     .then ((response) => {
       console.log("data: " + response.data.username);
@@ -76,13 +85,28 @@ const UserProfile = (props) => {
             }
         ];
         setData(backupData);
-
-
-
     })
-
-    
+    }}).catch( err => {
+      console.log("ERROR!");
+      console.error(err);
+    })
+    }).catch( err => {
+      console.log("ERROR!");
+      console.error(err);
+    })
 }, []);
+
+if (shouldPersonalRedirect) {
+  return <Redirect push to='/PersonalProfile/'/>
+}
+
+if (shouldFollowerRedirect) {
+  return <Redirect push to='/Follower/'/>
+}
+
+if (shouldFollowingRedirect) {
+  return <Redirect push to='/Followee/'/>
+}
 
 function followClicked (e) {
   e.preventDefault();
@@ -113,6 +137,7 @@ function followClicked (e) {
 }
 
 
+
 //console.log(data.id);
 if (!data.id) {
   return (
@@ -132,14 +157,17 @@ if (!data.id) {
             </div>
                       <div className='buttons'>
                           <div className='button1'>
-                            <form action="/Followee">
-                            <button id="following">Following {followingNum}</button>
-                            </form>
+                            
+                            <button id="following" onClick={() => {
+                              props.passUser(data.id)
+                              setFollowingRedirect(true)
+                              }}>Following {followingNum}</button>
                           </div>
                           <div className='button2'>
-                            <form action="/Follower">
-                            <button id="followers">Followers {followerNum}</button>
-                            </form>
+                            <button id="followers" onClick={() => {
+                              props.passUser(data.id)
+                              setFollowerRedirect(true);
+                              }}>Followers {followerNum}</button>
                           </div>
                           <div className='button3'>
                             <form action="/Harmonies">
@@ -168,4 +196,4 @@ if (!data.id) {
 }
 
 
-export default UserProfile;
+export default withRouter(UserProfile);

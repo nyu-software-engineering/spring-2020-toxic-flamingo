@@ -9,15 +9,32 @@ const UserSearchTile = (props) => {
     const jsonObj = props.jsonObj;
 
     const [shouldRedirect, setRedirect] = useState(false);
+    const [isPersonal, setIsPersonal] = useState(false);
 
     if (shouldRedirect) {
-        return (
-            <Redirect push to = '/UserProfile/' />
-        )
+        console.log("in shouldredirect")
+        if(isPersonal) {
+            return <Redirect push to='/PersonalProfile/'/>
+        } else {
+            return <Redirect push to={'/UserProfile/' + jsonObj.Username}/>
+        }
+    }
+
+    async function isProfile() {
+        await axios.get("/isPersonal/" + jsonObj._id)
+        .then ((response) => {
+            console.log(response.data);
+            setIsPersonal(response.data);
+        })
+        .catch( err => {
+            console.log("ERROR!");
+            console.error(err);
+        })
     }
 
     return (
-        <div className ="post" onClick={() => {
+        <div className ="post" onClick={async () => {
+            await isProfile();
             props.passUser(jsonObj._id);
             setRedirect(true);
         }}>

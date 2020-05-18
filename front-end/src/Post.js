@@ -13,6 +13,7 @@ const Post = (props) => {
     const [playPause, setData] = useState(val);
     const [username, setUsername] = useState("");
     const [shouldRedirect, setRedirect] = useState(false);
+    const [isPersonal, setIsPersonal] = useState(false);
     
     const data = props.data;
     const userID = data.userID;
@@ -46,20 +47,29 @@ const Post = (props) => {
     }
 
     useEffect(() => {
-        async function fetchUsername() {
-            await axios.get("/getUsername/" + userID)
-            .then ((response) => {
-                setUsername(response.data);
-                console.log(username);
-                console.log(response.data);
-            })
-            .catch( err => {
-                console.log("ERROR!");
-                console.error(err);
-            })
-        }
-        fetchUsername();
+        axios.get("/getUsername/" + userID)
+        .then ((response) => {
+            setUsername(response.data);
+            console.log(username);
+            console.log(response.data);
+        })
+        .catch( err => {
+            console.log("ERROR!");
+            console.error(err);
+        })
     });
+
+    async function isProfile() {
+        await axios.get("/isPersonal/" + userID)
+        .then ((response) => {
+            console.log(response.data);
+            setIsPersonal(response.data);
+        })
+        .catch( err => {
+            console.log("ERROR!");
+            console.error(err);
+        })
+    }
     
 
     // make sure you dont see "see more comments if there are none"
@@ -79,14 +89,20 @@ const Post = (props) => {
     }
 
     if (shouldRedirect) {
-        return <Redirect push to='/UserProfile/'/>
+        console.log("in shouldredirect")
+        if(isPersonal) {
+            return <Redirect push to='/PersonalProfile/'/>
+        } else {
+            return <Redirect push to={'/UserProfile/' + username}/>
+        }
     }
 
     return (
         <div className="FeedPost">
             <div className='postHeader'>
 
-                <h4 onClick={() => {
+                <h4 onClick={async () => {
+                    await isProfile();
                     props.passUser(userID);
                     setRedirect(true);
                 }}>{username}</h4>

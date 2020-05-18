@@ -2,6 +2,7 @@ import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import BurgerMenu from './BurgerMenu';
 import './PersonalProfile.css';
+import {Redirect} from 'react-router-dom';
 
 import './PostPreview';
 import PostPreview from './PostPreview';
@@ -19,6 +20,8 @@ const PersonalProfile = (props) => {
   //const [showScreenOne, setScreenOne] = useState(false);
   const [followingNum, setFollowingNum] = useState();
   const [followerNum, setFollowerNum] = useState();
+  const [shouldFollowerRedirect, setFollowerRedirect] = useState(false);
+  const [shouldFollowingRedirect, setFollowingRedirect] = useState(false);
 
   let userID = 1;
   console.log(props);
@@ -80,6 +83,14 @@ function BioPopOpen() {
 function BioPopClose() {
   setBioSeen(false);
 };
+
+if (shouldFollowerRedirect) {
+  return <Redirect push to='/Follower/'/>
+}
+
+if (shouldFollowingRedirect) {
+  return <Redirect push to='/Followee/'/>
+}
   
 console.log(data.id);
 if (!data.id) {
@@ -104,12 +115,18 @@ if (!data.id) {
             </div>
             <div className='buttons'>
               <div className="flex-container">
-                  <form action="/Followee">
-                  <button id="following">Following {followingNum}</button>
-                  </form>
-                  <form action="/Follower">
-                  <button id="followers">Followers {followerNum}</button>
-                  </form>
+                <div className='button1'>      
+                  <button id="following" onClick={() => {
+                    props.passUser(data.id)
+                    setFollowingRedirect(true)
+                  }}>Following {followingNum}</button>
+                </div>
+                  <div className='button2'>
+                    <button id="followers" onClick={() => {
+                    props.passUser(data.id)
+                    setFollowerRedirect(true);
+                  }}>Followers {followerNum}</button>
+                </div>
                   <form action="/Harmonies">
                   <button id="harmonies" >Harmonies</button>
                   </form>
