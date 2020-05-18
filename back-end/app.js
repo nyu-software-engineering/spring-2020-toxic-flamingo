@@ -641,7 +641,7 @@ request.post(authOptions, function(error, response, body) {
     request.get(options, function(error, response, body) {
       console.log("TRACK DATA!!!!!!!!!!!!!!!!!!!!!");
       //console.log(body.tracks.items);
-      console.log(body.tracks.items[0].album.images);
+      //console.log(body.tracks.items[0].album.images);
       //console.log(body.artists.items);
       res.json(body);
       //res.redirect(querystring.stringify(body), 'http://localhost:3000/Make_Post');
