@@ -826,19 +826,18 @@ app.get('/mainFeed/', async (req, res) => {
 });
 
 app.get('/trophies/', async (req, res) => {
-  
-  //const userID = req.params.userID; 
-  let response = await axios.get("https://api.mockaroo.com/api/3ea885f0?count=12&key=ffab93f0");
-  //res.json(getTrophyData(userID));
-  let trophyList = [];
+  let trophy;
+  const userID = cookieToID(req);
+  await userModel.findById(userID)
+  .then(doc => {
+    trophy  = doc.Trophies;
 
-  for (let i=0; i<response.data.length; i++) {
-    const trophy = response.data[i];
-    //console.log(trophy);
-    trophyList.push(trophy);
-  }
+  })
+  .catch(err => {
+    console.log(err);
+  });
   
-  res.json(trophyList);
+  res.json(trophy);
 });
 
 // load and filter a feed based on a hashtag
@@ -991,6 +990,20 @@ app.post("/createPost/", async (req,res) => {
       console.log(err);
      }); 
   }
+
+  userModel.findByIdAndUpdate(userID,{$set: {[`Trophies.${0}`]: true} },
+    {
+      new : true,
+      runValidators: true
+    }    
+  )
+  .then(doc => {
+    console.log('trophy testesetsetsetsetsetsetsetsets');
+    console.log(doc);
+  }).catch(err => {
+    console.log(err);
+  });
+
   let newPost = new postModel({
     userID: cookieToID(req),
     hashID: data.hashID,
