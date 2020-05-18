@@ -2,7 +2,7 @@ import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import BurgerMenu from './BurgerMenu';
 import {Redirect, withRouter} from 'react-router-dom';
-import './PersonalProfile.css';
+import './UserProfile.css';
 import './PostPreview';
 import PostPreview from './PostPreview';
 //import { parseWithoutProcessing } from 'handlebars';
@@ -189,9 +189,9 @@ if (!data.id) {
                             
                      
 
-                            <form action="/Follow">
-                            <button id="follow" onClick={followClicked}>{followunfollow}</button>
-                            </form>
+                            <div className='follow'>
+                            <button className='followbutton' id="follow" onClick={followClicked}>{followunfollow}</button>
+                         </div>
                            
 
                       </div>
