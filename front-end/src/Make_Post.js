@@ -2,6 +2,7 @@ import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import './Make_Post.css';
 import queryString from 'query-string';
+import { withRouter} from 'react-router-dom';
 
 // import logo from './logo.svg';
 //import './About.css';
@@ -69,8 +70,7 @@ const Make_Post = (props) => {
   <div className="Header">
     <div class="flex-container">
       <div class="back_button">
-        <img src="/back-button.jpg" alt="where my button at"></img>
-        <button class="btn"></button>
+        <img onClick={() => props.history.goBack()} src="/back-button.jpg" alt="where my button at"></img>
       </div>
       <div>
       </div>
@@ -130,4 +130,4 @@ this.props.history.push('/') //this will go to home page
   );
 }
 
-export default Make_Post;
+export default withRouter(Make_Post);

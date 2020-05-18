@@ -4,6 +4,7 @@ import axios from 'axios';
 import {NavLink} from 'react-router-dom';
 import {hashHistory} from 'react';
 import {Redirect} from 'react-router';
+import {withRouter} from 'react-router-dom';
 
 const Make_Post2 = (props) => {
     const data = props.songData;
@@ -85,8 +86,7 @@ const Make_Post2 = (props) => {
         <div className="Header">
             <div className="flex-container">
                 <div className="back_button">
-                <img src="/back-button.jpg" alt="where my button at"></img>
-                <button className="btn">a</button>
+                <img onClick={() => props.history.goBack()} src="/back-button.jpg" alt="where my button at"></img>
                 </div>
                 <div>
                 <img src="/temp-logo.jpg" alt="logo plz" width="200" height="50"></img>
@@ -128,4 +128,4 @@ const Make_Post2 = (props) => {
     );
 }
 
-export default Make_Post2;
+export default withRouter(Make_Post2);
