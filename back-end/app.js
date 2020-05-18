@@ -452,9 +452,20 @@ app.get("/Notifications", async (req, res) => {
 })
 
 app.get("/Harmonies/:userID", async (req, res) => {
-  //const user  = req.params.userid;
-  let response = await axios.get("https://api.mockaroo.com/api/0abb6050?count=5&key=ffab93f0").catch();
-  res.json(response.data);
+  
+  const userID = req.params.userID;
+
+  
+  postModel.find({ 'userID':  userID , 'harmony': true})
+  .sort({createdAt: -1})
+  .then(result => {
+    console.log(result);
+    res.json(result);
+  })
+  .catch(err => {
+    console.log(err);
+  })
+
 })
 
 app.get("/followThisGuy/:userID", async (req,res) => {
@@ -764,6 +775,9 @@ app.get('/loadPost/:postID', async (req, res) => {
   res.json(post);
 
 });
+
+
+
 
 // load a main feed of only followed users' posts
 app.get('/mainFeed/', async (req, res) => {

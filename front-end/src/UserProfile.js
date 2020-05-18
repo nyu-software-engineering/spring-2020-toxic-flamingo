@@ -5,6 +5,7 @@ import {Redirect, withRouter} from 'react-router-dom';
 import './PersonalProfile.css';
 import './PostPreview';
 import PostPreview from './PostPreview';
+//import { parseWithoutProcessing } from 'handlebars';
 // import logo from './logo.svg';
 //import './About.css';
 
@@ -27,6 +28,8 @@ const UserProfile = (props) => {
   const [shouldPersonalRedirect, setPersonalRedirect] = useState(false);
   const [shouldFollowerRedirect, setFollowerRedirect] = useState(false);
   const [shouldFollowingRedirect, setFollowingRedirect] = useState(false);
+  
+  const [shouldHarmoniesRedirect, setHarmoniesRedirect] = useState(false);
   // load in posts or whatever
   useEffect( () => {
     axios.get("/getUserID/" + username).then ((res) => {
@@ -110,6 +113,12 @@ if (shouldFollowingRedirect) {
   return <Redirect push to='/Followee/'/>
 }
 
+if (shouldHarmoniesRedirect) {
+  return <Redirect push to='/Harmonies/'/>
+}
+
+
+
 function followClicked (e) {
   e.preventDefault();
   if (followunfollow == "Unfollow"){
@@ -172,9 +181,12 @@ if (!data.id) {
                               }}>Followers {followerNum}</button>
                           
 
-                            <form action="/Harmonies">
-                            <button className='button1' id="harmonies" >Harmonies</button>
-                            </form>
+                            
+                            <button className='button1' id="harmonies" onClick={() => {
+                             props.passUser(data.id)
+                             setHarmoniesRedirect(true);
+                            }}>Harmonies</button>
+                            
                      
 
                             <form action="/Follow">
