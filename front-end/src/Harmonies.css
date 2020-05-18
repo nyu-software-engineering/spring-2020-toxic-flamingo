@@ -1,0 +1,32 @@
+.Harmonies{
+    width: 300px;
+    text-align: center;
+    margin-bottom: 150px;
+  }
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    align-content:center;
+  }
+  
+  .flex-container > div {
+    margin: 0px;
+    padding: 5px;
+    font-size: 10px;
+  }
+
+  .back_button {
+      position: relative;
+      width: 10%;
+    }
+
+  .back_button :hover {
+    opacity: 50%
+  }
+    
+    
+    .back_button img {
+      width: 40%;
+      height: auto;
+    }

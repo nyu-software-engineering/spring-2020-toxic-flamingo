@@ -1,6 +1,8 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import Post from './Post';
+import {withRouter} from 'react-router-dom';
+import './Harmonies.css';
 
 const Harmonies = (props) => {
     const userID = props.userID;
@@ -31,14 +33,28 @@ const Harmonies = (props) => {
             
         }, []);
     
-  return (
-<div className="Harmonies">
-    <h1>Harmonies</h1>
-            {data.map((jsonObj, i) => (
-                <Post key={jsonObj.id} data={jsonObj}/>
-            ))}
-</div>
-  );
+        function goBack(){
+            props.history.goBack();
+        }
+if(!data){
+    return(
+        <h1>Loading...</h1>
+    ) 
+} else {
+  return (  
+    <div className="Harmonies">
+        <div className="flex-container">
+            <div className="back_button">
+                <img onClick={goBack} src="/back-button.jpg" alt="where my button at"></img>
+            </div>
+            <h1>Harmonies</h1>
+        </div>
+        {data.map((jsonObj, i) => (
+            <Post key={jsonObj.id} data={jsonObj}/>
+        ))}
+    </div>
+    );
+    }
 }
 
-export default Harmonies;
+export default withRouter(Harmonies);
