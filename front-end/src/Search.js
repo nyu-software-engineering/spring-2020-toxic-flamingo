@@ -5,6 +5,7 @@ import TagSearchTile from './TagSearchTile';
 import './Search.css';
 import HashtagFeed from './HashtagFeed';
 import { Redirect } from 'react-router-dom';
+import { withRouter} from 'react-router-dom';
 // import logo from './logo.svg';
 //import './About.css';
 
@@ -81,8 +82,7 @@ const Search = (props) => {
 <div className="Header">
   <div class="flex-container">
     <div class="back_button">
-      <img src="/back-button.jpg" alt="where my button at"></img>
-      <button class="btn"></button>
+      <img onClick={() => props.history.goBack()} src="/back-button.jpg" alt="where my button at"></img>
     </div>
     <div>
     <img src="/temp-logo.jpg" alt="logo plz" width="200" height="50"></img>
@@ -162,4 +162,4 @@ this.props.history.push('/') //this will go to home page
   );
 }
 
-export default Search;
+export default withRouter(Search);
