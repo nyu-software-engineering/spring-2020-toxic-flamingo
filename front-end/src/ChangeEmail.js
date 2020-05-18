@@ -36,10 +36,11 @@ function handleData(e) {
     <section className="main-content">
         <img alt="about us" className="icon" src="https://cdn1.iconfinder.com/data/icons/e-mail-11/48/Change-Mail-Email-Letter-Communication-512.png" />
         <form>
+          <div>
               <p>Enter your new email: </p>
               <input className='newEmail' type='text' name='email' onChange={handleData} />
-              
-                <button onClick={submitEmail}>Submit</button>
+            </div>  
+                <button className='button1' onClick={submitEmail}>Submit</button>
               </form>
 
     </section>

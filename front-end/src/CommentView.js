@@ -20,7 +20,7 @@ const CommentView = (props) => {
             <p className='user' onClick={() => {
                 setRedirect(true);
             }}><b>{commenter}</b></p>
-            <p> <b>commented:</b> {comment}</p>
+            <p className='commented'> <b>commented:</b> {comment}</p>
         </div>
     )
 }

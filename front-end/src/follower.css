@@ -1,7 +1,8 @@
 .Header{
     border: 5px solid #555;
-    width: 300px;
+    width: 50%;
     text-align: center;
+    margin: auto;
   }
   
   .flex-container {
