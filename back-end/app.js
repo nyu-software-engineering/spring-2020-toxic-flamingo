@@ -654,6 +654,16 @@ app.post("/submitComment/:comment/:userID/:postID", async (req, res) => {
       text: comment
     });
 
+    let username = "";
+
+    await userModel.findById(userID)
+    .then(doc => {
+      username = doc.Username;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
     await postModel.updateOne(
       {_id: postID},
       {$push: {comments: commentToSubmit}}

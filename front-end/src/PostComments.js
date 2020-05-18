@@ -5,6 +5,7 @@ import CommentView from './CommentView';
 import axios from 'axios';
 import CommentBuilder from './CommentBuilder';
 import FeedWrapper from './FeedWrapper';
+import PostView from './PostView';
 
 const PostComments = (props) => {
     
@@ -21,8 +22,8 @@ const PostComments = (props) => {
 
     const [shouldRedirect, setRedirect] = useState(false);
 
-    useEffect(async () => {
-        await axios.get('/loadComments/' + postID)
+    useEffect(() => {
+        axios.get('/loadComments/' + postID)
         .then((response) => {
             setComments(response.data);
             setLoading(false);
@@ -32,7 +33,7 @@ const PostComments = (props) => {
             console.log(err);
         });
 
-        await axios.get('/loadPost/' + postID)
+        axios.get('/loadPost/' + postID)
         .then((response) => {
             setPostData(response.data);
         })
@@ -64,7 +65,8 @@ const PostComments = (props) => {
                 console.log("isMainFeed: " + isMainFeed);
                 setRedirect(true);
             }}></img>
-            
+            <PostView data={postData} passUser={(userID) => props.passUser(userID)}/>
+            <h5>Comments</h5>
             {comments.map((commentJson, i) => (
                 <CommentView key={i} data={commentJson} passUser={(userID) => props.passUser(userID)}/>
             ))}

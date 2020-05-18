@@ -20,8 +20,8 @@ const CommentView = (props) => {
             <p onClick={() => {
                 props.passUser(props.data.userID);
                 setRedirect(true);
-            }}>{commenter}</p>
-            <p> commented: {comment}</p>
+            }}><b>{commenter}</b></p>
+            <p> <b>commented:</b> {comment}</p>
         </div>
     )
 }
