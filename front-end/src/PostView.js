@@ -2,6 +2,7 @@ import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 
 import './PostView.css';
+import { Redirect } from 'react-router-dom';
 //import { Redirect } from 'react-router-dom';
 
 const PostView = (props) => {
@@ -64,7 +65,7 @@ const PostView = (props) => {
                 <div className='username'>
                     <img className='profilepic' src={profilePic} /> 
                 <h4 onClick={() => setRedirect(true)}>{username}</h4>
-
+                </div>
             </div>
             <div className='postContent'>
                 
