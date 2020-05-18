@@ -2,6 +2,7 @@ import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import BurgerMenu from './BurgerMenu';
 import './PersonalProfile.css';
+
 import {Redirect} from 'react-router-dom';
 
 import './PostPreview';
@@ -92,6 +93,8 @@ if (shouldFollowingRedirect) {
   return <Redirect push to='/Followee/'/>
 }
   
+
+
 console.log(data.id);
 if (!data.id) {
   return (
@@ -99,8 +102,10 @@ if (!data.id) {
   )
 } else {
     return (
+    <div>
+    <BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
           <div className='Profile'>
-            <BurgerMenu right pageWrapID={"ProfileHeader"} outerContainerID={"outer-container"}/>
+            
             <div className="ProfileHeader">
 
                 <div className="flex-container">
@@ -115,6 +120,8 @@ if (!data.id) {
             </div>
             <div className='buttons'>
               <div className="flex-container">
+     </form>
+
                 <div className='button1'>      
                   <button id="following" onClick={() => {
                     props.passUser(data.id)
@@ -127,8 +134,9 @@ if (!data.id) {
                     setFollowerRedirect(true);
                   }}>Followers {followerNum}</button>
                 </div>
+
                   <form action="/Harmonies">
-                  <button id="harmonies" >Harmonies</button>
+                  <button className='button1' id="harmonies" >Harmonies</button>
                   </form>
               </div>     
             </div>
@@ -139,6 +147,7 @@ if (!data.id) {
       <PostPreview userID = {data.id}/>
         </div>
       </div> 
+      </div>
     );
   }
 }

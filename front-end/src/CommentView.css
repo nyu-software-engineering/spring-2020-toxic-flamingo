@@ -5,3 +5,11 @@
     width: 300px;
     border-style: solid;
 }
+
+.user {
+    transition-duration: .04s;
+}
+.user:hover{
+    color: purple;
+    text-decoration: underline;
+}
