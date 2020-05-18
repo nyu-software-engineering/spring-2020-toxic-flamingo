@@ -20,6 +20,10 @@
         position: relative;
         width: 10%;
       }
+
+    .back_button :hover {
+      opacity: 50%
+    }
       
       
       .back_button img {
@@ -46,24 +50,7 @@
 
 
 
-      .nav_bar{
-        float:center;
-        
-      }
-      .nav_link{
-        list-style: none;
-      }
-      
-      .nav_link li {
-        display: inline-block;
-        padding: 0px;
-      
-      }
-      
-      .nav_link li a {
-        color: gray;
-        border: 1px solid #555;
-      }
+    
       .content{
         border: 1px solid #555;
       }

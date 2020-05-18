@@ -106,20 +106,6 @@ const Make_Post2 = (props) => {
                     </NavLink>
                  </form>
             </div>
-
-
-            <div className="nav_bar"> 
-                <div className="flex-container">
-                <nav>
-                    <ul className ="nav_link"> 
-                    <li><a href="/MainFeed">Home</a></li>
-                    <li><a href="#">Search</a></li>
-                    <li><a href="/Make_Post">New Post</a></li>
-                    <li><a href="#">Notifications</a></li>
-                    </ul>
-                </nav>
-                </div>
-                </div>
         </div>
         </div>
     );
