@@ -36,6 +36,7 @@ const Post = (props) => {
     }
     
     function musicPlayer() {
+        audioPlayer.volume = 0.1;
         let spotifyLink = data.spotify
         console.log(spotifyLink)
         if (playPause == 'Pause') {
