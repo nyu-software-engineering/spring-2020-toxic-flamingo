@@ -44,7 +44,7 @@ const PostPreview = (props) => {
     }
 
     if (shouldRedirect) {
-        return <Redirect push to={"PostComments/"+postID}/>
+        return <Redirect push to={"/PostComments/"+postID}/>
     }
 
     return(
