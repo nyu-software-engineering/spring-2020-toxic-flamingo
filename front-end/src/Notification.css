@@ -1,6 +1,8 @@
 .Notification {
     display: flex;
     flex-direction: row;
-    border-style: solid;
+    border-bottom-style: 1px solid;
+    box-shadow: 2px 2px 4px black;
     width: 300px;
 }
+

@@ -1,6 +1,6 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
-
+import {withRouter} from 'react-router-dom'
 import './Notifications.css';
 import Notification from './Notification';
 
@@ -37,10 +37,19 @@ const Notifications = (props) => {
         })
     }, []);
 
-    
+    function goBack(){
+        props.history.goBack();
+    } 
+
     return(
         <div className="Notifications">
+            <div class="flex-container-notifications">
+            
+            <div className="back_button">
+                <img onClick={goBack} src="/back-button.jpg" alt="where my button at"></img>
+            </div>
             <h1>Notifications</h1>
+            </div>
             {data.map((jsonObj, i) => (
                 <Notification key={jsonObj.id} data={jsonObj}/>
             ))}
@@ -49,4 +58,4 @@ const Notifications = (props) => {
 
 }
 
-export default Notifications;
+export default withRouter(Notifications);

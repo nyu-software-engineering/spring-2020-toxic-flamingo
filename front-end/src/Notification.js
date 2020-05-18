@@ -21,9 +21,10 @@ const Notification = (props) => {
     }
     */
 
+      
+
     return (
         <div className="Notification">
-            
             <p>{notificationString}</p>
         </div>
     );

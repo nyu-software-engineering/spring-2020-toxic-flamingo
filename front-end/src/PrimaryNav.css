@@ -11,6 +11,25 @@
   z-index: 500;
 }
 
+.nav_bar{
+  float:center;
+  
+}
+.nav_link{
+  list-style: none;
+}
+
+.nav_link li {
+  display: inline-block;
+  padding: 0px;
+
+}
+
+.nav_link li a {
+  color: gray;
+  border: 1px solid #555;
+}
+
 li a:hover {
   background-color: #555;
   color: white;

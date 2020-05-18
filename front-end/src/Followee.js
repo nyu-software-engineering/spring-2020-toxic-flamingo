@@ -1,7 +1,7 @@
 import React, {useState, useEffect, Component} from 'react';
 import axios from 'axios';
 import FollowerTile from './FollowerTile';
-
+import {withRouter} from 'react-router-dom';
 import './followee.css';
 
 
@@ -23,12 +23,15 @@ const Followee = (props) => {
       
     }, []);
 
+    function goBack(){
+        props.history.goBack();
+    }
+
     return (
         <div class = "Header">
             <div class="flex-container">
             <div class="back_button">
-            <img src="/back-button.jpg" alt="where my button at"></img>
-            <button class="btn"></button>
+            <img onClick={goBack} src="/back-button.jpg" alt="where my button at"></img>
             </div>
             <div>
                 <h3>Following</h3>
@@ -46,21 +49,8 @@ const Followee = (props) => {
                 })}
             </div>
 
-            <div className="nav_bar"> 
-                <div class="flex-container">
-                <nav>
-                    <ul class ="nav_link"> 
-                    <li><a href="/MainFeed">Home</a></li>
-                    <li><a href="#">Search</a></li>
-                    <li><a href="/Make_Post">New Post</a></li>
-                    <li><a href="#">Notifications</a></li>
-                    </ul>
-                </nav>
-                </div>
-            </div>
-
         </div>
     );
 }
 
-export default Followee;
+export default withRouter(Followee);
