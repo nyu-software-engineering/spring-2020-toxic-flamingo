@@ -16,7 +16,8 @@ const LogIn = (props) => {
 
   useEffect( () => {
     //fetch data
-    axios.get(process.env.REACT_APP_BACKEND+"/status", {withCredentials: true})
+    let statusRoute = `${BACKEND_IP}/status`
+    axios.get(statusRoute, {withCredentials: true})
     .then ((response) => {
 
         console.log(response.data);
@@ -52,7 +53,8 @@ const LogIn = (props) => {
     
     
     // Send request to the server
-    axios.post(process.env.REACT_APP_BACKEND+"/logIn/", dataArray, {withCredentials: true})
+    let loginRoute = `${BACKEND_IP}/logIn/`
+    axios.post(loginRoute, dataArray, {withCredentials: true})
         .then ((response) => {
           //console.log(response);
           if (response.status === 200) {
