@@ -25,8 +25,11 @@ const {JWT_SECRET} = require('./src/configuration');
 const passport = require('passport');
 const JwtCookieComboStrategy = require('passport-jwt-cookiecombo');
 const jwtDecode = require('jwt-decode');
+
+const FRONTEND_IP = process.env.NODE_ENV === "production"? "http://64.225.7.121:3000" :"http://localhost:3000";
+
 const corsOptions = {
-  origin: "http://localhost:3000",    // reqexp will match all prefixes
+  origin: FRONTEND_IP,    // reqexp will match all prefixes
   methods: "GET,HEAD,POST,PATCH,DELETE,OPTIONS",
   credentials: true,                // required to pass
   allowedHeaders: "Content-Type, Authorization, X-Requested-With",
