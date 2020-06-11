@@ -6,6 +6,7 @@ import './logIn.css';
 import axios from 'axios';
 
 const BACKEND_IP = process.env.NODE_ENV === "production"? "http://64.225.7.121:7000" :"http://localhost:7000";
+console.log(process.env.NODE_ENV)
 
 const LogIn = (props) => {
 
