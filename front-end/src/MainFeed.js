@@ -19,8 +19,7 @@ const MainFeed = (props) => {
     // load in posts
     useEffect( () => {
         //fetch data
-        let mainFeedRoute = `${BACKEND_IP}/mainFeed/`
-        axios.get(mainFeedRoute, {withCredentials: true})
+        axios.get(process.env.REACT_APP_BACKEND+"/mainFeed/", {withCredentials: true})
         .then ((response) => {
             
             setData(response.data);

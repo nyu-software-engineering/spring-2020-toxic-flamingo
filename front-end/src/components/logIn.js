@@ -6,6 +6,7 @@ import './logIn.css';
 import axios from 'axios';
 
 const BACKEND_IP = process.env.NODE_ENV === "production"? "http://64.225.7.121:7000" :"http://localhost:7000";
+console.log(process.env.NODE_ENV)
 
 const LogIn = (props) => {
 
@@ -15,8 +16,7 @@ const LogIn = (props) => {
 
   useEffect( () => {
     //fetch data
-    let statusRoute = `${BACKEND_IP}/status`
-    axios.get(statusRoute, {withCredentials: true})
+    axios.get(process.env.REACT_APP_BACKEND+"/status", {withCredentials: true})
     .then ((response) => {
 
         console.log(response.data);
@@ -52,8 +52,7 @@ const LogIn = (props) => {
     
     
     // Send request to the server
-    let loginRoute = `${BACKEND_IP}/logIn/`
-    axios.post(loginRoute, dataArray, {withCredentials: true})
+    axios.post(process.env.REACT_APP_BACKEND+"/logIn/", dataArray, {withCredentials: true})
         .then ((response) => {
           //console.log(response);
           if (response.status === 200) {
