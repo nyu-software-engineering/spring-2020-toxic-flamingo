@@ -3,6 +3,8 @@ import axios from 'axios';
 import SharmonyLogoCropped from "./SharmonyLogoCropped.PNG";
 import './SharmonyHeader.css';
 
+const BACKEND_IP = process.env.NODE_ENV === "production"? "http://64.225.7.121:7000" :"http://localhost:7000";
+
 const SharmonyHeader = (props) => {
     //let {userID} = props;
     //console.log(userID);
@@ -12,8 +14,8 @@ const SharmonyHeader = (props) => {
     // load in posts
     useEffect( () => {
         //fetch data
-
-        axios.get("/status")
+        let statusRoute = `${BACKEND_IP}/status`
+        axios.get(statusRoute, {withCredentials: true})
         .then ((response) => {
             console.log(response.data.profPic);
             //userID = response.data.decodedToken.sub;

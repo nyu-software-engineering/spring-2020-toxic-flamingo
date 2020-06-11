@@ -51,9 +51,9 @@ app.use(cookieParser(JWT_SECRET));
 const cookieExtractor = req => {
   let token = null;
   if (req && req.cookies){
-      //console.log('req.cookies', req.cookies);
+      console.log('req.cookies', req.cookies);
       token = req.cookies['access_token'];
-      //console.log("token received: " + token);
+      console.log("token received: " + token);
   }
   return token;
 }
@@ -230,8 +230,9 @@ failureFlash: true }), async (req, res, next) => {
 
 
 app.get("/status", async (req, res, next) => {
+  console.log("cookie:" + req);
   let token = cookieExtractor(req);
-  console.log(token);
+  console.log("token:" + token);
 
   if (token != null) {
     let decodedToken = jwtDecode(token);

@@ -5,6 +5,7 @@ import {Redirect} from 'react-router';
 import './logIn.css';
 import axios from 'axios';
 
+const BACKEND_IP = process.env.NODE_ENV === "production"? "http://64.225.7.121:7000" :"http://localhost:7000";
 
 const LogIn = (props) => {
 
@@ -14,8 +15,8 @@ const LogIn = (props) => {
 
   useEffect( () => {
     //fetch data
-
-    axios.get("/status")
+    let statusRoute = `${BACKEND_IP}/status`
+    axios.get(statusRoute, {withCredentials: true})
     .then ((response) => {
 
         console.log(response.data);
@@ -51,7 +52,8 @@ const LogIn = (props) => {
     
     
     // Send request to the server
-    axios.post("/logIn/", dataArray, {withCredentials: true})
+    let loginRoute = `${BACKEND_IP}/logIn/`
+    axios.post(loginRoute, dataArray, {withCredentials: true})
         .then ((response) => {
           //console.log(response);
           if (response.status === 200) {
