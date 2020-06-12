@@ -22,7 +22,7 @@ const ChangePassword = (props) => {
     setIncorrectPassword("");
     console.log(dataArray)
     e.preventDefault();
-    axios.post("/changePassword/", dataArray)
+    axios.post(process.env.REACT_APP_BACKEND + "/changePassword/", dataArray, {withCredentials: true})
         .then ((res) => {
             console.log(res);
             if (res.status === 200) {

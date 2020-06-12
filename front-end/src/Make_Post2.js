@@ -60,7 +60,7 @@ const Make_Post2 = (props) => {
         //dataaaaa= JSON.stringify(dataaaaa);
 
         //Axios.get('/createPost', {data: dataaaaa})
-        axios.post('/createPost/', songData)
+        axios.post(process.env.REACT_APP_BACKEND + "/createPost/", songData, {withCredentials: true})
         // if second request is ok, receive a notification 
         .then((res) => {
             console.log('request is ok');

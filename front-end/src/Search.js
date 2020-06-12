@@ -56,7 +56,7 @@ const Search = (props) => {
     console.log("searchUsers = " + searchUsers);
     console.log(searchQuery);
 
-    axios.get("/Search/" + searchUsers + "/" + searchQuery)
+    axios.get(process.env.REACT_APP_BACKEND + "/Search/" + searchUsers + "/" + searchQuery, {withCredentials: true})
     .then(result => {
 
       setData(result.data);

@@ -9,7 +9,7 @@ const PrimaryNav = (props) => {
 
 
     function LogOut() {
-        axios.get('/signOut/') 
+        axios.get(process.env.REACT_APP_BACKEND + "/signOut/", {withCredentials: true}) 
         .then((response) => {
             if (response.status === 200) {
                 setIsRedirect(true);

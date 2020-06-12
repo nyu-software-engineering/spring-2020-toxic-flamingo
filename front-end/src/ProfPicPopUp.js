@@ -17,7 +17,7 @@ const PopUp = (props) => {
     function submit() {
         console.log(imageLink);
         console.log("testing");
-        axios.post("/changeProfilePic/", {profPic: imageLink})
+        axios.post(process.env.REACT_APP_BACKEND + "/changeProfilePic/", {profPic: imageLink}, {withCredentials: true})
         .then ((res) => {
             console.log('request is ok');
         })

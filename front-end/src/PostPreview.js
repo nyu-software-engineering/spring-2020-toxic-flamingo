@@ -18,7 +18,7 @@ const PostPreview = (props) => {
         //fetch data
 
 
-        axios.get("/profileposts/" + userID)
+        axios.get(process.env.REACT_APP_BACKEND + "/profileposts/" + userID, {withCredentials: true})
         .then ((response) => {
             setData(response.data);
         })

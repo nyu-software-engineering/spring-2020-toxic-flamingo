@@ -16,7 +16,7 @@ const Make_Post = (props) => {
     e.preventDefault();
     console.log("BUTTON?");
     
-    axios.get("/Make_Post/" + search)
+    axios.get(process.env.REACT_APP_BACKEND + "/Make_Post/" + search, {withCredentials: true})
     //.then(response => JSON.parse(response))
     .then ((response) => {
       

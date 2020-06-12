@@ -32,16 +32,16 @@ const UserProfile = (props) => {
   const [shouldHarmoniesRedirect, setHarmoniesRedirect] = useState(false);
   // load in posts or whatever
   useEffect( () => {
-    axios.get("/getUserID/" + username).then ((res) => {
+    axios.get(process.env.REACT_APP_BACKEND + "/getUserID/" + username, {withCredentials: true}).then ((res) => {
       userID = res.data;
       console.log(userID);
       setFollowUserID(userID);
-      axios.get("/isPersonal/" + userID).then((res) => {
+      axios.get(process.env.REACT_APP_BACKEND + "/isPersonal/" + userID, {withCredentials: true}).then((res) => {
       if(res.data) {
         setPersonalRedirect(true);
       } else {
       
-      axios.get("/user/" + "false/" + userID )
+      axios.get(process.env.REACT_APP_BACKEND + "/user/" + "false/" + userID, {withCredentials: true})
 
     .then ((response) => {
       console.log("data: " + response.data.username);
@@ -123,7 +123,7 @@ function followClicked (e) {
   e.preventDefault();
   if (followunfollow == "Unfollow"){
     console.log('you tryna unfollow?');
-    axios.get("/unfollowThisGuy/"+followUserID)
+    axios.get(process.env.REACT_APP_BACKEND + "/unfollowThisGuy/"+followUserID, {withCredentials: true})
     .then ((response) => {
       setFollowUnfollow("Follow");
       setFollowerNum(followerNum - 1);
@@ -133,7 +133,7 @@ function followClicked (e) {
     })
   } else {
     console.log("you tryna follow them");
-    axios.get("/followThisGuy/"+followUserID)
+    axios.get(process.env.REACT_APP_BACKEND + "/followThisGuy/"+followUserID, {withCredentials: true})
     .then ((response) => {
       setFollowUnfollow("Unfollow");
       setFollowerNum(followerNum + 1);

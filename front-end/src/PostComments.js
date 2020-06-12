@@ -19,7 +19,7 @@ const PostComments = (props) => {
     const [shouldRedirect, setRedirect] = useState(false);
 
     useEffect(() => {
-        axios.get('/loadComments/' + postID)
+        axios.get(process.env.REACT_APP_BACKEND + '/loadComments/' + postID, {withCredentials: true})
         .then((response) => {
             setComments(response.data);
             setLoading(false);
@@ -29,7 +29,7 @@ const PostComments = (props) => {
             console.log(err);
         });
 
-        axios.get('/loadPost/' + postID)
+        axios.get(process.env.REACT_APP_BACKEND + '/loadPost/' + postID, {withCredentials: true})
         .then((response) => {
             setPostData(response.data);
         })

@@ -29,7 +29,7 @@ const FollowerTile = (props) => {
     }
 
     async function isProfile() {
-        await axios.get("/isPersonal/" + userID)
+        await axios.get(process.env.REACT_APP_BACKEND + "/isPersonal/" + userID, {withCredentials: true})
         .then ((response) => {
             console.log(response.data);
             setIsPersonal(response.data);

@@ -11,7 +11,7 @@ const Followee = (props) => {
     let userID = props.userID;
 
     useEffect( () => {
-      axios.get("/Followee/" + userID)
+      axios.get(process.env.REACT_APP_BACKEND + "/Followee/" + userID, {withCredentials: true})
       .then ((response) => {
         console.log(response.data);
         setData(response.data);
