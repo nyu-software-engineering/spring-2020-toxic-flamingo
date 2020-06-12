@@ -26,8 +26,9 @@ const passport = require('passport');
 const JwtCookieComboStrategy = require('passport-jwt-cookiecombo');
 const jwtDecode = require('jwt-decode');
 
-const FRONTEND_IP = process.env.NODE_ENV === "production"? "http://64.225.7.121:3000" :"http://localhost:3000";
-console.log(process.env.NODE_ENV)
+//const FRONTEND_IP = process.env.NODE_ENV === "production"? "http://64.225.7.121:3000" :"http://localhost:3000";
+const FRONTEND_IP = process.env.FRONTEND || "localhost:3000"
+console.log(FRONTEND_IP)
 const corsOptions = {
   origin: FRONTEND_IP,    // reqexp will match all prefixes
   methods: "GET,HEAD,POST,PATCH,DELETE,OPTIONS",
