@@ -13,7 +13,7 @@ const Notifications = (props) => {
 
         //fetch data
 
-        axios.get('/Notifications')
+        axios.get(process.env.REACT_APP_BACKEND + "/Notifications", {withCredentials: true})
         .then((response) => {
             setData(response.data);
         })

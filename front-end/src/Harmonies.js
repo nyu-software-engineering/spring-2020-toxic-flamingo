@@ -12,7 +12,7 @@ const Harmonies = (props) => {
         // load in posts or whatever
         useEffect( () => {
             //fetch data
-            axios.get("/Harmonies/"+userID)
+            axios.get(process.env.REACT_APP_BACKEND + "/Harmonies/" + userID, {withCredentials: true})
             .then ((response) => {
                 setData(response.data);
             })

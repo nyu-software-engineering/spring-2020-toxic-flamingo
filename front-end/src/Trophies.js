@@ -20,7 +20,7 @@ const Trophies = (props) => {
         // load in posts or whatever
         useEffect( () => {
             
-            axios.get('/trophies/')
+            axios.get(process.env.REACT_APP_BACKEND + "/trophies/", {withCredentials: true})
             .then(doc => {
                 console.log(doc.data);
                 list = doc.data;

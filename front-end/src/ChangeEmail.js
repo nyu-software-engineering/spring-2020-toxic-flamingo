@@ -14,7 +14,7 @@ const ChangeEmail = (props) => {
   function submitEmail(e) {
     e.preventDefault();
     console.log(data)
-    axios.post("/changeEmail/", dataArray)
+    axios.post(process.env.REACT_APP_BACKEND + "/changeEmail/", dataArray, {withCredentials: true})
         .then ((res) => {
             console.log('request is ok');
         })

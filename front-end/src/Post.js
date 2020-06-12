@@ -54,7 +54,7 @@ const Post = (props) => {
     }
 
     useEffect(() => {
-        axios.get("/getUsername/" + userID)
+        axios.get(process.env.REACT_APP_BACKEND + "/getUsername/" + userID, {withCredentials: true})
         .then ((response) => {
             setUsername(response.data.username);
             console.log(username);

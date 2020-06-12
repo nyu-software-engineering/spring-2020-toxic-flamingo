@@ -20,7 +20,7 @@ const PostView = (props) => {
 
     useEffect(() => {
         async function fetchUsername() {
-            await axios.get("/getUsername/" + userID)
+            await axios.get(process.env.REACT_APP_BACKEND + "/getUsername/" + userID, {withCredentials: true})
             .then ((response) => {
                 setUsername(response.data.username);
                 console.log(username);

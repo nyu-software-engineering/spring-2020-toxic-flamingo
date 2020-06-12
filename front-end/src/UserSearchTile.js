@@ -21,7 +21,7 @@ const UserSearchTile = (props) => {
     }
 
     async function isProfile() {
-        await axios.get("/isPersonal/" + jsonObj._id)
+        await axios.get(process.env.REACT_APP_BACKEND + "/isPersonal/" + jsonObj._id, {withCredentials: true})
         .then ((response) => {
             console.log(response.data);
             setIsPersonal(response.data);

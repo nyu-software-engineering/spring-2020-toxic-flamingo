@@ -18,7 +18,7 @@ const HashtagFeed = (props) => {
     // load in posts
     useEffect( () => {
         //fetch data
-        axios.get("/hashtagFeed/" + hashtag)
+        axios.get(process.env.REACT_APP_BACKEND + "/hashtagFeed/" + hashtag, {withCredentials: true})
         .then ((response) => {
             console.log("testing")
             //filtering now takes place on the backend

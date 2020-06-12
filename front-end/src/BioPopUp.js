@@ -17,7 +17,7 @@ const PopUp = (props) => {
     function submit() {
         console.log(bio);
         console.log("testing");
-        axios.post("/changeBio/", {userBio: bio})
+        axios.post(process.env.REACT_APP_BACKEND + "/changeBio/", {userBio: bio, withCredentials: true})
         .then ((res) => {
             console.log('request is ok');
         })

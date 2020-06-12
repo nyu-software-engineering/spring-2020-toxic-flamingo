@@ -21,7 +21,10 @@ const CommentBuilder = (props) => {
             return;
         }
         
-        axios.post("/submitComment/" + commentText + "/" + userID + "/" + postID)
+        axios.post(process.env.REACT_APP_BACKEND + "/submitComment/" + 
+                    commentText + "/" + userID + "/" + postID, 
+                    {withCredentials: true}
+        )
         .then(res => {
             console.log("GOT A RESPONSE");
             console.log(res);

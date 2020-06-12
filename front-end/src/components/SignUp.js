@@ -24,7 +24,7 @@ const SignUp = (props) => {
     
     
     // Send request to the server
-    axios.post("/signUp/", dataArray, {withCredentials: true})
+    axios.post(process.env.REACT_APP_BACKEND + "/signUp/", dataArray, {withCredentials: true})
         .then ((response) => {
           //console.log(response);
           if (response.status === 200) {

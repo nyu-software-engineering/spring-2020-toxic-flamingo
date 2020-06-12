@@ -30,7 +30,7 @@ const PersonalProfile = (props) => {
   // load in posts or whatever
   useEffect( () => {
     //fetch data
-    axios.get("/user/" + "true/" + userID )
+    axios.get(process.env.REACT_APP_BACKEND + "/user/" + "true/" + userID, {withCredentials: true})
     .then ((response) => {
       console.log("data: " + response.data.username);
       setData(response.data);
