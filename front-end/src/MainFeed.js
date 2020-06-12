@@ -5,7 +5,7 @@ import './MainFeed.css';
 import Post from './Post';
 import { Redirect } from 'react-router-dom';
 
-const BACKEND_IP = process.env.NODE_ENV === "production"? "http://64.225.7.121:7000" :"http://localhost:7000";
+//const BACKEND_IP = process.env.NODE_ENV === "production"? "http://64.225.7.121:7000" :"http://localhost:7000";
 
 const MainFeed = (props) => {
 
@@ -19,8 +19,8 @@ const MainFeed = (props) => {
     // load in posts
     useEffect( () => {
         //fetch data
-        let mainFeedRoute = `${BACKEND_IP}/mainFeed/`
-        axios.get(mainFeedRoute, {withCredentials: true})
+        //let mainFeedRoute = `${BACKEND_IP}/mainFeed/`
+        axios.get(process.env.REACT_APP_BACKEND + "/mainFeed/", {withCredentials: true})
         .then ((response) => {
             
             setData(response.data);
