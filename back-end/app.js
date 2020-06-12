@@ -31,6 +31,7 @@ const jwtDecode = require('jwt-decode');
 //console.log(FRONTEND_IP)
 const allowedOrigins = [
   "http://localhost:3000",
+  "http://64.225.7.121",
   "http://64.225.7.121:3000",
   "http://sharmony.world"
 	];
