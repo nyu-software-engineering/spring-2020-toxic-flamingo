@@ -27,10 +27,24 @@ const JwtCookieComboStrategy = require('passport-jwt-cookiecombo');
 const jwtDecode = require('jwt-decode');
 
 //const FRONTEND_IP = process.env.NODE_ENV === "production"? "http://64.225.7.121:3000" :"http://localhost:3000";
-const FRONTEND_IP = process.env.FRONTEND || "localhost:3000"
-console.log(FRONTEND_IP)
+//const FRONTEND_IP = process.env.FRONTEND || "localhost:3000"
+//console.log(FRONTEND_IP)
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://64.225.7.121:3000",
+  "http://sharmony.world"
+	];
+
 const corsOptions = {
-  origin: FRONTEND_IP,    // reqexp will match all prefixes
+  origin: (origin, cb)=>{
+    // allow requests with no origin
+    if(!origin) return cb(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+        return cb(new Error(msg), false);
+    }
+    return cb(null, true);
+  },  
   methods: "GET,HEAD,POST,PATCH,DELETE,OPTIONS",
   credentials: true,                // required to pass
   allowedHeaders: "Content-Type, Authorization, X-Requested-With",
