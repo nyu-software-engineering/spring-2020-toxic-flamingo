@@ -13,7 +13,7 @@ const FollowerTile = (props) => {
     const [data, setData] = useState();
 
     useEffect( () => {
-        axios.get('/user/' + 'false/' + userID)
+        axios.get(process.env.REACT_APP_BACKEND + '/user/' + 'false/' + userID, {withCredentials: true})
         .then ((response) => {
             setData(response.data);
         })
