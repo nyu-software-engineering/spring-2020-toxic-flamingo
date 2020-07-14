@@ -25,6 +25,8 @@ const {JWT_SECRET} = require('./src/configuration');
 const passport = require('passport');
 const JwtCookieComboStrategy = require('passport-jwt-cookiecombo');
 const jwtDecode = require('jwt-decode');
+const { boolean } = require("joi");
+const { truncateSync } = require("fs");
 
 //const FRONTEND_IP = process.env.NODE_ENV === "production"? "http://64.225.7.121:3000" :"http://localhost:3000";
 //const FRONTEND_IP = process.env.FRONTEND || "localhost:3000"
@@ -802,16 +804,20 @@ app.get('/loadPost/:postID', async (req, res) => {
 app.get('/mainFeed/', async (req, res) => {
 
   const userID = cookieToID(req);
-
+  let hasFollowers = true; 
   let following = [];
 
   await userModel.findById(userID)
     .then(doc => {
-      if (doc.following) {
-
+      if (doc.following.length > 0) {
+        console.log(doc.following)
+        console.log("this is following!!!")
         console.log(doc.following);
 
         following = doc.following;
+      } else {
+        hasFollowers = false;
+        following = ["5f0cf62626a9b208c18dde39"]
       }
       following.push(userID);
     })
@@ -827,7 +833,7 @@ app.get('/mainFeed/', async (req, res) => {
   .sort({createdAt: -1})
   .then(result => {
     console.log(result);
-    res.json(result);
+    res.json({postIDList: result, hasFollowers: hasFollowers});
   })
   .catch(err => {
     console.log(err);
