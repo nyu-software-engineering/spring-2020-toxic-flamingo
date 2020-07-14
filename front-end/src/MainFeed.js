@@ -13,6 +13,7 @@ const MainFeed = (props) => {
 
     const [shouldRedirect, setRedirect] = useState(false);
     const [postID, setPostID] = useState("");
+    const [noFollowingText, setNoFollowingText] = useState("");
 
     //const userId = "5eab5536cfcc1f47a02d55cf";
 
@@ -22,8 +23,11 @@ const MainFeed = (props) => {
         //let mainFeedRoute = `${BACKEND_IP}/mainFeed/`
         axios.get(process.env.REACT_APP_BACKEND + "/mainFeed/", {withCredentials: true})
         .then ((response) => {
-            
-            setData(response.data);
+            console.log(response);
+            setData(response.data.postIDList);
+            if (!response.data.hasFollowers) {
+                setNoFollowingText("Looks like you're not following anyone yet. Go search for some cool pages or friends. Here's some Michael Jackson in the meantime.");
+            }
         })
         .catch( err => {
             console.log("ERROR!");
@@ -47,12 +51,15 @@ const MainFeed = (props) => {
 
     return(
         <div className="MainFeed">
+        <div className="NoFollowing">
+            <h3>{noFollowingText}</h3>
+        </div>
             {data.map((jsonObj, i) => (
                 <Post key={jsonObj._id} data={jsonObj} loadComments={((postID) => handleCommentClick(postID))}/>
             ))}
         </div>
     );
-
 }
+
 
 export default MainFeed;
